@@ -26,7 +26,7 @@ export default {
     async mysql () {
       const sql = 'select * from userinfo'
       console.time()
-      var data = await this.$queryFunc(sql)
+      var data = await this.$queryAsync(sql)
       console.group()
       // console.log(data)
       // console.dir(data)

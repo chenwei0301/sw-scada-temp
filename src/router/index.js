@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-01-28 15:50:04
- * @LastEditTime: 2021-05-19 17:24:16
+ * @LastEditTime: 2021-05-20 09:10:34
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \swiscs_3d\src\router\index.js
@@ -27,8 +27,7 @@ const routes = [
   //   path: '/',
   //   name: 'Login',
   //   meta: { title: APPTITLE },
-  //   // component: () => import('@/views/Login.vue')
-  //   component: () => import('@/views/Function.vue')
+  //   component: () => import('@/views/Login.vue')
   // },
   // {
   //   path: '/',

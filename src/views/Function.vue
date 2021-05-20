@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-05-13 13:56:51
- * @LastEditTime: 2021-05-18 16:22:51
+ * @LastEditTime: 2021-05-20 09:22:44
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \swiscs_3d\src\views\Function.vue
@@ -20,7 +20,6 @@
 
 <script>
 import LoginTitleBar from '@/components/LoginTitleBar/LoginTitleBar.vue'
-import { queryFunc } from '@/db/queryFunc.js'
 export default {
   data () {
     return {
@@ -34,7 +33,7 @@ export default {
     async mysql () {
       const sql = 'select * from userinfo'
       console.time()
-      var data = await queryFunc(sql)
+      var data = await this.$queryAsync(sql)
       console.group()
       // console.log(data)
       // console.dir(data)
@@ -45,7 +44,7 @@ export default {
     async add () {
       const sql = "INSERT INTO roleinfo VALUES( 11,'authtest11','测试权限组1','MACT',1,1,1,1,1,'2020-02-13 14:25:37',null)"
       console.time()
-      var data = await queryFunc(sql)
+      var data = await this.$queryAsync(sql)
       console.group()
       // console.log(data)
       // console.dir(data)

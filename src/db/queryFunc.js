@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-05-13 14:47:39
- * @LastEditTime: 2021-05-19 17:27:22
+ * @LastEditTime: 2021-05-20 09:25:48
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \swiscs_3d\src\db\queryFunc.js

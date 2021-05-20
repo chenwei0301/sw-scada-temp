@@ -36,7 +36,6 @@ var querySync = function (sql, callback) {
     } else {
       conn.query(sql, function (qerr, vals, fields) {
         // 释放连接
-        // conn.release();
         pool.releaseConnection(conn);
         // 事件驱动回调
         var _vals = JSON.parse(JSON.stringify(vals))
