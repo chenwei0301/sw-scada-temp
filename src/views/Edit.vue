@@ -1,6 +1,7 @@
 <template>
   <div class="funcTest">
-    <h4>This is an function page</h4>
+    <h4>{{msg | uppercase  }}</h4>
+    <h4>{{msg | uppercaseFirst  }}</h4>
     <el-button @click.prevent="getAreas" type="primary">getAreas</el-button>
     <el-button @click.prevent="addAreas" type="primary">addAreas</el-button>
     <el-button @click.prevent="mysql" type="primary">mysql</el-button>
@@ -14,13 +15,16 @@
 
 <script>
 import { addAreas, getAreas } from '@/api/db/s_area'
+import Vue2Filters from 'vue2-filters'
 export default {
   data () {
     return {
+      msg: 'this is an function page'
     }
   },
   components: {
   },
+  mixins: [Vue2Filters.mixin],
   methods: {
     async mysql () {
       // const sql = 'select * from userinfo'

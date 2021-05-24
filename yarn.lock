@@ -10771,6 +10771,11 @@ vue-toast-notification@^0.6.1:
   resolved "https://registry.nlark.com/vue-toast-notification/download/vue-toast-notification-0.6.1.tgz#0ee0d75cba500a342f720107fc4d09cfaa84aa31"
   integrity sha1-DuDXXLpQCjQvcgEH/E0Jz6qEqjE=
 
+vue2-filters@^0.12.0:
+  version "0.12.0"
+  resolved "https://registry.npm.taobao.org/vue2-filters/download/vue2-filters-0.12.0.tgz#6b90e8ed2104d3590d498d7d26fbb43c12af940d"
+  integrity sha1-a5Do7SEE01kNSY19Jvu0PBKvlA0=
+
 vue@^2.6.11:
   version "2.6.12"
   resolved "https://registry.npm.taobao.org/vue/download/vue-2.6.12.tgz#f5ebd4fa6bd2869403e29a896aed4904456c9123"

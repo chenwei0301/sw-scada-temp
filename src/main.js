@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-01-28 15:50:04
- * @LastEditTime: 2021-05-24 10:45:06
+ * @LastEditTime: 2021-05-24 17:59:20
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \swiscs_3d\src\main.js
@@ -13,6 +13,7 @@ import router from '@/router'
 import store from '@/store'
 
 import '@/plugins/vue-toast-notification'
+import '@/plugins/vue2-filters'
 import '@/plugins/vue-layer'
 import '@/plugins/element'
 import '@/plugins/styles'
@@ -21,6 +22,14 @@ import '@/plugins/moment'
 import '@/plugins/axios'
 import '@/plugins/mysql'
 import '@/plugins/qs'
+import '@/filters/filters'
+import prototype from '@/plugins/prototype'
+
+// import filters from '@/filters/index'
+// // 注册全局过滤器
+// Object.keys(filters).forEach(key => Vue.filter(key, filters[key]))
+
+Vue.use(prototype)
 
 Vue.config.productionTip = false
 
