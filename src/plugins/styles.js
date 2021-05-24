@@ -6,5 +6,5 @@
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\plugins\assets.js
  */
-import '@/assets/css/normalize.css'
-import '@/assets/css/reset.css'
+import '@/styles/normalize.css'
+import '@/styles/reset.css'

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-01-28 15:50:04
- * @LastEditTime: 2021-05-20 09:31:55
+ * @LastEditTime: 2021-05-24 10:45:06
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \swiscs_3d\src\main.js
@@ -12,9 +12,10 @@ import App from '@/App.vue'
 import router from '@/router'
 import store from '@/store'
 
+import '@/plugins/vue-toast-notification'
 import '@/plugins/vue-layer'
 import '@/plugins/element'
-import '@/plugins/assets'
+import '@/plugins/styles'
 import '@/plugins/v-ajax'
 import '@/plugins/moment'
 import '@/plugins/axios'

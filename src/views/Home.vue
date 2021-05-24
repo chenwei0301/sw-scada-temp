@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-01-29 08:46:21
- * @LastEditTime: 2021-04-16 11:55:18
+ * @LastEditTime: 2021-05-20 10:36:25
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \swiscs_3d\src\views\Home.vue
@@ -23,7 +23,7 @@
 import HomeTitleBar from '@/components/HomeTitleBar/HomeTitleBar.vue'
 import HomeHeader from '@/components/HomeHeader/HomeHeader.vue'
 import HomeFooter from '@/components/HomeFooter/HomeFooter.vue'
-import SwWebSocket from '@/api/webSocket.js'
+import SwWebSocket from '@/plugins/webSocket.js'
 import { decodeBase64 } from '@/api/common.js'
 
 export default {

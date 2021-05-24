@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-01-28 15:59:40
- * @LastEditTime: 2021-05-19 17:24:33
+ * @LastEditTime: 2021-05-20 13:51:52
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \swiscs_3d\src\background.js
@@ -91,7 +91,7 @@ async function createWindow () {
     height: 768,
     maxHeight: display.size.height,
     maxWidth: display.size.width,
-    maximizable: false,
+    // maximizable: false,
     // backgroundColor: '#3882ad',
     // frame: false,
     webPreferences: {
@@ -174,7 +174,9 @@ if (isDevelopment) {
 function createTray () {
   // 创建系统通知区菜单
   try {
-    const trayIcon = isDevelopment ? 'public/favicon.png' : path.join(__dirname, 'favicon.png')
+    // const trayIcon = isDevelopment ? 'public/favicon.png' : path.join(__dirname, 'favicon.png')
+    const faviconName = 'favicon.png'
+    const trayIcon = isDevelopment ? 'public/' + faviconName : path.join(__dirname, faviconName)
     appTray = new Tray(trayIcon)
     const contextMenu = Menu.buildFromTemplate([
       {

@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "author": "深圳赛为智能股份有限公司",
-  "repository": "https://github.com/chenwei0301/swiscs_3d.git",
-  "description": "合肥轨道交通综合监控系统",
+  "repository": "https://github.com/chenwei0301/sw-scada-temp.git",
+  "description": "赛为智能SCADA平台",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -12,9 +12,9 @@
     "lint-fix": "eslint --fix --ext .js --ext .jsx --ext .vue src/ test/unit test/e2e/specs",
     "electron:build": "vue-cli-service electron:build",
     "electron:serve": "vue-cli-service electron:serve",
+    "electron:icon": "electron-icon-builder --input=./static/icon.png --output=./static --flatten",
     "postinstall": "electron-builder install-app-deps",
-    "postuninstall": "electron-builder install-app-deps",
-    "electron:icon": "electron-icon-builder --input=./public/icon.png --output=./public --flatten"
+    "postuninstall": "electron-builder install-app-deps"
   },
   "main": "background.js",
   "dependencies": {
@@ -29,6 +29,7 @@
     "vue": "^2.6.11",
     "vue-layer": "^1.2.1",
     "vue-router": "^3.2.0",
+    "vue-toast-notification": "^0.6.1",
     "vuex": "^3.4.0"
   },
   "devDependencies": {

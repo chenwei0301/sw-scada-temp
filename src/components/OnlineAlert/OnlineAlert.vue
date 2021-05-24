@@ -19,7 +19,7 @@
 
 <script>
 import { decodeBase64 } from '@/api/common.js'
-import SwWebSocket from '@/api/webSocket.js'
+import SwWebSocket from '@/plugins/webSocket.js'
 
 export default {
   vueName: 'OnlineAlert',
