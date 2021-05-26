@@ -1,8 +1,8 @@
 /* eslint-disable no-template-curly-in-string */
 /*
- * @Author: your name
+ * @Author: sw0447
  * @Date: 2021-01-29 10:22:58
- * @LastEditTime: 2021-03-04 16:56:22
+ * @LastEditTime: 2021-05-26 14:45:36
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \swiscs_3d\vue.config.js
@@ -15,7 +15,7 @@ module.exports = {
         // options placed here will be merged with default configuration and passed to  electron-builder
         // 在这里的配置将会和默认配置合并，然后传递给electron-builder
         appId: 'com.szsunwin.www', // 项目唯一标识
-        productName: 'HFDT4_ISCS', // 打包产物的前缀
+        productName: 'SunWin SCADA OA', // 打包产物的前缀
         // eslint-disable-next-line no-template-curly-in-string
         copyright: 'Copyright © 2021 Sunwin',
         // copyright: 'Copyright © 2021 ${author}',
@@ -38,7 +38,7 @@ module.exports = {
           installerIcon: 'public/favicon.ico', // 安装图标
           uninstallerIcon: 'public/favicon.ico', // 卸载图标
           installerHeaderIcon: 'public/favicon.ico', // 安装时头部图标
-          shortcutName: 'HFDT4_ISCS', // 图标名称
+          shortcutName: 'SunWin SCADA OA', // 图标名称
           createDesktopShortcut: true, // 创建桌面图标
           createStartMenuShortcut: true // 创建开始菜单图标
         }

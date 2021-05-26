@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-01-28 15:59:40
- * @LastEditTime: 2021-05-20 13:51:52
+ * @LastEditTime: 2021-05-26 11:19:40
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \swiscs_3d\src\background.js
@@ -87,8 +87,8 @@ async function createWindow () {
   mainWindow = new BrowserWindow({
     // width: 380,
     // height: 530,
-    width: 1024,
-    height: 768,
+    width: 1440,
+    height: 960,
     maxHeight: display.size.height,
     maxWidth: display.size.width,
     // maximizable: false,

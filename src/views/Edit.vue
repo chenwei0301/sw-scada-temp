@@ -10,6 +10,9 @@
 
     <el-button @click.prevent="axiosTest" type="primary">axiosTest</el-button>
     <el-button @click.prevent="VueToast" type="primary">VueToast</el-button>
+        <vue-draggable-resizable :active.sync="active" class="vdr1">
+      <p>Controlling the active state from outside the component by providing the <b>:{{active}}</b> prop.</p>
+    </vue-draggable-resizable>
   </div>
 </template>
 
@@ -19,6 +22,7 @@ import Vue2Filters from 'vue2-filters'
 export default {
   data () {
     return {
+      active: false,
       msg: 'this is an function page'
     }
   },
@@ -180,5 +184,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.vdr1{
+    background-color: lightcoral;
+}
 </style>

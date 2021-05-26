@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-01-28 15:50:04
- * @LastEditTime: 2021-05-24 17:59:20
+ * @LastEditTime: 2021-05-26 09:09:20
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \swiscs_3d\src\main.js
@@ -25,9 +25,7 @@ import '@/plugins/qs'
 import '@/filters/filters'
 import prototype from '@/plugins/prototype'
 
-// import filters from '@/filters/index'
-// // 注册全局过滤器
-// Object.keys(filters).forEach(key => Vue.filter(key, filters[key]))
+import '@/plugins/vue-draggable-resizable'
 
 Vue.use(prototype)
 
