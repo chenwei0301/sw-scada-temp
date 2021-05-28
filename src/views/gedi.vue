@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-05-26 09:09:39
- * @LastEditTime: 2021-05-26 14:24:23
+ * @LastEditTime: 2021-05-28 08:54:47
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\views\gedi.vue
@@ -34,6 +34,7 @@
       <template #right>
         <PanelView id="childPanelView" title="组件选项" :groups="groups1"></PanelView>
         <PanelView id="pagePanelView" title="页面选项" :groups="groups2"></PanelView>
+        <PanelView id="pagePanelView2" title="页面选项2" :groups="groups2"></PanelView>
       </template>
 
     </Designer>
@@ -204,6 +205,12 @@ const explorerComponents = [
         node: `<i-col :span="24">
                     <i-button>按钮</i-button>
                   </i-col>`
+      },
+      {
+        id: '1-7',
+        title: '测试组件',
+        node: `<vue-draggable-resizable style="background:#004400">
+               </vue-draggable-resizable>`
       }
     ]
   }
@@ -227,7 +234,7 @@ export default {
       title: 'template',
       editorOptions: {
         wrapperStyle: {
-          padding: '15px',
+          // padding: '0px',
           background: '#f7f7f7'
         },
         beforeSelectNode (node) {
@@ -299,7 +306,7 @@ export default {
     },
     exportVue () {
       const content = this.$refs.designer.getVueContent();
-      FileSaver.saveAs('data:text/plain;charset=utf-8,' + encodeURIComponent(content), 'main.vue');
+      FileSaver.saveAs('data:text/plain;charset=utf-8,' + encodeURIComponent(content), 'Untitled.vue');
     },
     funcTest () {
       const $designer = this.$refs
@@ -343,8 +350,11 @@ export default {
   height: 100%;
   background: lightblue;
   #designer{
-    background-color: lightcoral;
-    height: calc(100% - 33px)
+    background-color: #ffffff;
+    height: calc(100% - 33px);
+    .app-wrapper{
+      padding: 0px;
+    }
   }
   .topFunc{
     text-align: center;

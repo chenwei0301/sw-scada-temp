@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-01-28 15:59:40
- * @LastEditTime: 2021-05-26 11:19:40
+ * @LastEditTime: 2021-05-28 09:00:43
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \swiscs_3d\src\background.js
@@ -144,8 +144,8 @@ app.on('ready', async () => {
   if (isDevelopment && !process.env.IS_TEST) {
     // Install Vue Devtools
     try {
-      //  删除下载的vue插件 修改为上面的插件
       await session.defaultSession.loadExtension(path.resolve(__dirname, '..', 'devTools/vue-devtools'))
+      //  删除下载的vue插件 修改为上面的插件
     } catch (e) {
       console.error('Vue Devtools failed to install:', e.toString())
     }

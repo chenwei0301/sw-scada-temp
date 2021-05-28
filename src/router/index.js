@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-01-28 15:50:04
- * @LastEditTime: 2021-05-26 09:10:11
+ * @LastEditTime: 2021-05-27 17:51:02
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \swiscs_3d\src\router\index.js
@@ -55,7 +55,8 @@ const routes = [
     name: 'gedi',
     meta: { title: APPTITLE },
     // component: () => import('@/views/Edit.vue')
-    component: () => import('@/views/gedi.vue')
+    component: () => import('@/views/VDR.vue')
+    // component: () => import('@/views/gedi.vue')
   },
   {
     path: '/home',

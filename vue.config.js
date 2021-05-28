@@ -2,7 +2,7 @@
 /*
  * @Author: sw0447
  * @Date: 2021-01-29 10:22:58
- * @LastEditTime: 2021-05-26 14:45:36
+ * @LastEditTime: 2021-05-26 17:10:41
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \swiscs_3d\vue.config.js
@@ -21,14 +21,14 @@ module.exports = {
         // copyright: 'Copyright © 2021 ${author}',
         // 可用使用${}引用package.json里面配置项，配置yarn项不存在会报错
         directories: {
-          output: 'dist_electron' // 打包产物的位置
+          output: 'dist_electron_v1.0.0' // 打包产物的位置
         },
         win: {
           target: 'nsis',
           icon: 'public/favicon.ico',
           legalTrademarks: 'http://www.szsunwin.com/'
         },
-        asar: true,
+        asar: false,
         nsis: {
           oneClick: false, // 是否一键安装
           allowElevation: true, // 允许请求提升。 如果为false，则用户必须使用提升的权限重新启动安装程序。

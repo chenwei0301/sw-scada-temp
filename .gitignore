@@ -1,6 +1,5 @@
 .DS_Store
 node_modules
-devTools
 dist*
 dist_electron
 /dist
