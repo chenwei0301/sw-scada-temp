@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-01-28 15:50:04
- * @LastEditTime: 2021-05-27 17:51:02
+ * @LastEditTime: 2021-05-28 17:48:34
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \swiscs_3d\src\router\index.js
@@ -53,14 +53,19 @@ const routes = [
   {
     path: '/',
     name: 'gedi',
-    meta: { title: APPTITLE },
-    // component: () => import('@/views/Edit.vue')
-    component: () => import('@/views/VDR.vue')
-    // component: () => import('@/views/gedi.vue')
+    meta: { title: APPTITLE, icon: '' },
+    alwaysShow: true,
+    component: () => import('@/views/Edit.vue'),
+    // component: () => import('@/views/VDR.vue'),
+    // component: () => import('@/views/gedi.vue'),
+    redirect: '',
+    children: []
   },
   {
     path: '/home',
     name: 'Home',
+    meta: { title: '主页', icon: '' },
+    alwaysShow: true,
     component: () => import('@/views/Home.vue'),
     redirect: '/home/main',
     children: [
