@@ -3,13 +3,13 @@
 /*
  * @Author: your name
  * @Date: 2021-05-21 09:34:07
- * @LastEditTime: 2021-06-03 17:53:46
+ * @LastEditTime: 2021-06-04 17:34:00
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\api\db\s_area.js
  */
 import tableName from '@/api/db/tableName'
-import { querySync, queryAsync } from '@/plugins/mysql'
+import { querySync, queryAsync } from '@/plugins/modules/mysql'
 
 /**
  * @description: 查询 区域表 数据
@@ -98,7 +98,8 @@ export async function sql_updateAreasAsync (obj, para) {
               " set " +
               "area_id='" + para.area_id + "', " +
               "area_name='" + para.area_name + "', " +
-              "update_time='" + para.updateTime + "', " +
+              // "update_time='" + para.updateTime + "', " +
+              "update_time=" + "NOW()" + ", " +
               "update_timeMS=" + para.updateTimeMs +
               " where " +
               "id=" + para.id
@@ -118,7 +119,8 @@ export function sql_updateAreasSync (obj, para) {
               " set " +
               "area_id='" + para.area_id + "', " +
               "area_name='" + para.area_name + "', " +
-              "update_time='" + para.updateTime + "', " +
+              // "update_time='" + para.updateTime + "', " +
+              "update_time=" + "NOW()" + ", " +
               "update_timeMS=" + para.updateTimeMs +
               " where " +
               "id=" + para.id

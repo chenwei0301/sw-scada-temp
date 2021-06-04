@@ -2,13 +2,13 @@
 /*
  * @Author: your name
  * @Date: 2021-06-03 09:53:24
- * @LastEditTime: 2021-06-03 10:01:45
+ * @LastEditTime: 2021-06-04 17:34:09
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\api\db\s_router.js
  */
 import tableName from '@/api/db/tableName'
-import { queryAsync } from '@/plugins/mysql'
+import { queryAsync } from '@/plugins/modules/mysql'
 // import { querySync, queryAsync } from '@/plugins/mysql'
 
 /**

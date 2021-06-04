@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-02-25 15:22:01
- * @LastEditTime: 2021-04-16 11:49:18
+ * @LastEditTime: 2021-06-04 17:36:25
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \swiscs_3d\src\components\OnlineAlert\OnlineAlert.vue
@@ -19,7 +19,7 @@
 
 <script>
 import { decodeBase64 } from '@/api/common.js'
-import SwWebSocket from '@/plugins/webSocket.js'
+import SwWebSocket from '@/plugins/modules/webSocket.js'
 
 export default {
   vueName: 'OnlineAlert',

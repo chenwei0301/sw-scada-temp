@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-05-26 09:09:39
- * @LastEditTime: 2021-05-28 08:54:47
+ * @LastEditTime: 2021-06-04 17:35:36
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\views\gedi.vue
@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import '@/plugins/view-design'
+import '@/plugins/modules/view-design'
 // import Designer from '@/plugins/vuc-designer'
 import Vuc from 'vuc-designer'
 import 'vuc-designer/dist/styles/vuc.css'

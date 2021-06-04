@@ -78,7 +78,7 @@ export default {
         sql_insertAreas(this, {
           areaId: areaId,
           areaName: areaName,
-          updateTime: this.$moment(t).format('yyyy-MM-DDTHH:mm:ss'),
+          // updateTime: this.$moment(t).format('yyyy-MM-DDTHH:mm:ss'),
           updateTimeMs: this.$moment(t).format('SSS')
         })
       }
@@ -91,7 +91,7 @@ export default {
         id: 17,
         area_id: '431',
         area_name: '测试车站431',
-        updateTime: this.$moment(t).format('yyyy-MM-DDTHH:mm:ss'),
+        // updateTime: this.$moment(t).format('yyyy-MM-DDTHH:mm:ss'),
         updateTimeMs: this.$moment(t).format('SSS')
       }
       var ret = await sql_updateAreasAsync(this, para)
