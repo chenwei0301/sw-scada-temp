@@ -1,34 +1,16 @@
 /*
  * @Author: your name
  * @Date: 2021-05-13 10:14:59
- * @LastEditTime: 2021-06-03 09:20:24
+ * @LastEditTime: 2021-06-08 15:02:30
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \swiscs_3d\src\db\mysql.js
  */
 import Vue from 'vue'
-// import { IP } from '@/api/ip.js'
+import appConfig from '@/api/appConfig'
+
 const mysql = require('mysql');
-
-// database config (服务器数据库)
-// const pool = mysql.createPool({
-//   host: '192.168.1.98',
-//   port: '3306',
-//   user: 'root',
-//   password: 'sunwin',
-//   // database: 'swrtms'
-//   database: 'swrtdb'
-// })
-
-// database config (本地测试数据库)
-const pool = mysql.createPool({
-  // host: IP,
-  host: '127.0.0.1',
-  port: '3306',
-  user: 'root',
-  password: '123456',
-  database: 'swrtdb'
-});
+const pool = mysql.createPool(appConfig('mysql'))
 
 // 导出查询相关
 var querySync = function (sql, callback) {
@@ -47,13 +29,8 @@ var querySync = function (sql, callback) {
   })
 }
 
-// // 向外暴露方法
-// module.exports = {
-//   pool,
-//   query
-// }
-
 var queryAsync = function (sql) {
+  console.log('queryAsync-sql:', sql)
   return new Promise((resolve, reject) => {
     querySync(sql, function (err, vals, fields) {
       if (err) {

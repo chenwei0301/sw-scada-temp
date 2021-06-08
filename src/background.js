@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-01-28 15:59:40
- * @LastEditTime: 2021-05-28 09:00:43
+ * @LastEditTime: 2021-06-08 14:39:41
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \swiscs_3d\src\background.js
@@ -11,7 +11,8 @@
 import { app, protocol, BrowserWindow, ipcMain, screen, Tray, Menu, globalShortcut, session } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import path from 'path'
-import { APPTITLE } from '@/api/appConfig.js'
+
+import appConfig from '@/api/appConfig'
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 if (!isDevelopment) {
@@ -22,6 +23,8 @@ if (!isDevelopment) {
 protocol.registerSchemesAsPrivileged([
   { scheme: 'app', privileges: { secure: true, standard: true } }
 ])
+
+const APPTITLE = appConfig('appTitle')
 
 let mainWindow
 const subWindow = []
@@ -61,6 +64,7 @@ async function createSubWindow (arg) {
           x: externalDisplay.bounds.x,
           y: externalDisplay.bounds.y,
           maximizable: true,
+          title: APPTITLE,
           resizable: true,
           frame: false,
           webPreferences: {
@@ -91,6 +95,7 @@ async function createWindow () {
     height: 960,
     maxHeight: display.size.height,
     maxWidth: display.size.width,
+    title: APPTITLE,
     // maximizable: false,
     // backgroundColor: '#3882ad',
     // frame: false,

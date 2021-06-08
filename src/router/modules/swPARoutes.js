@@ -8,12 +8,12 @@
  */
 const swPARoutes = [
   /** SW4xx PA **/
-  { // 广播系统 station
+  { // 广播系统(车站) station
     path: '/home/PA_STATION',
     name: 'PA_STATION',
     component: () => import('@/components/PaStation/PaStation.vue')
   },
-  { // 广播系统 center
+  { // 广播系统(中心) center
     path: '/home/PA_CENTER',
     name: 'PA_CENTER',
     component: () => import('@/components/PaCenter/PaCenter.vue')

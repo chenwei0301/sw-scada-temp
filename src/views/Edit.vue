@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-05-19 17:52:36
- * @LastEditTime: 2021-06-03 11:00:21
+ * @LastEditTime: 2021-06-07 17:46:50
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\views\Edit.vue
@@ -11,6 +11,7 @@
     <!-- <h4>{{msg | uppercase  }}</h4> -->
     <h4>{{msg | uppercaseFirst  }}</h4>
 
+    <staticRouter></staticRouter>
     <sArea></sArea>
 
     <sRouter></sRouter>
@@ -30,6 +31,7 @@ import sArea from '@/components/FunctionTest/s_area.vue'
 import sRouter from '@/components/FunctionTest/s_router.vue'
 import Axios from '@/components/FunctionTest/axios.vue'
 import Toast from '@/components/FunctionTest/toast.vue'
+import staticRouter from '@/../public/WebConfigure/components/static_router.vue'
 
 import Vue2Filters from 'vue2-filters'
 export default {
@@ -43,7 +45,8 @@ export default {
     sArea,
     sRouter,
     Axios,
-    Toast
+    Toast,
+    staticRouter
   },
   mixins: [Vue2Filters.mixin],
   methods: {

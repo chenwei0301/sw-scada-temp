@@ -3,7 +3,7 @@
 /*
  * @Author: your name
  * @Date: 2021-05-21 09:34:07
- * @LastEditTime: 2021-06-04 17:34:00
+ * @LastEditTime: 2021-06-08 13:56:22
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\api\db\s_area.js
@@ -13,47 +13,38 @@ import { querySync, queryAsync } from '@/plugins/modules/mysql'
 
 /**
  * @description: 查询 区域表 数据
- * @param {*}
+ * @param {*} para
  * @return {*}
  */
-export async function sql_getAreas (obj, para) {
+async function getAreasAsync (para) {
   const sql = 'select ' +
               para.filter +
               ' from ' + tableName.area +
               ' order by area_id ASC'
-  console.log('sql:', sql)
   return await queryAsync(sql)
 }
 
 /**
  * @description: 条件过滤查询
- * @param {*} obj
  * @param {*} para
  * @return {*}
  */
-export async function sql_whereAreas (obj, para) {
-  console.log(typeof (para.fieldVal))
-  const singleQuotes = (typeof (para.fieldVal) !== "number" ? "'" : "")
+async function whereAreasAsync (para) {
   const sql = "select " +
-              para.filter +
+              para.selectFilter +
               " from " + tableName.area +
-              " where " + para.field + "=" +
-              singleQuotes +
-              para.fieldVal +
-              singleQuotes +
+              " where " + para.whereFilter +
               " order by area_id ASC"
-  console.log('sql:', sql)
   return await queryAsync(sql)
 }
 
 /**
- * @description: 插入
+ * @description: 新增areas Sync
  * @param {*} obj
- * @param {*} areaId
- * @param {*} areaName
+ * @param {*} para
  * @return {*}
  */
-export function sql_insertAreas (obj, para) {
+function insertAreasSync (obj, para) {
   const sql = "INSERT INTO " +
               tableName.area +
               " VALUES(" +
@@ -63,7 +54,6 @@ export function sql_insertAreas (obj, para) {
               para.updateTime + "'," +
               para.updateTimeMs +
               ")"
-  console.log('sql:', sql)
   querySync(sql, function (err, vals, fields) {
     if (err) {
       // console.log(err.message)
@@ -88,12 +78,29 @@ export function sql_insertAreas (obj, para) {
 }
 
 /**
- * @description: 更新数据
- * @param {*} obj
+ * @description: 新增areas Async
  * @param {*} para
  * @return {*}
  */
-export async function sql_updateAreasAsync (obj, para) {
+async function insertAreasAsync (para) {
+  const sql = "INSERT INTO " +
+              tableName.area +
+              " VALUES(" +
+              "null" + ",'" +
+              para.areaId + "','" +
+              para.areaName + "','" +
+              para.updateTime + "'," +
+              para.updateTimeMs +
+              ")"
+  return await queryAsync(sql)
+}
+
+/**
+ * @description: 更新数据 Async
+ * @param {*} para
+ * @return {*}
+ */
+async function updateAreasAsync (para) {
   const sql = "update " + tableName.area +
               " set " +
               "area_id='" + para.area_id + "', " +
@@ -103,17 +110,16 @@ export async function sql_updateAreasAsync (obj, para) {
               "update_timeMS=" + para.updateTimeMs +
               " where " +
               "id=" + para.id
-  console.log('sql:', sql)
   return await queryAsync(sql)
 }
 
 /**
- * @description:
+ * @description: 更新数据 Sync
  * @param {*} obj
  * @param {*} para
  * @return {*}
  */
-export function sql_updateAreasSync (obj, para) {
+function updateAreasSync (obj, para) {
   const sql = "update " +
               tableName.area +
               " set " +
@@ -124,7 +130,6 @@ export function sql_updateAreasSync (obj, para) {
               "update_timeMS=" + para.updateTimeMs +
               " where " +
               "id=" + para.id
-  console.log('sql:', sql)
   querySync(sql, function (err, vals, fields) {
     if (err) {
       // console.log(err.message)
@@ -159,16 +164,24 @@ export function sql_updateAreasSync (obj, para) {
 }
 
 /**
- * @description: 删除数据
- * @param {*} obj
+ * @description: 删除数据 Async
  * @param {*} para
  * @return {*}
  */
-export async function sql_deleteAreasAsync (obj, para) {
+async function deleteAreasAsync (para) {
   const singleQuotes = (typeof (para.fieldVal) !== "number" ? "'" : "")
   const sql = "delete from " + tableName.area +
               " where " +
               para.field + "=" + singleQuotes + para.fieldVal + singleQuotes
-  console.log('sql:', sql)
   return await queryAsync(sql)
+}
+
+export default {
+  getAreasAsync,
+  whereAreasAsync,
+  insertAreasAsync,
+  insertAreasSync,
+  updateAreasAsync,
+  updateAreasSync,
+  deleteAreasAsync
 }

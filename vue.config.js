@@ -2,7 +2,7 @@
 /*
  * @Author: sw0447
  * @Date: 2021-01-29 10:22:58
- * @LastEditTime: 2021-05-26 17:10:41
+ * @LastEditTime: 2021-06-07 17:51:47
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \swiscs_3d\vue.config.js
@@ -45,5 +45,19 @@ module.exports = {
       },
       nodeIntegration: true
     }
-  }
+  },
+  /* 放置生成的静态资源 (json、css、img、fonts) 的 (相对于 outputDir 的) 目录 */
+  // assetsDir: 'static',
+  // 修改或新增html-webpack-plugin的值，在index.html里面能读取htmlWebpackPlugin.options.title
+  chainWebpack: config => {
+    config.plugin('html')
+      .tap(args => {
+        args[0].title = '';
+        // args[0].title = 'SunWin SCADA OA';
+        return args;
+      })
+  },
+  /* 是否在构建生产包时生成 sourceMap 文件，false将提高构建速度 */
+  productionSourceMap: false,
+  lintOnSave: false
 }

@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-01-28 16:29:41
- * @LastEditTime: 2021-03-08 10:08:21
+ * @LastEditTime: 2021-06-08 09:06:16
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \swiscs_3d\src\views\login.vue
@@ -35,9 +35,8 @@ export default {
   deactivated () {},
   beforeDestroy () {},
   destroyed () {},
-  errorCaptured: (err, vm, info) => {
-    console.log(err, vm, info)
-  }
+  // eslint-disable-next-line handle-callback-err
+  errorCaptured: (err, vm, info) => {}
 }
 </script>
 

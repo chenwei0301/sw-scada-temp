@@ -1,8 +1,9 @@
+/* eslint-disable import/no-duplicates */
 /* eslint-disable quotes */
 <!--
  * @Author: your name
  * @Date: 2021-06-03 10:14:51
- * @LastEditTime: 2021-06-03 17:51:39
+ * @LastEditTime: 2021-06-08 11:09:23
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\FunctionTest\s_area.vue
@@ -22,13 +23,15 @@
     <el-button @click.prevent="updateAreasSync" type="primary">updateAreasSync</el-button>
 
     <el-button @click.prevent="deleteAreas" type="primary">deleteAreas</el-button>
+
   </div>
 </template>
 
 <script>
 // eslint-disable-next-line camelcase
-import { sql_insertAreas, sql_getAreas, sql_whereAreas, sql_updateAreasSync, sql_updateAreasAsync, sql_deleteAreasAsync } from '@/api/db/s_area'
+import sArea from '@/api/db/s_area'
 import Vue2Filters from 'vue2-filters'
+
 export default {
   data () {
     return {
@@ -41,41 +44,46 @@ export default {
   mixins: [Vue2Filters.mixin],
   methods: {
     async getAreas () {
-      var para = {
+      const para = {
         filter: '*'
       }
-      var ret = await sql_getAreas(this, para)
+      // var ret = await sql_getAreas(this, para)
+      var ret = await sArea.getAreasAsync(para)
       console.table(ret)
+      // this.$message({
+      //   showClose: true,
+      //   message: this.$Qs.stringify(ret),
+      //   type: 'success'
+      // })
       ret.forEach(element => {
         // console.log(this.$moment(element.update_time).format('yyyy-MM-DD HH:mm:ss') + '.' + element.update_timeMS.toString())
-      });
+      })
     },
 
     async whereAreas () {
       console.log('whereAreas')
-      var para = {
-        filter: '*',
-        field: 'id',
-        fieldVal: 1
+      const para = {
+        selectFilter: '*',
+        whereFilter: "area_id='410' or area_name='测试车站'"
       }
-      var ret = await sql_whereAreas(this, para)
+      var ret = await sArea.whereAreasAsync(para)
       console.info(ret, ret.length)
     },
 
     async insertAreas () {
       var areaId = '431'
       var areaName = '测试车站431'
-      var para = {
-        filter: '*',
-        field: 'area_id',
-        fieldVal: areaId
+
+      const para = {
+        selectFilter: '*',
+        whereFilter: "area_id='" + areaId + "'"
       }
-      var ret = await sql_whereAreas(this, para)
+      var ret = await sArea.whereAreasAsync(para)
       var t = new Date()
       if (ret.length > 0) { // update
         this.$message.error('重复添加，失败！')
       } else { // insert
-        sql_insertAreas(this, {
+        sArea.insertAreasSync(this, {
           areaId: areaId,
           areaName: areaName,
           // updateTime: this.$moment(t).format('yyyy-MM-DDTHH:mm:ss'),
@@ -87,14 +95,14 @@ export default {
     async updateAreasAsync () {
       console.info('updateAreasAsync')
       var t = new Date()
-      var para = {
+      const para = {
         id: 17,
         area_id: '431',
         area_name: '测试车站431',
         // updateTime: this.$moment(t).format('yyyy-MM-DDTHH:mm:ss'),
         updateTimeMs: this.$moment(t).format('SSS')
       }
-      var ret = await sql_updateAreasAsync(this, para)
+      var ret = await sArea.updateAreasAsync(para)
       console.log(ret)
       if (ret.affectedRows > 0) {
         console.log('update success')
@@ -109,26 +117,28 @@ export default {
     updateAreasSync () {
       console.info('updateAreasSync')
       var t = new Date()
-      var para = {
+      const para = {
         id: 170,
         area_id: '431',
         area_name: '测试车站431',
         updateTime: this.$moment(t).format('yyyy-MM-DDTHH:mm:ss'),
         updateTimeMs: this.$moment(t).format('SSS')
       }
-      sql_updateAreasSync(this, para)
+      sArea.updateAreasSync(this, para)
     },
 
     async deleteAreas () {
       console.info('deleteAreas')
-      var para = {
+      const para = {
         field: 'id',
-        fieldVal: 13
+        fieldVal: 8
       }
-      var ret = await sql_deleteAreasAsync(this, para)
+      var ret = await sArea.deleteAreasAsync(para)
       console.log(ret)
       if (ret.affectedRows > 0) {
         console.log('delete success')
+      } else if (ret.affectedRows === 0) {
+        console.log('not exist')
       }
       if (ret.warningCount > 0) {
         console.log('delete warning')

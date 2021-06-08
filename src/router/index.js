@@ -1,20 +1,19 @@
 /*
  * @Author: your name
  * @Date: 2021-01-28 15:50:04
- * @LastEditTime: 2021-05-28 17:48:34
+ * @LastEditTime: 2021-06-08 16:12:26
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \swiscs_3d\src\router\index.js
  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import { APPTITLE } from '@/api/appConfig.js'
-// import Home from '@/views/Home.vue'
 
 import { swBaseRoutes } from '@/router/modules/swBaseRoutes'
 import { swTabBarRoutes } from '@/router/modules/swTabBarRoutes'
 import { swPSCADARoutes } from '@/router/modules/swPSCADARoutes'
 import { swBASRoutes } from '@/router/modules/swBASRoutes'
+import { swFASRoutes } from '@/router/modules/swFASRoutes'
 import { swPARoutes } from '@/router/modules/swPARoutes'
 import { swAFCRoutes } from '@/router/modules/swAFCRoutes'
 import { swCCTVRoutes } from '@/router/modules/swCCTVRoutes'
@@ -53,7 +52,7 @@ const routes = [
   {
     path: '/',
     name: 'gedi',
-    meta: { title: APPTITLE, icon: '' },
+    meta: { title: 'gedi', icon: '' },
     alwaysShow: true,
     component: () => import('@/views/Edit.vue'),
     // component: () => import('@/views/VDR.vue'),
@@ -73,6 +72,7 @@ const routes = [
       ...swTabBarRoutes,
       ...swPSCADARoutes,
       ...swBASRoutes,
+      ...swFASRoutes,
       ...swPARoutes,
       ...swAFCRoutes,
       ...swCCTVRoutes,
