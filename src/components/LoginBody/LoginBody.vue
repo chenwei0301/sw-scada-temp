@@ -49,7 +49,7 @@
 <script>
 import FooterCopyright from '@/components/FooterCopyright/FooterCopyright.vue'
 import { ipcRenderer } from 'electron'
-import { ERR_OK } from '@/api/baseConst.js'
+import { ERR_OK } from '@/api/constMsg/baseConst.js'
 import { swHttpLogin } from '@/api/api.js'
 import { encodeBase64, decodeBase64 } from '@/api/common.js'
 const remote = require('electron').remote;

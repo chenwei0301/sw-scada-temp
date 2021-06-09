@@ -6,7 +6,7 @@
  * @Description: In User Settings Edit
  * @FilePath: \swiscs_3d\src\api\vAjax.js
  */
-import { ERR_NET_DES, ERR_API_DES } from '@/api/baseConst.js'
+import { ERR_NET_DES, ERR_API_DES } from '@/api/constMsg/baseConst.js'
 import { HTTP_IP } from '@/api/ip.js'
 export default function VueAjax (obj, api, param, timeout = 5000) {
   if (api !== '/login') {

@@ -6,7 +6,7 @@
  * @Description: In User Settings Edit
  * @FilePath: \swiscs_3d\src\api\webSocket_Test.js
  */
-import { isDevelopment } from '@/api/baseConst'
+import { isDevelopment } from '@/api/constMsg/baseConst'
 import { getWebSocketUrl, setWebSocketPara } from '@/api/common.js'
 const TIME_OUT = 120 * 1000
 const RECONNECT_INTERVAL = 5000
