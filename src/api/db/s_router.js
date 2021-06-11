@@ -3,7 +3,7 @@
 /*
  * @Author: your name
  * @Date: 2021-06-03 09:53:24
- * @LastEditTime: 2021-06-09 16:25:30
+ * @LastEditTime: 2021-06-11 14:55:36
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\api\db\s_router.js
@@ -154,18 +154,21 @@ async function getRouterMenuAsync () {
 const isNull = function (str) {
   return str === null || str === "";
 }
+
 const UnRegisteredRouter = async function () {
   var ret = await getUnregisteredRouterAsync()
   const tempRouter = []
   for (var i = 0; i < ret.length; i++) {
     if (!(ret[i].path === null || ret[i].path === '')) {
-      const temp = {
+      const component = ret[i].component
+      var temp = {
         path: ret[i].path,
         name: ret[i].name,
         meta: { title: ret[i].title },
-        // redirect: ret[i].redirect,
-        component: () => import(ret[i].component)
-        // component: (resolve) => require([`${ret[i].component}`], resolve)
+        component: () => import('@/' + component)
+      }
+      if (ret[i].redirect) {
+        temp.redirect = ret[i].redirect
       }
       tempRouter.push(temp)
     }
@@ -179,20 +182,23 @@ const _UnRegisteredRouter = async function () {
   const tempRouter = []
   for (var i = 0; i < ret.length; i++) {
     if (!(ret[i].path === null || ret[i].path === '')) {
-      const temp = {
+      var component = ret[i].component
+      var temp = {
         path: ret[i].path,
         name: ret[i].name,
         meta: { title: ret[i].title },
         // redirect: ret[i].redirect,
-        // component: () => import(ret[i].component)
-        component: (resolve) => require([`${ret[i].component}`], resolve)
+        component: () => import('@/' + component)
+        // component: (resolve) => require([`@/${component}`], resolve)
+      }
+      if (ret[i].redirect) {
+        temp.redirect = ret[i].redirect
       }
       tempRouter.push(temp)
     }
   }
+  console.log('_UnRegisteredRouter', tempRouter)
   return tempRouter
-  // routes[routes.length - 1].children = tempRouter
-  // return routes
 }
 
 export default {

@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-05-27 17:46:13
- * @LastEditTime: 2021-06-09 17:28:42
+ * @LastEditTime: 2021-06-11 11:23:52
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\views\VDR.vue
@@ -33,7 +33,7 @@ export default {
   methods: {
     routertest () {
       // console.log(this.$router.options.routes[1])
-      this.$router.push({ path: '/' })
+      this.$router.push({ name: 'gedi' })
     },
     routerLogin () {
       // console.log(this.$router.options.routes[1])

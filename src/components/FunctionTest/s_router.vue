@@ -2,7 +2,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-03 10:27:55
- * @LastEditTime: 2021-06-09 16:42:05
+ * @LastEditTime: 2021-06-11 11:21:05
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\FunctionTest\s_router.vue
@@ -177,11 +177,14 @@ export default {
     }
   },
   beforeCreate () {},
-  created () {},
-  beforeMount () {},
-  mounted () {
+  created () {
     // 动态添加路由
     // this.addUnRegisteredRouter()
+  },
+  beforeMount () {
+
+  },
+  mounted () {
   },
   beforeUpdate () {},
   updated () {},

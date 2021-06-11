@@ -1,14 +1,15 @@
 /*
  * @Author: your name
  * @Date: 2021-01-28 15:50:04
- * @LastEditTime: 2021-06-09 17:25:33
+ * @LastEditTime: 2021-06-11 15:34:13
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \swiscs_3d\src\router\index.js
  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import sRouter from '@/api/db/s_router'
+import { LoadingBar } from 'view-design'
+// import sRouter from '@/api/db/s_router'
 
 // import { swBaseRoutes } from '@/router/modules/swBaseRoutes'
 // import { swTabBarRoutes } from '@/router/modules/swTabBarRoutes'
@@ -36,43 +37,16 @@ const originalPush = VueRouter.prototype.push
 VueRouter.prototype.push = function push (location) {
   return originalPush.call(this, location).catch(err => err)
 }
-
-const items = [{
-  // 冷水系统
-  path: '/home/SW404_BAS_Coldwater',
-  name: 'SW404_BAS_Coldwater',
-  component: () => import('@/views/sw404/SW404_BAS_Coldwater.vue')
-},
-{ // 角色管理
-  path: '/home/UserManager',
-  name: 'UserManager',
-  meta: { title: '角色管理', icon: '' },
-  component: () => import('@/components/UserManager/UserManager.vue')
-}]
-// const UnRegisteredRouterList = async function () {
-//   var ret = await sRouter.UnRegisteredRouter()
-//   // for (let index = 0; index < ret.length; index++) {
-//   //   const element = ret[index];
-//   //   items.push(element)
-//   // }
-//   // return items
-//   console.log(ret)
-//   return ret
+// var items = []
+// async function UnRegisteredRouterList () {
+//   var ret = await sRouter._UnRegisteredRouter()
+//   for (let index = 0; index < ret.length; index++) {
+//     items.push(ret[index])
+//   }
 // }
+// UnRegisteredRouterList()
 
-async function UnRegisteredRouterList () {
-  var ret = await sRouter.UnRegisteredRouter()
-  for (let index = 0; index < ret.length; index++) {
-    const element = ret[index];
-    items.push(element)
-  }
-  // return items
-  console.log('test', ret)
-  return items
-}
-UnRegisteredRouterList()
-
-export const routes = [
+export const constantRoutes = [
   {
     path: '/login',
     name: 'Login',
@@ -93,7 +67,7 @@ export const routes = [
     component: () => import('@/views/Edit.vue'),
     // component: (resolve) => require(['@/views/Edit.vue'], resolve),
     // component: () => import('@/views/gedi.vue'),
-    redirect: '',
+    // redirect: '/gedi',
     children: []
   },
   {
@@ -104,7 +78,20 @@ export const routes = [
     component: () => import('@/views/VDR.vue'),
     redirect: '',
     children: []
-  },
+  }
+  // ,
+  // {
+  //   path: '/home',
+  //   name: 'Home',
+  //   meta: { title: '主页', icon: '' },
+  //   alwaysShow: true,
+  //   component: () => import('@/views/Home.vue'),
+  //   // redirect: '/home/main',
+  //   children: []
+  // }
+]
+
+export const asyncRoutes = [
   {
     path: '/home',
     name: 'Home',
@@ -112,50 +99,43 @@ export const routes = [
     alwaysShow: true,
     component: () => import('@/views/Home.vue'),
     // redirect: '/home/main',
-    children: [
-      ...items
-    ]
-    // children: []
-    // children: UnRegisteredRouterList
-    // children: [
-    //   ...swBaseRoutes,
-    //   ...swTabBarRoutes,
-    //   ...swPSCADARoutes,
-    //   ...swBASRoutes,
-    //   ...swFASRoutes,
-    //   ...swPARoutes,
-    //   ...swAFCRoutes,
-    //   ...swCCTVRoutes,
-    //   ...swPISRoutes,
-    //   ...swPSDRoutes,
-    //   ...swATSRoutes,
-    //   ...swUPSRoutes,
-    //   ...swALMRoutes,
-    //   ...swZHJKRoutes,
-    //   ...swKLTJRoutes,
-    //   ...swZHCZRoutes
-    // ]
+    children: []
   }
 ]
 
 const router = new VueRouter({
-  routes
+  routes: constantRoutes,
+  mode: 'hash'
 })
 
-router.beforeEach((to, from, next) => { // beforeEach是router的钩子函数，在进入路由前执行
+router.beforeEach(async (to, from, next) => { // beforeEach是router的钩子函数，在进入路由前执行
+  LoadingBar.start()
+  console.log('from:', from)
+  console.log('to:', to)
+  // if (from.path === '/') {
+  //   var ret = await sRouter._UnRegisteredRouter()
+  //   console.log('ret:', ret)
+  //   constantRoutes[constantRoutes.length - 1].children = ret
+  //   console.log('constantRoutes:', constantRoutes)
+  //   // 动态添加路由
+  //   // router.addRoutes(constantRoutes)
+  //   router.selfaddRoutes(constantRoutes)
+  // }
   next() // 执行进入路由，如果不写就不会进入目标页
 })
 
 router.afterEach((to, from) => {
-  if (to.meta.title) { // 判断是否有标题
-    document.title = to.meta.title
-  }
+  LoadingBar.finish()
+  // if (to.meta.title) { // 判断是否有标题
+  //   document.title = to.meta.title
+  // }
 })
 
 router.selfaddRoutes = function (params) {
-  router.matcher = new VueRouter().matcher;
+  router.matcher = new VueRouter({
+    mode: 'hash'
+  }).matcher;
   router.addRoutes(params)
-  // router.addRoute(params)
 }
 
 export default router
