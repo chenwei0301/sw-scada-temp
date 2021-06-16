@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-02-01 13:49:56
- * @LastEditTime: 2021-03-05 09:37:02
+ * @LastEditTime: 2021-06-16 11:11:12
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \swiscs_3d\src\components\HomeMain\HomeMain.vue
@@ -35,8 +35,8 @@ export default {
   },
   watch: {
     $route (to, from) {
-      // console.log(to, from)
-      this.stationSted = this.$route.query.id
+      console.log(to.query)
+      this.stationSted = to.query.id
     }
   },
   methods: {
@@ -48,14 +48,15 @@ export default {
 
     // 获取路由参数并设置属性
     initRouterparams () {
-      // const query = this.$route.query
-      // console.log('query:', query)
+      console.log('homemain:', this.$route)
+      const params = this.$route.params
+      console.log('homemain:', params)
     }
   },
   beforeCreate () {},
   created () {
     this.componentInit()
-    this.initRouterparams()
+    // this.initRouterparams()
   },
   beforeMount () {},
   mounted () {},
@@ -65,9 +66,8 @@ export default {
   deactivated () {},
   beforeDestroy () {},
   destroyed () {},
-  errorCaptured: (err, vm, info) => {
-    console.log(err, vm, info)
-  }
+  // eslint-disable-next-line handle-callback-err
+  errorCaptured: (err, vm, info) => {}
 };
 </script>
 

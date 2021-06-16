@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-05-19 17:52:36
- * @LastEditTime: 2021-06-07 17:46:50
+ * @LastEditTime: 2021-06-16 10:22:38
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\views\Edit.vue
@@ -11,7 +11,10 @@
     <!-- <h4>{{msg | uppercase  }}</h4> -->
     <h4>{{msg | uppercaseFirst  }}</h4>
 
+    <sSysInfo></sSysInfo>
+
     <staticRouter></staticRouter>
+
     <sArea></sArea>
 
     <sRouter></sRouter>
@@ -29,6 +32,7 @@
 <script>
 import sArea from '@/components/FunctionTest/s_area.vue'
 import sRouter from '@/components/FunctionTest/s_router.vue'
+import sSysInfo from '@/components/FunctionTest/s_sysinfo.vue'
 import Axios from '@/components/FunctionTest/axios.vue'
 import Toast from '@/components/FunctionTest/toast.vue'
 import staticRouter from '@/../public/WebConfigure/components/static_router.vue'
@@ -46,7 +50,8 @@ export default {
     sRouter,
     Axios,
     Toast,
-    staticRouter
+    staticRouter,
+    sSysInfo
   },
   mixins: [Vue2Filters.mixin],
   methods: {
@@ -54,7 +59,9 @@ export default {
   beforeCreate () {},
   created () {},
   beforeMount () {},
-  mounted () {},
+  mounted () {
+    console.log('route:', this.$route.params)
+  },
   beforeUpdate () {},
   updated () {},
   activated () {},
@@ -62,9 +69,7 @@ export default {
   beforeDestroy () {},
   destroyed () {},
   // eslint-disable-next-line handle-callback-err
-  errorCaptured: (err, vm, info) => {
-    // console.log(err, vm, info)
-  }
+  errorCaptured: (err, vm, info) => {}
 }
 </script>
 

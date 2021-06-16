@@ -2,7 +2,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-03 10:27:55
- * @LastEditTime: 2021-06-11 11:21:05
+ * @LastEditTime: 2021-06-15 09:47:52
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\FunctionTest\s_router.vue
@@ -160,32 +160,16 @@ export default {
       console.table(ret)
     },
     async addUnRegisteredRouter () {
-      // var ret = await sRouter.UnRegisteredRouter()
-      // console.info(ret)
-      // this.$router.selfaddRoutes(ret)
-
       var ret = await sRouter._UnRegisteredRouter()
-      // console.info(ret)
       for (var i = 0; i < ret.length; i++) {
-        console.info(ret[i])
         this.$router.addRoute('Home', ret[i])
       }
-
-      // this.$router.addRoutes(ret)
-      // this.$router.options.routes[1].children = tempRouter;
-      // console.log(this.$router.options.routes[1])
     }
   },
   beforeCreate () {},
-  created () {
-    // 动态添加路由
-    // this.addUnRegisteredRouter()
-  },
-  beforeMount () {
-
-  },
-  mounted () {
-  },
+  created () {},
+  beforeMount () {},
+  mounted () {},
   beforeUpdate () {},
   updated () {},
   activated () {},

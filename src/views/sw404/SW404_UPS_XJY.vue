@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-02-24 14:27:29
- * @LastEditTime: 2021-02-24 14:27:37
+ * @LastEditTime: 2021-06-15 16:34:12
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \swiscs_3d\src\views\sw404\SW404_UPS_XJY.vue
@@ -17,7 +17,7 @@
 
 <script>
 export default {
-  vueName: 'SW404_UPS_XJY',
+  name: 'SW404_UPS_XJY',
   data () {
     return {
       staName: '',

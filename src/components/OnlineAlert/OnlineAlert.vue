@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { decodeBase64 } from '@/api/common.js'
+import { decodeBase64 } from '@/api/base/common.js'
 import SwWebSocket from '@/plugins/modules/webSocket.js'
 
 export default {

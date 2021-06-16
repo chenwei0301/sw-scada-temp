@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-01-29 08:46:21
- * @LastEditTime: 2021-06-04 17:35:10
+ * @LastEditTime: 2021-06-16 13:50:26
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \swiscs_3d\src\views\Home.vue
@@ -24,8 +24,8 @@ import HomeTitleBar from '@/components/HomeTitleBar/HomeTitleBar.vue'
 import HomeHeader from '@/components/HomeHeader/HomeHeader.vue'
 import HomeFooter from '@/components/HomeFooter/HomeFooter.vue'
 import SwWebSocket from '@/plugins/modules/webSocket.js'
-import { decodeBase64 } from '@/api/common.js'
-
+import { decodeBase64 } from '@/api/base/common.js'
+import sSysInfo from '@/api/db/s_sysinfo'
 export default {
   data () {
     return {
@@ -46,10 +46,16 @@ export default {
   methods: {
     // 获取路由参数并设置属性
     initRouterparams () {
-      const query = this.$route.query
-      if (query.display !== undefined) {
-        this.display = parseInt(query.display)
+      console.log('home:', this.$route)
+      const params = this.$route.params
+      if (params.display !== undefined) {
+        this.display = parseInt(params.display)
       }
+    },
+
+    initSWWebSocket () {
+      const arr = ['index', decodeBase64(sessionStorage.getItem('ISCS_username'))];
+      this.ws = new SwWebSocket('/index', arr, this.getSocketdata)
     },
 
     getSocketdata (obj) {
@@ -58,12 +64,12 @@ export default {
   },
   beforeCreate () {},
   created () {
-    this.initRouterparams()
+    console.log('session:', sSysInfo.getSysInfoFromSession())
+    // this.initRouterparams()
   },
   beforeMount () {},
   mounted () {
-    var arr = ['index', decodeBase64(sessionStorage.getItem('ISCS_username'))];
-    this.ws = new SwWebSocket('/index', arr, this.getSocketdata)
+
   },
   beforeUpdate () {},
   updated () {},
@@ -71,11 +77,10 @@ export default {
   deactivated () {},
   beforeDestroy () {},
   destroyed () {
-    this.ws.close()
+    // this.ws.close()
   },
-  errorCaptured: (err, vm, info) => {
-    console.log(err, vm, info)
-  }
+  // eslint-disable-next-line handle-callback-err
+  errorCaptured: (err, vm, info) => {}
 }
 </script>
 

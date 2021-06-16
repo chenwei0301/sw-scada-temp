@@ -4,7 +4,7 @@
  * @LastEditTime: 2021-03-08 13:50:19
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
- * @FilePath: \swiscs_3d\src\api\common.js
+ * @FilePath: \swiscs_3d\src\api\base\common.js
  */
 import { WSHOST } from '@/api/ip.js'
 

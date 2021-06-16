@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-02-01 13:42:36
- * @LastEditTime: 2021-03-05 14:55:23
+ * @LastEditTime: 2021-06-16 11:25:48
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \swiscs_3d\src\components\HomeHeader\HomeHeader.vue
@@ -56,7 +56,7 @@ import { ipcRenderer } from 'electron'
 import swStationList from '@/api/stationInfo.js'
 import swSubSysList from '@/api/subSysInfo.js'
 import { swHttpGetUserRole } from '@/api/api.js'
-import { decodeBase64 } from '@/api/common.js'
+import { decodeBase64 } from '@/api/base/common.js'
 
 export default {
   data () {
@@ -81,14 +81,16 @@ export default {
     initStationList () {
       this.stationList = swStationList.station
       this.otherList = swStationList.other
+      this.subSysList = swSubSysList.subSys
+      const sysInfo = this.$store.state.sysInfo
+      console.info('sysInfo:', sysInfo)
       this.stedStationId = swStationList.localInfo.stationId
       this.stedStationName = swStationList.localInfo.stationName
       this.isOcc = swStationList.localInfo.isOcc
-      this.subSysList = swSubSysList.subSys
     },
 
     setVueStore () {
-      this.$store.commit('setLocalInfo', swStationList.localInfo)
+      // this.$store.commit('setLocalInfo', swStationList.localInfo)
     },
 
     // 车站列表点击事件
@@ -161,6 +163,7 @@ export default {
 
     // 二级导航点击事件
     menuClickToRouter (item) {
+      // this.$router.push({ path: '/home/PA_STATION', query: { id: this.stedStationId, staName: this.stedStationName, title: item.text } })
       this.$router.push({ path: item.path, query: { id: this.stedStationId, staName: this.stedStationName, title: item.text } })
     },
 
@@ -168,7 +171,7 @@ export default {
     async getUserRoleFromServe () {
       try {
         var param = {
-          username: decodeBase64(localStorage.getItem('ISCS_username'))
+          username: decodeBase64(localStorage.getItem('SCADA_username'))
         }
         const {
           data, meta:
@@ -178,7 +181,7 @@ export default {
           this.$store.commit('setUserRole', data)
           this.setSubSysRole(data);
         } else {
-          this.msg(msg)
+          this.$layer.msg(msg)
         }
       } catch (error) {
         console.log(error)

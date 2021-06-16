@@ -3,15 +3,16 @@
 /*
  * @Author: your name
  * @Date: 2021-06-03 09:53:24
- * @LastEditTime: 2021-06-11 14:55:36
+ * @LastEditTime: 2021-06-16 10:52:45
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\api\db\s_router.js
  */
+
 import tableName from '@/api/db/tableName'
 import { queryAsync } from '@/plugins/modules/mysql'
-// import { querySync, queryAsync } from '@/plugins/mysql'
-import { routes } from '@/router'
+
+// const
 const MENU_TYPE_HOME = 0
 const MENU_TYPE_TOOLBAR = 1
 const MENU_TYPE_TOOLBAR_VUE = 2
@@ -115,8 +116,7 @@ async function deleteRouterAsync (para) {
 async function getUnregisteredRouterAsync () {
   const para = {
     selectFilter: '*',
-    // eslint-disable-next-line quotes
-    whereFilter: "menu_type>" + MENUTYPE.home + " order by module_id ASC"
+    whereFilter: 'menu_type>' + MENUTYPE.home + ' order by module_id ASC'
   }
   var ret = await whereRouterAsync(para)
   return ret
@@ -131,20 +131,17 @@ async function getRouterMenuAsync () {
   const para = {
     selectFilter: '*',
     // eslint-disable-next-line quotes
-    whereFilter: "menu_type=" + MENUTYPE.menuBAR + " order by display_order ASC"
+    whereFilter: 'menu_type=' + MENUTYPE.menuBAR + ' order by display_order ASC'
   }
   var ret = await whereRouterAsync(para)
   // console.table(ret)
   for (var i = 0; i < ret.length; i++) {
     ret[i].children = []
-    if (isNull(ret[i].path)) { // 下拉菜单
+    if (isNull(ret[i].path)) { // 子组件
       const subPara = {
         selectFilter: '*',
-        // eslint-disable-next-line quotes
-        whereFilter: "parent_id=" + ret[i].menu_id + " order by display_order ASC"
+        whereFilter: 'parent_id=' + ret[i].menu_id + ' order by display_order ASC'
       }
-      // var subRet = await whereRouterAsync(subPara)
-      // ret[i].children = subRet
       ret[i].children = await whereRouterAsync(subPara)
     }
   }
@@ -159,13 +156,12 @@ const UnRegisteredRouter = async function () {
   var ret = await getUnregisteredRouterAsync()
   const tempRouter = []
   for (var i = 0; i < ret.length; i++) {
-    if (!(ret[i].path === null || ret[i].path === '')) {
-      const component = ret[i].component
+    if (!isNull(ret[i].path)) {
       var temp = {
         path: ret[i].path,
         name: ret[i].name,
         meta: { title: ret[i].title },
-        component: () => import('@/' + component)
+        component: routerCom(ret[i].component)
       }
       if (ret[i].redirect) {
         temp.redirect = ret[i].redirect
@@ -173,32 +169,18 @@ const UnRegisteredRouter = async function () {
       tempRouter.push(temp)
     }
   }
-  routes[routes.length - 1].children = tempRouter
-  return routes
+  return tempRouter
 }
 
-const _UnRegisteredRouter = async function () {
-  var ret = await getUnregisteredRouterAsync()
-  const tempRouter = []
+function routerCom (path) {
+  return (resolve) => require([`@/${path}`], resolve)
+}
+
+const addAsyncRoutes = async function (obj) {
+  var ret = await UnRegisteredRouter()
   for (var i = 0; i < ret.length; i++) {
-    if (!(ret[i].path === null || ret[i].path === '')) {
-      var component = ret[i].component
-      var temp = {
-        path: ret[i].path,
-        name: ret[i].name,
-        meta: { title: ret[i].title },
-        // redirect: ret[i].redirect,
-        component: () => import('@/' + component)
-        // component: (resolve) => require([`@/${component}`], resolve)
-      }
-      if (ret[i].redirect) {
-        temp.redirect = ret[i].redirect
-      }
-      tempRouter.push(temp)
-    }
+    obj.$router.addRoute('Home', ret[i])
   }
-  console.log('_UnRegisteredRouter', tempRouter)
-  return tempRouter
 }
 
 export default {
@@ -210,5 +192,5 @@ export default {
   getUnregisteredRouterAsync,
   UnRegisteredRouter,
   getRouterMenuAsync,
-  _UnRegisteredRouter
+  addAsyncRoutes
 }

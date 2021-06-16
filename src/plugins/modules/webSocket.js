@@ -1,13 +1,13 @@
 /*
  * @Author: your name
  * @Date: 2021-04-15 14:03:41
- * @LastEditTime: 2021-04-19 10:13:09
+ * @LastEditTime: 2021-06-15 14:10:22
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \swiscs_3d\src\api\webSocket_Test.js
  */
 import { isDevelopment } from '@/api/constMsg/baseConst'
-import { getWebSocketUrl, setWebSocketPara } from '@/api/common.js'
+import { getWebSocketUrl, setWebSocketPara } from '@/api/base/common.js'
 const TIME_OUT = 120 * 1000
 const RECONNECT_INTERVAL = 5000
 

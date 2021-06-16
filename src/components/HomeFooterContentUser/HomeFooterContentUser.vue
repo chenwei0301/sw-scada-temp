@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { decodeBase64 } from '@/api/common.js'
+import { decodeBase64 } from '@/api/base/common.js'
 export default {
   prop: {
   },

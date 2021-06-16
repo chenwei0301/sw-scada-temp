@@ -28,7 +28,7 @@
 import tabBarList from '@/api/tabBarList.js'
 import { TABBARTYPE_MAINCONTENT, TABBARTYPE_TOOL_PRINT, TABBARTYPE_TOOL_HELP, TABBARTYPE_TOOL_PUSH, TABBARTYPE_TOOL_ACTIVE } from '@/api/tabBarBtnType.js'
 export default {
-  vueName: 'HomeFooterBarList',
+  name: 'HomeFooterBarList',
   data () {
     return {
       imgsrc: require('../../assets/image/setUser.png'),

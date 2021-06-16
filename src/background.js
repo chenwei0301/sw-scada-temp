@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-01-28 15:59:40
- * @LastEditTime: 2021-06-08 14:39:41
+ * @LastEditTime: 2021-06-15 14:28:27
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \swiscs_3d\src\background.js
@@ -86,13 +86,14 @@ async function createSubWindow (arg) {
 }
 
 async function createWindow () {
+  // Menu.setApplicationMenu(null) // 取消菜单栏
   // Create the browser window.
   const display = screen.getAllDisplays()[0]
   mainWindow = new BrowserWindow({
-    // width: 380,
-    // height: 530,
-    width: 1440,
-    height: 960,
+    width: 480,
+    height: 580,
+    // width: 1440,
+    // height: 960,
     maxHeight: display.size.height,
     maxWidth: display.size.width,
     title: APPTITLE,

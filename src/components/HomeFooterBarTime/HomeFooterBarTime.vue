@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-02-24 16:57:59
- * @LastEditTime: 2021-03-04 15:48:58
+ * @LastEditTime: 2021-06-15 16:13:24
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \swiscs_3d\src\components\HomeFooterBarTime\HomeFooterBarTime.vue
@@ -22,7 +22,7 @@ export default {
   },
   methods: {
     setLocalTime () {
-      this.time = this.moment(new Date()).format('YYYY-MM-DD HH:mm:ss dddd')
+      this.time = this.$moment(new Date()).format('YYYY-MM-DD HH:mm:ss dddd')
     },
 
     IntervalLocalTime () {
