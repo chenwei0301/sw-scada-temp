@@ -1,11 +1,15 @@
+/* eslint-disable quotes */
 /*
  * @Author: your name
  * @Date: 2021-06-15 13:47:10
- * @LastEditTime: 2021-06-16 14:10:47
+ * @LastEditTime: 2021-06-17 11:04:55
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\api\base\login.js
  */
+import tableName from '@/api/db/tableName'
+import { queryAsync } from '@/plugins/modules/mysql'
+// import { decodeBase64 } from '@/api/base/common.js'
 import { decodeBase64, encodeBase64 } from '@/api/base/common.js'
 import { ipcRenderer } from 'electron'
 import sSysInfo from '@/api/db/s_sysinfo'
@@ -13,6 +17,82 @@ import sSysInfo from '@/api/db/s_sysinfo'
 // import { asyncRoutes, constantRoutes } from '@/router'
 
 // import sRouter from '@/api/db/s_router'
+/**
+ * @description: 条件过滤查询
+ * @param {*} para
+ * @return {*}
+ */
+const whereUserAsync = async function (para) {
+  const sql = "select " +
+              para.selectFilter +
+              " from " + tableName.user +
+              " where " + para.whereFilter
+  return await queryAsync(sql)
+}
+
+/**
+ * @description: 登录
+ * @param {*}
+ * @return {*}
+ */
+const handleLoginLocal = async function (obj) {
+  if (obj.ruleForm.uiType === '') {
+    const msg = '请先选择UI类型！'
+    obj.$layer.msg('<span style="color:#8a0606">' + msg + '</span>')
+    return false
+  }
+  const param = {
+    username: obj.ruleForm.username,
+    password: obj.ruleForm.password,
+    ui: obj.ruleForm.ui
+  }
+
+  const sqlFilter = {
+    selectFilter: '*',
+    whereFilter: "user_name='" + param.username + "' and user_password='" + param.password + "'"
+  }
+
+  const ret = await whereUserAsync(sqlFilter)
+  if (ret.length === 0) {
+    const msg = '用户名或密码错误！'
+    obj.$layer.msg('<span style="color:#8a0606">' + msg + '</span>')
+    return false
+  }
+
+  const userInfo = ret[0]
+
+  // localStorage
+  localStorage.setItem('SCADA_ui', param.ui)
+  if (obj.ruleForm.remeber) {
+    localStorage.setItem('SCADA_username', encodeBase64(userInfo.user_name))
+    localStorage.setItem('SCADA_password', encodeBase64(userInfo.user_password))
+    localStorage.setItem('SCADA_uiType', obj.ruleForm.uiType)
+    localStorage.setItem('SCADA_rember', obj.ruleForm.remeber)
+    localStorage.setItem('SCADA_fullScreen', obj.ruleForm.fullScreen)
+    localStorage.setItem('SCADA_display', obj.ruleForm.displaySeleted)
+  }
+
+  // sessionStorage
+  sessionStorage.setItem('SCADA_username', encodeBase64(userInfo.user_name))
+  // sessionStorage.setItem('SCADA_token', userInfo.token)
+  sessionStorage.setItem('SCADA_userComment', userInfo.user_des)
+  sessionStorage.setItem('SCADA_ui', param.ui)
+
+  loginEnterPush(obj)
+
+  obj.$layer.msg('登录成功')
+}
+
+// const userPwdIsVerify = function (ret, pwd) {
+//   for (var i = 0; i <= ret.length; i++) {
+//     if (ret[i].user_password === pwd) {
+//       return {
+//         isVerify: true,
+//         user: ret[i]
+//       }
+//     }
+//   }
+// }
 
 const handleLogin = function (obj) {
   if (obj.ruleForm.uiType === '') {
@@ -50,15 +130,7 @@ const handleLogin = function (obj) {
 
     loginEnterPush(obj)
 
-    obj.$message({
-      showClose: true,
-      message: msg,
-      type: 'success',
-      center: true,
-      duration: 2000,
-      offset: 50
-    })
-    // console.log(data, msg)
+    obj.$layer.msg(msg)
   }).catch(_error => {
     obj.$message.error('登录请求失败，请重试！')
   })
@@ -103,6 +175,8 @@ const loginEnterPush = async function (obj) {
 }
 
 export default {
+  whereUserAsync,
+  handleLoginLocal,
   handleLogin,
   initLoginParam,
   loginEnterPush

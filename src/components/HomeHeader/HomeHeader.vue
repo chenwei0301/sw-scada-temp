@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-02-01 13:42:36
- * @LastEditTime: 2021-06-16 11:25:48
+ * @LastEditTime: 2021-06-17 13:45:10
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \swiscs_3d\src\components\HomeHeader\HomeHeader.vue
@@ -144,9 +144,10 @@ export default {
       // 有权限
       if (role.indexOf('M') > -1) {
         return this.stedSubSysId === id ? 'menu-sys-active' : ''
-      } else {
-        return 'menu-sys-disabled'
       }
+      //  else {
+      //   return 'menu-sys-disabled'
+      // }
     },
 
     // 一级子系统导航点击事件

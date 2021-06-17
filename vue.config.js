@@ -2,11 +2,15 @@
 /*
  * @Author: sw0447
  * @Date: 2021-01-29 10:22:58
- * @LastEditTime: 2021-06-07 17:51:47
+ * @LastEditTime: 2021-06-17 16:16:16
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \swiscs_3d\vue.config.js
  */
+// const path = require('path') // 引入path模块 -> 设置绝对路径
+// function resolve (dir) { // 声明一个函数,调用函数的时候传入相对路径
+//   return path.join(__dirname, dir) // return绝对路径
+// }
 
 module.exports = {
   pluginOptions: {
@@ -21,7 +25,7 @@ module.exports = {
         // copyright: 'Copyright © 2021 ${author}',
         // 可用使用${}引用package.json里面配置项，配置yarn项不存在会报错
         directories: {
-          output: 'dist_electron_v1.0.0' // 打包产物的位置
+          output: 'dist_electron_v1.0.1' // 打包产物的位置
         },
         win: {
           target: 'nsis',
@@ -56,6 +60,9 @@ module.exports = {
         // args[0].title = 'SunWin SCADA OA';
         return args;
       })
+    // config.resolve.alias
+    //   .set('api', resolve('./src/api'))
+    //   .set('public', resolve('./public'))
   },
   /* 是否在构建生产包时生成 sourceMap 文件，false将提高构建速度 */
   productionSourceMap: false,

@@ -1,18 +1,21 @@
 /*
  * @Author: your name
  * @Date: 2021-01-28 15:50:04
- * @LastEditTime: 2021-06-16 11:32:09
+ * @LastEditTime: 2021-06-17 16:05:31
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \swiscs_3d\src\router\index.js
  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import { LoadingBar } from 'view-design'
+import NProgress from 'nprogress' // progress bar
+import 'nprogress/nprogress.css' // progress bar style
+// import { LoadingBar } from 'view-design'
 
 import { swBaseRoutes } from '@/router/modules/swBaseRoutes'
+import { swZHCZRoutes } from '@/../public/WebConfigure/router/swZHCZRoutes.js'
 // import { swBASRoutes } from '@/router/modules/swBASRoutes'
-
+NProgress.configure({ ease: 'linear', speed: 500 });
 Vue.use(VueRouter)
 
 // 获取原型对象上的push函数
@@ -68,7 +71,18 @@ export const constantRoutes = [
     component: () => import('@/views/Home.vue'),
     redirect: '/home/main',
     children: [
-      ...swBaseRoutes
+      ...swBaseRoutes,
+      ...swZHCZRoutes
+      // {
+      //   path: '/home/SW404_ZHCZ',
+      //   name: 'SW404_ZHCZ',
+      //   meta: { title: 'ZHCZ', icon: '' },
+      //   alwaysShow: true,
+      //   // component: () => import('@/views/../../public/WebConfigure/view/SW404_ZHCZ.vue')
+      //   component: (resolve) => require(['@/views/../../public/WebConfigure/view/SW404_ZHCZ.vue'], resolve)
+      //   // component: (resolve) => require(['../../public/WebConfigure/view/SW404_ZHCZ.vue'], resolve)
+      //   // component: (resolve) => require(['~public/WebConfigure/view/SW404_ZHCZ.vue'], resolve)
+      // }
     ]
   }
 ]
@@ -94,19 +108,20 @@ const router = new VueRouter({
 })
 
 router.beforeEach(async (to, from, next) => { // beforeEach是router的钩子函数，在进入路由前执行
-  LoadingBar.start()
+  NProgress.start()
   // console.log('from:', from)
   // console.log('to:', to)
   // if (from.path === '/') {
   // }
-  next() // 执行进入路由，如果不写就不会进入目标页
-})
-
-router.afterEach((to, from) => {
-  LoadingBar.finish()
   // if (to.meta.title) { // 判断是否有标题
   //   document.title = to.meta.title
   // }
+  next() // 执行进入路由，如果不写就不会进入目标页
+  NProgress.done()
+})
+
+router.afterEach((to, from) => {
+  NProgress.done()
 })
 
 router.selfaddRoutes = function (params) {

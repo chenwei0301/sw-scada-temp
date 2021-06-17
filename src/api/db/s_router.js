@@ -3,7 +3,7 @@
 /*
  * @Author: your name
  * @Date: 2021-06-03 09:53:24
- * @LastEditTime: 2021-06-16 10:52:45
+ * @LastEditTime: 2021-06-17 16:09:26
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\api\db\s_router.js
@@ -161,7 +161,8 @@ const UnRegisteredRouter = async function () {
         path: ret[i].path,
         name: ret[i].name,
         meta: { title: ret[i].title },
-        component: routerCom(ret[i].component)
+        // component: routerCom(ret[i].component)
+        component: routerCom(ret[i])
       }
       if (ret[i].redirect) {
         temp.redirect = ret[i].redirect
@@ -172,9 +173,19 @@ const UnRegisteredRouter = async function () {
   return tempRouter
 }
 
-function routerCom (path) {
-  return (resolve) => require([`@/${path}`], resolve)
+function routerCom (ret) {
+  if (ret.isPublic === 0) {
+    console.log([`${ret.component}`])
+    return (resolve) => require([`${ret.component}`], resolve)
+  } else if (ret.isPublic === 1) {
+    return (resolve) => require([`@/${ret.component}`], resolve)
+  }
+  // console.log([`@/${ret.component}`])
+  // return (resolve) => require([`@/${ret.component}`], resolve)
 }
+// function routerCom (path) {
+//   return (resolve) => require([`@/${path}`], resolve)
+// }
 
 const addAsyncRoutes = async function (obj) {
   var ret = await UnRegisteredRouter()

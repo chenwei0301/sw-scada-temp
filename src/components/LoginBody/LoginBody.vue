@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-02-01 10:19:36
- * @LastEditTime: 2021-06-16 13:42:58
+ * @LastEditTime: 2021-06-17 11:05:11
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \swiscs_3d\src\components\LoginBody\LoginBody.vue
@@ -61,6 +61,8 @@
 
     <el-button @click.prevent="handleLogin" class="login-btn" type="primary">登 录</el-button>
 
+    <el-button @click.prevent="full" class="login-btn" type="primary">full</el-button>
+
     <FooterCopyright class="login-copyright"></FooterCopyright>
 
   </el-form>
@@ -75,6 +77,7 @@ import { swHttpLogin } from '@/api/api.js'
 import { encodeBase64 } from '@/api/base/common.js'
 import Login from '@/api/base/login.js'
 // import sRouter from '@/api/db/s_router'
+import screenfull from 'screenfull'
 
 const remote = require('electron').remote;
 export default {
@@ -125,12 +128,16 @@ export default {
     FooterCopyright
   },
   methods: {
+    full () {
+      screenfull.toggle()
+    },
+
     // 登录信息初始化
     loginInfoInit () {
       Login.initLoginParam(this)
     },
 
-    async  handleLogin () {
+    async handleLogin () {
       Login.handleLogin(this)
     },
 
