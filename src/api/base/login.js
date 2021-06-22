@@ -2,7 +2,7 @@
 /*
  * @Author: your name
  * @Date: 2021-06-15 13:47:10
- * @LastEditTime: 2021-06-17 11:04:55
+ * @LastEditTime: 2021-06-22 14:42:16
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\api\base\login.js
@@ -108,28 +108,29 @@ const handleLogin = function (obj) {
   obj.$axios.post('/login', obj.$Qs.stringify(param)).then(res => {
     const {
       data, meta:
-        { msg }
+        { msg, status }
     } = res.data
 
-    // localStorage
-    localStorage.setItem('SCADA_ui', data.ui)
-    if (obj.ruleForm.remeber) {
-      localStorage.setItem('SCADA_username', encodeBase64(param.username))
-      localStorage.setItem('SCADA_password', encodeBase64(param.password))
-      localStorage.setItem('SCADA_uiType', obj.ruleForm.uiType)
-      localStorage.setItem('SCADA_rember', obj.ruleForm.remeber)
-      localStorage.setItem('SCADA_fullScreen', obj.ruleForm.fullScreen)
-      localStorage.setItem('SCADA_display', obj.ruleForm.displaySeleted)
+    if (status === 200) {
+      // localStorage
+      localStorage.setItem('SCADA_ui', param.ui)
+      if (obj.ruleForm.remeber) {
+        localStorage.setItem('SCADA_username', encodeBase64(param.username))
+        localStorage.setItem('SCADA_password', encodeBase64(param.password))
+        localStorage.setItem('SCADA_uiType', obj.ruleForm.uiType)
+        localStorage.setItem('SCADA_rember', obj.ruleForm.remeber)
+        localStorage.setItem('SCADA_fullScreen', obj.ruleForm.fullScreen)
+        localStorage.setItem('SCADA_display', obj.ruleForm.displaySeleted)
+      }
+
+      // sessionStorage
+      sessionStorage.setItem('SCADA_username', encodeBase64(param.username))
+      sessionStorage.setItem('SCADA_token', data.token)
+      sessionStorage.setItem('SCADA_userComment', data.userComment)
+      sessionStorage.setItem('SCADA_ui', param.ui)
+
+      loginEnterPush(obj)
     }
-
-    // sessionStorage
-    sessionStorage.setItem('SCADA_username', encodeBase64(param.username))
-    sessionStorage.setItem('SCADA_token', data.token)
-    sessionStorage.setItem('SCADA_userComment', data.userComment)
-    sessionStorage.setItem('SCADA_ui', data.ui)
-
-    loginEnterPush(obj)
-
     obj.$layer.msg(msg)
   }).catch(_error => {
     obj.$message.error('登录请求失败，请重试！')
@@ -138,8 +139,8 @@ const handleLogin = function (obj) {
 
 const initLoginParam = function (obj) {
   var ui = localStorage.getItem('SCADA_ui')
-  if (ui) {
-    obj.ruleForm.ui = parseInt(ui)
+  if (ui !== undefined) {
+    obj.ruleForm.ui = ui
   }
   var flag = localStorage.getItem('SCADA_rember') === 'true'
   if (flag) {
@@ -152,25 +153,31 @@ const initLoginParam = function (obj) {
 }
 
 const loginEnterPush = async function (obj) {
-  if (obj.ruleForm.uiType === 'gedi') {
-    obj.$router.push({ name: 'Edit', params: { display: 0, sysNum: 404 } })
-  } else if (obj.ruleForm.uiType === 'home') {
+  // if (obj.ruleForm.uiType === 'edit') {
+  //   await obj.$router.push({ name: 'Edit', params: { display: 0, sysNum: 404 } })
+  // } else
+  var arg = {
+    full: obj.ruleForm.fullScreen,
+    width: 1280,
+    height: 960
+  }
+  if (obj.ruleForm.uiType === 'Home') {
     // 加载home 动态路由
     // await sRouter.addAsyncRoutes(obj)
     sSysInfo.setSysInfoToStore(obj)
 
-    obj.$router.push({ path: '/home', query: { display: 0, sysNum: 404 } })
-    var arg = {
-      full: obj.ruleForm.fullScreen,
-      width: 1280,
-      height: 960
-    }
-    ipcRenderer.send('main-setSize', arg);
-    ipcRenderer.send('main-setMaximizable', true);
-    ipcRenderer.send('main-resizable', true);
+    await obj.$router.push({ path: '/home', query: { display: 0, sysNum: 404 } })
+    ipcRenderer.send('main-setSize', arg)
+    ipcRenderer.send('main-setMaximizable', true)
+    ipcRenderer.send('main-resizable', true)
 
     // 等待主屏进入home界面在打开副屏
     obj.openMainSubWind(obj.ruleForm.displaySeleted)
+  // } else if (obj.ruleForm.uiType === 'gedi') {
+  //   await obj.$router.push({ name: 'Gedi', params: { display: 0, sysNum: 404 } })
+  } else {
+    await obj.$router.push({ name: obj.ruleForm.uiType, params: { display: 0, sysNum: 404 } })
+    ipcRenderer.send('main-setSize', arg)
   }
 }
 

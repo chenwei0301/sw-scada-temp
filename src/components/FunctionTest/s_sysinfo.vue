@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-16 10:16:18
- * @LastEditTime: 2021-06-16 10:37:16
+ * @LastEditTime: 2021-06-22 09:49:24
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\FunctionTest\s_sysinfo.vue
@@ -11,6 +11,7 @@
     <label for="">{{msg | uppercaseFirst  }}</label>
     <br>
     <el-button @click.prevent="setSysInfo" type="primary">setSysInfo</el-button>
+    <el-button @click.prevent="test" type="primary">test</el-button>
 
   </div>
 </template>
@@ -39,6 +40,16 @@ export default {
         console.log('setLocalInfo')
         this.$store.commit('setLocalInfo', ret[0])
       }
+    },
+
+    test () {
+      const arr = {
+        tips: 1,
+        tips2: true,
+        tips3: 'ok',
+        key: 'dddldl'
+      }
+      console.log(JSON.stringify(arr))
     }
 
   },

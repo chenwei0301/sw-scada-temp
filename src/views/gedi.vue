@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-05-26 09:09:39
- * @LastEditTime: 2021-06-04 17:35:36
+ * @LastEditTime: 2021-06-22 14:10:36
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\views\gedi.vue
@@ -203,14 +203,34 @@ const explorerComponents = [
         id: '1-6',
         title: '按钮',
         node: `<i-col :span="24">
-                    <i-button>按钮</i-button>
-                  </i-col>`
+                <i-button>按钮</i-button>
+              </i-col>`
       },
       {
         id: '1-7',
         title: '测试组件',
         node: `<vue-draggable-resizable style="background:#004400">
                </vue-draggable-resizable>`
+      }
+    ]
+  },
+  {
+    id: '2',
+    title: '自定义组件',
+    children: [
+      {
+        id: '2-0',
+        title: '基本组件',
+        node: `<vue-draggable-resizable style="background:#004400">
+               </vue-draggable-resizable>`
+      },
+      {
+        id: '2-1',
+        title: '基本按钮',
+        node: `<vue-draggable-resizable v-bind:style='dashed 1px black' :w='100' :h='30'>
+                <button v-bind:style="width:'100%',height:'100%'">Submit</button>
+              </vue-draggable-resizable>
+              `
       }
     ]
   }

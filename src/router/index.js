@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-01-28 15:50:04
- * @LastEditTime: 2021-06-17 16:05:31
+ * @LastEditTime: 2021-06-22 17:34:13
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \swiscs_3d\src\router\index.js
@@ -36,14 +36,14 @@ export const constantRoutes = [
     name: 'Login',
     meta: { title: 'login' },
     alwaysShow: true,
-    component: () => import('@/views/Base/OA_Login.vue')
+    component: () => import(/* webpackChunkName: "Login" */'@/views/Base/OA_Login.vue')
   },
   {
     path: '/gedi',
-    name: 'gedi',
+    name: 'Gedi',
     meta: { title: 'gedi', icon: '' },
     alwaysShow: true,
-    component: () => import('@/views/gedi.vue'),
+    component: () => import(/* webpackChunkName: "Gedi" */'@/views/gedi.vue'),
     children: []
   },
   {
@@ -51,7 +51,15 @@ export const constantRoutes = [
     name: 'Edit',
     meta: { title: 'edit', icon: '' },
     alwaysShow: true,
-    component: () => import('@/views/Edit.vue'),
+    component: () => import(/* webpackChunkName: "Edit" */'@/views/Edit.vue'),
+    children: []
+  },
+  {
+    path: '/draggable',
+    name: 'Draggable',
+    meta: { title: 'draggable', icon: '' },
+    alwaysShow: true,
+    component: () => import(/* webpackChunkName: "Draggable" */'@/views/Draggable.vue'),
     children: []
   },
   {
@@ -59,7 +67,7 @@ export const constantRoutes = [
     name: 'VDR',
     meta: { title: 'VDR', icon: '' },
     alwaysShow: true,
-    component: () => import('@/views/VDR.vue'),
+    component: () => import(/* webpackChunkName: "VDR" */'@/views/VDR.vue'),
     redirect: '',
     children: []
   },
@@ -68,7 +76,7 @@ export const constantRoutes = [
     name: 'Home',
     meta: { title: '主页', icon: '' },
     alwaysShow: true,
-    component: () => import('@/views/Home.vue'),
+    component: () => import(/* webpackChunkName: "Home" */'@/views/Home.vue'),
     redirect: '/home/main',
     children: [
       ...swBaseRoutes,
@@ -81,7 +89,6 @@ export const constantRoutes = [
       //   // component: () => import('@/views/../../public/WebConfigure/view/SW404_ZHCZ.vue')
       //   component: (resolve) => require(['@/views/../../public/WebConfigure/view/SW404_ZHCZ.vue'], resolve)
       //   // component: (resolve) => require(['../../public/WebConfigure/view/SW404_ZHCZ.vue'], resolve)
-      //   // component: (resolve) => require(['~public/WebConfigure/view/SW404_ZHCZ.vue'], resolve)
       // }
     ]
   }
@@ -109,8 +116,8 @@ const router = new VueRouter({
 
 router.beforeEach(async (to, from, next) => { // beforeEach是router的钩子函数，在进入路由前执行
   NProgress.start()
-  // console.log('from:', from)
-  // console.log('to:', to)
+  console.log('from:', from)
+  console.log('to:', to)
   // if (from.path === '/') {
   // }
   // if (to.meta.title) { // 判断是否有标题

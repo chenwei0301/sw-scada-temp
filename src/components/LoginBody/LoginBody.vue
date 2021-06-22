@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-02-01 10:19:36
- * @LastEditTime: 2021-06-17 11:05:11
+ * @LastEditTime: 2021-06-22 14:25:45
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \swiscs_3d\src\components\LoginBody\LoginBody.vue
@@ -90,11 +90,19 @@ export default {
         uiOptions: [
           {
             lable: 'gedi',
-            value: 'gedi'
+            value: 'Gedi'
+          },
+          {
+            lable: 'draggable',
+            value: 'Draggable'
+          },
+          {
+            lable: 'edit',
+            value: 'Edit'
           },
           {
             lable: 'home',
-            value: 'home'
+            value: 'Home'
           }],
         uiType: '',
         ui: 1,
@@ -102,7 +110,6 @@ export default {
         displayInfo: {},
         remeber: false,
         fullScreen: false,
-        // loginImg: require('@/assets/image/loginTitle.png'),
         loginImg: require('@/assets/company/sunwin_logo.png'),
         loginImgLine: require('@/assets/image/line.png')
       },

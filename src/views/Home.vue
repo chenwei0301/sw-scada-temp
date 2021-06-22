@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-01-29 08:46:21
- * @LastEditTime: 2021-06-16 13:50:26
+ * @LastEditTime: 2021-06-22 09:20:04
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \swiscs_3d\src\views\Home.vue
@@ -54,7 +54,7 @@ export default {
     },
 
     initSWWebSocket () {
-      const arr = ['index', decodeBase64(sessionStorage.getItem('ISCS_username'))];
+      const arr = ['index', decodeBase64(sessionStorage.getItem('ISCS_username'))]
       this.ws = new SwWebSocket('/index', arr, this.getSocketdata)
     },
 
@@ -98,6 +98,7 @@ export default {
   flex-flow: column;
   .home-header{
     padding: 0;
+    // border: none;
   }
   .home-main::-webkit-scrollbar{
     display: none;

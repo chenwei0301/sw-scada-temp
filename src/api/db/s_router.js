@@ -3,7 +3,7 @@
 /*
  * @Author: your name
  * @Date: 2021-06-03 09:53:24
- * @LastEditTime: 2021-06-17 16:09:26
+ * @LastEditTime: 2021-06-18 10:08:05
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\api\db\s_router.js
@@ -174,14 +174,14 @@ const UnRegisteredRouter = async function () {
 }
 
 function routerCom (ret) {
-  if (ret.isPublic === 0) {
-    console.log([`${ret.component}`])
-    return (resolve) => require([`${ret.component}`], resolve)
-  } else if (ret.isPublic === 1) {
-    return (resolve) => require([`@/${ret.component}`], resolve)
-  }
+  // if (ret.isPublic === 0) {
+  //   console.log([`${ret.component}`])
+  //   return (resolve) => require([`${ret.component}`], resolve)
+  // } else if (ret.isPublic === 1) {
+  //   return (resolve) => require([`@/${ret.component}`], resolve)
+  // }
   // console.log([`@/${ret.component}`])
-  // return (resolve) => require([`@/${ret.component}`], resolve)
+  return (resolve) => require([`@/${ret.component}`], resolve)
 }
 // function routerCom (path) {
 //   return (resolve) => require([`@/${path}`], resolve)

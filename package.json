@@ -2,7 +2,7 @@
   "name": "sw_scada_temp",
   "version": "0.1.0",
   "private": true,
-  "author": "深圳赛为智能股份有限公司",
+  "author": "WillChen",
   "repository": "https://github.com/chenwei0301/sw-scada-temp.git",
   "description": "SunWin SCADA OA",
   "scripts": {
