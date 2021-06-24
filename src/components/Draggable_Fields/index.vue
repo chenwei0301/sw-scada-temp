@@ -1,25 +1,39 @@
 <!--
  * @Author: your name
- * @Date: 2021-06-22 16:16:55
- * @LastEditTime: 2021-06-22 17:01:07
+ * @Date: 2021-06-24 14:53:13
+ * @LastEditTime: 2021-06-24 15:37:27
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
- * @FilePath: \sw_scada_temp\src\components\Draggable\Draggable_Top.vue
+ * @FilePath: \sw_scada_temp\src\components\Draggable_Fields\index.vue
 -->
 <template>
-  <div class="draggable_top">
-    <p>{{title+' '+msg}}</p>
+  <div class="Draggable_Fields">
+       <splitpanes style=""  class="default-theme custom-theme">
+            <pane min-size="5" size='10' >1
+            </pane>
+
+          <pane min-size="60" size='80' class="pane3">
+            <div class="test"></div>
+          </pane>
+
+          <pane min-size="5" size='10' >3
+          </pane>
+        </splitpanes>
   </div>
 </template>
 
 <script>
+import { Splitpanes, Pane } from 'splitpanes'
+// import 'splitpanes/dist/splitpanes.css'
+import '@/styles/splitpanes.css'
+
 export default {
-  name: 'draggable_top',
+  name: 'Draggable_Fields',
   // props 中的数据，都是只读的，无法重新赋值
   // 把父组件传递过来的 parentmsg 属性，先在 props 数组中，定义一下，这样，才能使用这个数据
   props: {
     msg: {
-      default: 'draggable_top'
+      default: 'Draggable_Fields'
     }
     // ...
   },
@@ -28,7 +42,7 @@ export default {
   // 存放 数据
   data () {
     return {
-      title: 'draggable_top'
+      title: 'Draggable_Fields'
     };
   },
   // 计算 属性
@@ -42,7 +56,10 @@ export default {
   // 自定义 私有指令
   directives: {},
   // 存放 子组件
-  components: {},
+  components: {
+    Splitpanes,
+    Pane,
+  },
   /*  生命周期函数  */
   // 创建期间
   beforeCreate () {},
@@ -67,9 +84,31 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-.draggable_top{
+.Draggable_Fields{
   width: 100%;
   height: 100%;
   background: lightblue;
+}
+.splitpanes__pane {
+  box-shadow: 0 0 3px rgba(0, 0, 0, .2) inset;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  position: relative;
+}
+.pane3{
+  display: block;
+  // height: 200px;
+  overflow: auto;
+}
+.test{
+  width: 800px;
+  height: 300px;
+  // height: 100%;
+  background-color: lightcoral;
+  overflow: hidden;
+}
+.custom-theme{
+  overflow: hidden;
 }
 </style>

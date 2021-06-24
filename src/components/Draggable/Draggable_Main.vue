@@ -1,26 +1,26 @@
 <!--
  * @Author: your name
- * @Date: 2021-06-22 17:38:10
- * @LastEditTime: 2021-06-22 17:38:48
+ * @Date: 2021-06-23 15:35:35
+ * @LastEditTime: 2021-06-23 15:41:45
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
- * @FilePath: \sw_scada_temp\src\components\Draggable\Draggable_Bottom.vue
+ * @FilePath: \sw_scada_temp\src\components\Draggable\Draggable_Main.vue
 -->
 
 <template>
-  <div class="draggable_bottom">
+  <div class="draggable_main">
     <p>{{title+' '+msg}}</p>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'draggable_bottom',
+  name: 'draggable_main',
   // props 中的数据，都是只读的，无法重新赋值
   // 把父组件传递过来的 parentmsg 属性，先在 props 数组中，定义一下，这样，才能使用这个数据
   props: {
     msg: {
-      default: 'draggable_bottom'
+      default: 'draggable_main'
     }
     // ...
   },
@@ -29,7 +29,7 @@ export default {
   // 存放 数据
   data () {
     return {
-      title: 'draggable_bottom'
+      title: 'draggable_main'
     };
   },
   // 计算 属性
@@ -68,9 +68,13 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-.draggable_bottom{
-  width: 100%;
-  height: 100%;
-  background: lightblue;
+.draggable_main{
+  // width: 100%;
+  // height: 100%;
+  // background: rgb(27, 79, 97);
+  width: 1900px;
+  height: 1800px;
+  // height: 100%;
+  background-color: lightcoral;
 }
 </style>

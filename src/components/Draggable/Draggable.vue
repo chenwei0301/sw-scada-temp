@@ -1,18 +1,18 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-22 14:52:01
- * @LastEditTime: 2021-06-22 17:59:36
+ * @LastEditTime: 2021-06-23 17:09:12
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable\Draggable.vue
 -->
 <template>
 
-    <splitpanes style="height: 100%"  class="default-theme" horizontal>
+    <splitpanes style="height:600px"  class="default-theme" horizontal>
 
       <!-- <pane style="height: 60px"> -->
       <pane :style="{ height: draggableTopHeight + 'px' }">
-        <DraggableTop :msg='123'></DraggableTop>
+        <DraggableHeader :msg='123'></DraggableHeader>
       </pane>
 
       <!-- <pane style="height:calc(100% - 90px)"> -->
@@ -27,13 +27,16 @@
           @splitter-click='centerSplitterClick($event)'
           >
 
-        <pane min-size="5" size='10' >2
+        <pane min-size="5" size='10' >
+          <DraggableAside></DraggableAside>
         </pane>
 
-        <pane min-size="60" size='80'>3
+        <pane min-size="60" size='80' class="paneOverAuto">
+          <DraggableMain></DraggableMain>
         </pane>
 
-        <pane min-size="5" size='10'>4
+        <pane min-size="5" size='10' class="paneOverAuto">
+          <DraggableProp></DraggableProp>
         </pane>
 
         </splitpanes>
@@ -41,7 +44,7 @@
 
       <!-- <pane style="height: 30px"> -->
       <pane :style="{ height: draggableBottomHeight + 'px' }">
-        <DraggableBottom></DraggableBottom>
+        <DraggableFooter></DraggableFooter>
       </pane>
 
     </splitpanes>
@@ -50,9 +53,13 @@
 
 <script>
 import { Splitpanes, Pane } from 'splitpanes'
-import 'splitpanes/dist/splitpanes.css'
-import DraggableTop from '@/components/Draggable/Draggable_Top'
-import DraggableBottom from '@/components/Draggable/Draggable_Bottom'
+// import 'splitpanes/dist/splitpanes.css'
+import '@/styles/splitpanes.css'
+import DraggableHeader from '@/components/Draggable/Draggable_Header'
+import DraggableFooter from '@/components/Draggable/Draggable_Footer'
+import DraggableAside from '@/components/Draggable/Draggable_Aside'
+import DraggableMain from '@/components/Draggable/Draggable_Main'
+import DraggableProp from '@/components/Draggable/Draggable_Prop'
 
 export default {
   name: 'draggable',
@@ -61,7 +68,7 @@ export default {
       // top height
       draggableTopHeight: 60,
       // bottom height
-      draggableBottomHeight: 30,
+      draggableBottomHeight: 20,
       dblClickSplitter: false,
       firstSplitter: false
     }
@@ -75,8 +82,11 @@ export default {
   components: {
     Splitpanes,
     Pane,
-    DraggableTop,
-    DraggableBottom
+    DraggableHeader,
+    DraggableFooter,
+    DraggableAside,
+    DraggableMain,
+    DraggableProp
   },
   mixins: '',
   methods: {
@@ -121,6 +131,10 @@ export default {
   align-items: center;
   display: flex;
   position: relative;
+}
+.paneOverAuto{
+  display: block;
+  overflow: auto;
 }
 
 </style>
