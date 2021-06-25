@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-25 14:02:44
- * @LastEditTime: 2021-06-25 14:03:05
+ * @LastEditTime: 2021-06-25 15:33:03
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\DataPoint\Index.vue

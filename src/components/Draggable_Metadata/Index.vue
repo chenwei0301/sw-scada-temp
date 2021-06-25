@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-24 15:41:39
- * @LastEditTime: 2021-06-24 16:59:56
+ * @LastEditTime: 2021-06-25 15:55:14
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_Metadata\Index.vue
@@ -19,7 +19,7 @@ export default {
   // 把父组件传递过来的 parentmsg 属性，先在 props 数组中，定义一下，这样，才能使用这个数据
   props: {
     msg: {
-      default: 'Draggable_Metadata'
+      default: 'Draggable_Metadata 1'
     }
     // ...
   },

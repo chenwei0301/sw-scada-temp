@@ -1,25 +1,25 @@
 <!--
  * @Author: your name
- * @Date: 2021-06-24 14:54:45
- * @LastEditTime: 2021-06-24 17:00:07
+ * @Date: 2021-06-24 14:55:36
+ * @LastEditTime: 2021-06-24 14:55:52
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
- * @FilePath: \sw_scada_temp\src\components\Draggable_Datasource\Index.vue
+ * @FilePath: \sw_scada_temp\src\components\Draggable_Listeners\Index.vue
 -->
 <template>
-  <div class="Draggable_Datasource">
+  <div class="Draggable_Listeners">
     <p>{{title+' '+msg}}</p>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Draggable_Datasource',
+  name: 'Draggable_Listeners',
   // props 中的数据，都是只读的，无法重新赋值
   // 把父组件传递过来的 parentmsg 属性，先在 props 数组中，定义一下，这样，才能使用这个数据
   props: {
     msg: {
-      default: 'Draggable_Datasource'
+      default: 'Draggable_Listeners 1'
     }
     // ...
   },
@@ -28,7 +28,7 @@ export default {
   // 存放 数据
   data () {
     return {
-      title: 'Draggable_Datasource'
+      title: 'Draggable_Listeners'
     };
   },
   // 计算 属性
@@ -67,7 +67,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-.Draggable_Datasource{
+.Draggable_Listeners{
   width: 100%;
   height: 100%;
   background: lightblue;
