@@ -1,33 +1,37 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-23 14:22:11
- * @LastEditTime: 2021-06-24 15:47:04
+ * @LastEditTime: 2021-06-24 17:55:48
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings EditDraggable_Container.vue
  * @FilePath: \sw_scada_temp\src\components\Draggable\Draggable_Container.vue
 -->
 <template>
-
+  <!---->
   <el-container id='Drag-container'>
-    <el-header :width= "headerHeight + 'px'">Header</el-header>
+
+    <el-header :width= "headerHeight + 'px'">
+      <DraggableHeader></DraggableHeader>
+    </el-header>
+
     <el-container>
           <el-aside :width= "asideWidth + 'px'">
             <div class="sw-design">
               <ul class="sw-jd-feature">
                 <a @click="change('fields')">
-                  <li :class="{ active: current === 'fields' }">fields</li>
+                  <li :class="{ active: current === 'fields' }">设计</li>
                 </a>
 
                 <a @click="change('datasource')">
-                  <li :class="{ active: current === 'datasource' }">datasource</li>
+                  <li :class="{ active: current === 'datasource' }">数据源</li>
                 </a>
 
                 <a @click="change('listeners')">
-                  <li :class="{ active: current === 'listeners' }">listeners</li>
+                  <li :class="{ active: current === 'listeners' }">监听</li>
                 </a>
 
                 <a @click="change('metadata')">
-                  <li :class="{ active: current === 'metadata' }">metadata</li>
+                  <li :class="{ active: current === 'metadata' }">元数据</li>
                 </a>
               </ul>
             </div>
@@ -41,44 +45,40 @@
       </el-main>
     </el-container>
 
-    <el-footer :width= "footerHeight + 'px'">Footer</el-footer>
+<!--
+    <el-footer :height= "footerHeight + 'px'">
+      <DraggableFooter></DraggableFooter>
+    </el-footer>
+-->
   </el-container>
 </template>
 
 <script>
-// import { Splitpanes, Pane } from 'splitpanes'
-// import 'splitpanes/dist/splitpanes.css'
-import DraggableFields from '@/components/Draggable_Fields/index'
-import DraggableDatasource from '@/components/Draggable_Datasource/index'
-import DraggableListeners from '@/components/Draggable_Listeners/index'
-import DraggableMetadata from '@/components/Draggable_Metadata/index'
+import DraggableHeader from '@/components/Draggable/Draggable_Header'
+import DraggableFooter from '@/components/Draggable/Draggable_Footer'
+import DraggableFields from '@/components/Draggable_Fields/Index'
+import DraggableDatasource from '@/components/Draggable_Datasource/Index'
+import DraggableListeners from '@/components/Draggable_Listeners/Index'
+import DraggableMetadata from '@/components/Draggable_Metadata/Index'
 
 export default {
-  name: 'draggable',
+  name: 'Draggable_Container',
   data () {
     return {
-      asideWidth: 100,
-      headerHeight: 60,
+      asideWidth: 60,
+      headerHeight: 50,
       footerHeight: 30,
-      // top height
-      draggableTopHeight: 60,
-      // bottom height
-      draggableBottomHeight: 30,
-      dblClickSplitter: false,
-      firstSplitter: false,
       current: 'fields'
     }
   },
   computed: {
-    // center height
     draggableCenterHeight: function () {
       return 'calc(100% - ' + (this.headerHeight + this.footerHeight) + 'px)'
-      // return '100%'
     }
   },
   components: {
-    // Splitpanes,
-    // Pane,
+    DraggableHeader,
+    DraggableFooter,
     DraggableFields,
     DraggableDatasource,
     DraggableListeners,
@@ -86,24 +86,6 @@ export default {
   },
   mixins: '',
   methods: {
-    topStyle () {
-      return '{' + 'height:' + this.draggableTopHeight + 'px}'
-    },
-    centerResize (e) {
-      console.log('centerResize', e)
-    },
-    centerPaneMaximize (e) {
-      console.log('centerPaneMaximize', e)
-    },
-    centerPaneClick (e) {
-      console.log('centerPaneClick', e)
-    },
-    centerReady (e) {
-      console.log('centerReady', e)
-    },
-    centerSplitterClick (e) {
-      console.log('centerSplitterClick', e)
-    },
     change (value) {
       console.log(value)
       this.current = value
@@ -130,7 +112,7 @@ export default {
   .sw-design{
     > ul {
       &.sw-jd-feature {
-       background-color: rgb(71, 145, 235);
+       background-color: rgb(48, 65, 86);
        list-style: none;
        margin: 0;
        padding: 0;
@@ -142,24 +124,24 @@ export default {
         li {
           text-align: center;
           display: flex;
-         flex-direction: column;
-         align-items: center;
-         justify-content: space-around;
-         height: 60px;
-         border: 1px solid #B3C0D1;
-         &.active {
-            color: #000000;
-           background-color: #6c9dd8;
+          flex-direction: column;
+          align-items: center;
+          justify-content: space-around;
+          height: 60px;
+          font-size: 12px;
+        //  border: 1px solid #B3C0D1;
+          &.active {
+            color: rgb(64, 158, 255);
+            background-color: #263445;
          }
        }
      }
    }
   }
   .el-header, .el-footer {
-    background-color: #B3C0D1;
-    color: #333;
+    // background-color: #B3C0D1;
     text-align: center;
-    line-height: 60px;
+    padding: 0;
   }
   .el-aside {
     background-color: #D3DCE6;
@@ -167,10 +149,9 @@ export default {
     text-align: center;
   }
   .el-main {
-    background-color: #E9EEF3;
+    // background-color: #E9EEF3;
     color: #333;
     text-align: center;
-    line-height: 160px;
     padding: 0;
   }
 }

@@ -1,24 +1,37 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-24 14:53:13
- * @LastEditTime: 2021-06-24 15:37:27
+ * @LastEditTime: 2021-06-24 17:56:54
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
- * @FilePath: \sw_scada_temp\src\components\Draggable_Fields\index.vue
+ * @FilePath: \sw_scada_temp\src\components\Draggable_Fields\Index.vue
 -->
 <template>
   <div class="Draggable_Fields">
-       <splitpanes style=""  class="default-theme custom-theme">
-            <pane min-size="5" size='10' >1
-            </pane>
+  <!-- -->
+    <splitpanes
+      class="default-theme custom-theme"
+      :dbl-click-splitter='dblClickSplitter'
+      :first-splitter='firstSplitter'
+      @resize='centerResize($event)'
+      @pane-maximize='centerPaneMaximize($event)'
+      @pane-click='centerPaneClick($event)'
+      @ready='centerReady($event)'
+      @splitter-click='centerSplitterClick($event)'
+      >
 
-          <pane min-size="60" size='80' class="pane3">
-            <div class="test"></div>
-          </pane>
+      <pane min-size="5" size='10' >
+        <Toolbox class="Fields-Toolbox"></Toolbox>
+      </pane>
 
-          <pane min-size="5" size='10' >3
-          </pane>
-        </splitpanes>
+      <pane min-size="60" size='80' class="pane3">
+        <div class="test"></div>
+       </pane>
+
+      <pane min-size="5" size='10' >
+        <Property></Property>
+      </pane>
+    </splitpanes>
   </div>
 </template>
 
@@ -26,6 +39,8 @@
 import { Splitpanes, Pane } from 'splitpanes'
 // import 'splitpanes/dist/splitpanes.css'
 import '@/styles/splitpanes.css'
+import Toolbox from '@/components/Draggable_Fields/Toolbox'
+import Property from '@/components/Draggable_Fields/Property'
 
 export default {
   name: 'Draggable_Fields',
@@ -42,13 +57,32 @@ export default {
   // 存放 数据
   data () {
     return {
-      title: 'Draggable_Fields'
+      title: 'Draggable_Fields',
+      dblClickSplitter: false,
+      firstSplitter: false
     };
   },
   // 计算 属性
   computed: {},
   // 存放 方法
-  methods: {},
+  methods: {
+    centerResize (e) {
+      console.log('centerResize', e)
+    },
+    centerPaneMaximize (e) {
+      console.log('centerPaneMaximize', e)
+    },
+    centerPaneClick (e) {
+      console.log('centerPaneClick', e)
+    },
+    centerReady (e) {
+      console.log('centerReady', e)
+    },
+    centerSplitterClick (e) {
+      console.log('centerSplitterClick', e)
+    }
+
+  },
   // 监听 属性
   watch: {},
   // 存放 过滤器
@@ -59,6 +93,8 @@ export default {
   components: {
     Splitpanes,
     Pane,
+    Toolbox,
+    Property
   },
   /*  生命周期函数  */
   // 创建期间
@@ -88,6 +124,9 @@ export default {
   width: 100%;
   height: 100%;
   background: lightblue;
+  // .Fields-Toolbox{
+  //   height: 400px;
+  // }
 }
 .splitpanes__pane {
   box-shadow: 0 0 3px rgba(0, 0, 0, .2) inset;
@@ -109,6 +148,9 @@ export default {
   overflow: hidden;
 }
 .custom-theme{
-  overflow: hidden;
+  // overflow: hidden;
+  // height: 600px;
+  min-height: 500px;
+  max-height: 940px;
 }
 </style>

@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-22 17:38:10
- * @LastEditTime: 2021-06-22 17:38:48
+ * @LastEditTime: 2021-06-24 16:26:14
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable\Draggable_Footer.vue
@@ -71,6 +71,6 @@ export default {
 .draggable_bottom{
   width: 100%;
   height: 100%;
-  background: lightblue;
+  background: rgb(50, 93, 107);
 }
 </style>

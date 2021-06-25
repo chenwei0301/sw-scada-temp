@@ -4,7 +4,7 @@
  * @LastEditTime: 2021-06-24 14:55:52
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
- * @FilePath: \sw_scada_temp\src\components\Draggable_Listeners\index.vue
+ * @FilePath: \sw_scada_temp\src\components\Draggable_Listeners\Index.vue
 -->
 <template>
   <div class="Draggable_Listeners">

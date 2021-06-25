@@ -1,25 +1,26 @@
 <!--
  * @Author: your name
- * @Date: 2021-06-22 16:16:55
- * @LastEditTime: 2021-06-24 16:26:28
+ * @Date: 2021-06-24 17:03:46
+ * @LastEditTime: 2021-06-24 17:04:12
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
- * @FilePath: \sw_scada_temp\src\components\Draggable\Draggable_Header.vue
+ * @FilePath: \sw_scada_temp\src\components\Draggable_Fields\Property.vue
 -->
 <template>
-  <div class="draggable_top">
-    <p>{{title+' '+msg}}</p>
+  <div class="Draggable_Fields_Property">
+
   </div>
 </template>
 
 <script>
+
 export default {
-  name: 'draggable_header',
+  name: 'Draggable_Fields_Property',
   // props 中的数据，都是只读的，无法重新赋值
   // 把父组件传递过来的 parentmsg 属性，先在 props 数组中，定义一下，这样，才能使用这个数据
   props: {
     msg: {
-      default: 'draggable_header'
+      default: 'Draggable_Fields_Property'
     }
     // ...
   },
@@ -28,13 +29,15 @@ export default {
   // 存放 数据
   data () {
     return {
-      title: 'draggable_header'
+      title: 'Draggable_Fields_Property'
     };
   },
   // 计算 属性
   computed: {},
   // 存放 方法
-  methods: {},
+  methods: {
+
+  },
   // 监听 属性
   watch: {},
   // 存放 过滤器
@@ -42,7 +45,8 @@ export default {
   // 自定义 私有指令
   directives: {},
   // 存放 子组件
-  components: {},
+  components: {
+  },
   /*  生命周期函数  */
   // 创建期间
   beforeCreate () {},
@@ -67,9 +71,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-.draggable_top{
+.Draggable_Fields_Property{
   width: 100%;
   height: 100%;
-  background: rgb(101, 197, 230);
+  background: rgb(160, 37, 119);
 }
 </style>
