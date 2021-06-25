@@ -1,18 +1,26 @@
-# swiscs_3d
+<!--
+ * @Author: your name
+ * @Date: 2021-06-04 17:40:32
+ * @LastEditTime: 2021-06-25 14:00:30
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: \sw_scada_temp\README.md
+-->
+# sw_scada_temp
 
 ## Project setup
 ```
-yarn install
+yarn OR npm install(npm i)
 ```
 
 ### Compiles and hot-reloads for development
 ```
-yarn serve
+yarn electron:serve (OR npm run electron:serve)
 ```
 
 ### Compiles and minifies for production
 ```
-yarn build
+yarn electron:build (OR npm run electron:build)
 ```
 
 ### Lints and fixes files

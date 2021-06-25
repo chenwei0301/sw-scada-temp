@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-02-01 10:19:36
- * @LastEditTime: 2021-06-22 14:25:45
+ * @LastEditTime: 2021-06-25 13:47:00
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \swiscs_3d\src\components\LoginBody\LoginBody.vue
@@ -145,7 +145,8 @@ export default {
     },
 
     async handleLogin () {
-      Login.handleLogin(this)
+      Login.handleLoginLocal(this)
+      // Login.handleLogin(this)
     },
 
     // 登录

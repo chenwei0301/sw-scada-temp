@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-23 14:22:11
- * @LastEditTime: 2021-06-24 17:55:48
+ * @LastEditTime: 2021-06-25 14:03:47
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings EditDraggable_Container.vue
  * @FilePath: \sw_scada_temp\src\components\Draggable\Draggable_Container.vue
@@ -33,6 +33,11 @@
                 <a @click="change('metadata')">
                   <li :class="{ active: current === 'metadata' }">元数据</li>
                 </a>
+
+                <a @click="change('dataPoint')">
+                  <li :class="{ active: current === 'dataPoint' }">数据点</li>
+                </a>
+
               </ul>
             </div>
           </el-aside>
@@ -42,6 +47,7 @@
         <DraggableDatasource v-show="current === 'datasource'"></DraggableDatasource>
         <DraggableListeners v-show="current === 'listeners'"></DraggableListeners>
         <DraggableMetadata v-show="current === 'metadata'"></DraggableMetadata>
+        <DataPoint v-show="current === 'dataPoint'"></DataPoint>
       </el-main>
     </el-container>
 
@@ -55,11 +61,12 @@
 
 <script>
 import DraggableHeader from '@/components/Draggable/Draggable_Header'
-import DraggableFooter from '@/components/Draggable/Draggable_Footer'
+// import DraggableFooter from '@/components/Draggable/Draggable_Footer'
 import DraggableFields from '@/components/Draggable_Fields/Index'
 import DraggableDatasource from '@/components/Draggable_Datasource/Index'
 import DraggableListeners from '@/components/Draggable_Listeners/Index'
 import DraggableMetadata from '@/components/Draggable_Metadata/Index'
+import DataPoint from '@/components/DataPoint/Index'
 
 export default {
   name: 'Draggable_Container',
@@ -68,7 +75,7 @@ export default {
       asideWidth: 60,
       headerHeight: 50,
       footerHeight: 30,
-      current: 'fields'
+      current: 'dataPoint'
     }
   },
   computed: {
@@ -78,11 +85,12 @@ export default {
   },
   components: {
     DraggableHeader,
-    DraggableFooter,
+    // DraggableFooter,
     DraggableFields,
     DraggableDatasource,
     DraggableListeners,
-    DraggableMetadata
+    DraggableMetadata,
+    DataPoint
   },
   mixins: '',
   methods: {
