@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-23 14:22:11
- * @LastEditTime: 2021-06-25 14:03:47
+ * @LastEditTime: 2021-06-28 15:07:05
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings EditDraggable_Container.vue
  * @FilePath: \sw_scada_temp\src\components\Draggable\Draggable_Container.vue
@@ -67,6 +67,7 @@ import DraggableDatasource from '@/components/Draggable_Datasource/Index'
 import DraggableListeners from '@/components/Draggable_Listeners/Index'
 import DraggableMetadata from '@/components/Draggable_Metadata/Index'
 import DataPoint from '@/components/DataPoint/Index'
+// import SvgIcon from '@/svgicon'
 
 export default {
   name: 'Draggable_Container',
@@ -84,6 +85,7 @@ export default {
     }
   },
   components: {
+    // SvgIcon,
     DraggableHeader,
     // DraggableFooter,
     DraggableFields,

@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-24 14:53:13
- * @LastEditTime: 2021-06-25 15:55:26
+ * @LastEditTime: 2021-06-30 10:32:58
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_Fields\Index.vue
@@ -21,15 +21,17 @@
       >
 
       <pane min-size="5" size='10' >
-        <Toolbox class="Fields-Toolbox"></Toolbox>
+        <Toolbox class="Fields-Toolbox"
+          />
       </pane>
 
       <pane min-size="60" size='80' class="pane3">
-        <div class="test"></div>
-       </pane>
+        <Design
+          />
+      </pane>
 
       <pane min-size="5" size='10' >
-        <Property></Property>
+        <Property/>
       </pane>
     </splitpanes>
   </div>
@@ -40,6 +42,7 @@ import { Splitpanes, Pane } from 'splitpanes'
 // import 'splitpanes/dist/splitpanes.css'
 import '@/styles/splitpanes.css'
 import Toolbox from '@/components/Draggable_Fields/Toolbox'
+import Design from '@/components/Draggable_Fields/Design'
 import Property from '@/components/Draggable_Fields/Property'
 
 export default {
@@ -60,7 +63,7 @@ export default {
       title: 'Draggable_Fields',
       dblClickSplitter: false,
       firstSplitter: false
-    };
+    }
   },
   // 计算 属性
   computed: {},
@@ -94,6 +97,7 @@ export default {
     Splitpanes,
     Pane,
     Toolbox,
+    Design,
     Property
   },
   /*  生命周期函数  */
@@ -139,13 +143,6 @@ export default {
   display: block;
   // height: 200px;
   overflow: auto;
-}
-.test{
-  width: 800px;
-  height: 300px;
-  // height: 100%;
-  background-color: lightcoral;
-  overflow: hidden;
 }
 .custom-theme{
   // overflow: hidden;

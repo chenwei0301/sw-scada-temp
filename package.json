@@ -43,6 +43,7 @@
     "vue-draggable-resizable": "^2.3.0",
     "vue-layer": "^1.2.1",
     "vue-router": "^3.2.0",
+    "vue-svgicon": "^3.2.9",
     "vue-toast-notification": "^0.6.1",
     "vue2-filters": "^0.12.0",
     "vuedraggable": "^2.24.3",
