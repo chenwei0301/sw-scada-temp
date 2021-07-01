@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-24 14:53:13
- * @LastEditTime: 2021-06-30 10:32:58
+ * @LastEditTime: 2021-07-01 15:33:23
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_Fields\Index.vue
@@ -27,6 +27,10 @@
 
       <pane min-size="60" size='80' class="pane3">
         <Design
+          :designConfings="designConfings"
+          :edrawComps="edrawComponents"
+          @dragComp="dragCurrentComp"
+          @selectComp="selectComp"
           />
       </pane>
 
@@ -62,7 +66,15 @@ export default {
     return {
       title: 'Draggable_Fields',
       dblClickSplitter: false,
-      firstSplitter: false
+      firstSplitter: false,
+      // 画布属性
+      designConfings: {
+        width: 800,
+        height: 600,
+        backgroundUrl: '',
+        backgroundColor: ''
+      },
+      edrawComponents: [] // 画布组件列表
     }
   },
   // 计算 属性
@@ -83,6 +95,15 @@ export default {
     },
     centerSplitterClick (e) {
       console.log('centerSplitterClick', e)
+    },
+    dragCurrentComp (event, comp, state, currentIndex) {
+      console.log('dragCurrentComp')
+    },
+    selectComp (e) {
+      e.preventDefault() // 阻止拖拽的默认弹出窗口
+      console.log('selectComp--e', e)
+      const item = JSON.parse(e.dataTransfer.getData('comData'))
+      console.log('selectComp--item', item)
     }
 
   },

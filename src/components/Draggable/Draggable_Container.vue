@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-23 14:22:11
- * @LastEditTime: 2021-06-28 15:07:05
+ * @LastEditTime: 2021-07-01 15:41:57
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings EditDraggable_Container.vue
  * @FilePath: \sw_scada_temp\src\components\Draggable\Draggable_Container.vue
@@ -44,10 +44,10 @@
 
       <el-main>
         <DraggableFields v-show="current === 'fields'"></DraggableFields>
-        <DraggableDatasource v-show="current === 'datasource'"></DraggableDatasource>
-        <DraggableListeners v-show="current === 'listeners'"></DraggableListeners>
-        <DraggableMetadata v-show="current === 'metadata'"></DraggableMetadata>
-        <DataPoint v-show="current === 'dataPoint'"></DataPoint>
+        <DraggableDatasource v-if="current === 'datasource'"></DraggableDatasource>
+        <DraggableListeners v-if="current === 'listeners'"></DraggableListeners>
+        <DraggableMetadata v-if="current === 'metadata'"></DraggableMetadata>
+        <DataPoint v-if="current === 'dataPoint'"></DataPoint>
       </el-main>
     </el-container>
 
@@ -76,7 +76,7 @@ export default {
       asideWidth: 60,
       headerHeight: 50,
       footerHeight: 30,
-      current: 'dataPoint'
+      current: 'fields'
     }
   },
   computed: {

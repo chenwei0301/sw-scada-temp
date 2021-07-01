@@ -1,13 +1,14 @@
 <!--
  * @Author: your name
  * @Date: 2021-01-28 15:50:04
- * @LastEditTime: 2021-06-18 14:29:54
+ * @LastEditTime: 2021-07-01 11:22:10
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \swiscs_3d\src\App.vue
 -->
 <template>
-  <div id="app" ondragstart="return false">
+  <!-- <div id="app" ondragstart="return false"> -->
+  <div id="app">
     <router-view/>
   </div>
 </template>

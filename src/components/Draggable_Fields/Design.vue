@@ -1,42 +1,41 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-28 09:09:39
- * @LastEditTime: 2021-06-30 10:05:53
+ * @LastEditTime: 2021-07-01 15:39:47
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_Fields\Design.vue
 -->
 <template>
   <div class="Draggable_Fields_Design">
-    <div class="screen"
+    <div class="design"
       @drop="drop($event)"
       @dragover="dragover($event)"
+      :style="designStyle"
     >
 
       <div
-                v-for="(item, index) in edrawComps"
-                @dragstart="dragComp($event, item, 'start', index)"
-                @drag="dragComp($event, item, 'drag', index)"
-                :key="index"
-
-            >
-        </div>
+          v-for="(item, index) in edrawComps"
+          @dragstart="dragComp($event, item, 'start', index)"
+          @drag="dragComp($event, item, 'drag', index)"
+          :key="index"
+        >
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-
 export default {
   name: 'Draggable_Fields_Design',
   // props 中的数据，都是只读的，无法重新赋值
   // 把父组件传递过来的 parentmsg 属性，先在 props 数组中，定义一下，这样，才能使用这个数据
   props: {
     msg: {
-      default: 'Draggable_Fields_Design',
-      canvasConfings: Object,
-      edrawComps: Array // 绘制组件（图片）列表
-    }
+      default: 'Draggable_Fields_Design'
+    },
+    designConfings: Object,
+    edrawComps: Array // 绘制组件（图片）列表
     // ...
   },
   // 创建实例时传递 props。主要作用是方便测试。
@@ -48,12 +47,35 @@ export default {
     };
   },
   // 计算 属性
-  computed: {},
+  computed: {
+    designWidth: function () {
+      const val = this.designConfings.width || 800
+      return val
+    },
+    designHeight: function () {
+      const val = this.designConfings.height || 600
+      return val
+    },
+    designBackgroundColor: function () {
+      const bgColor = this.designConfings.backgroundColor
+      const val = bgColor !== '' ? bgColor : '#F0F0F0'
+      return val
+    },
+    designStyle: function () {
+      const style = {
+        width: this.designWidth + 'px',
+        height: this.designHeight + 'px',
+        backgroundColor: this.designBackgroundColor
+      }
+      return style
+    }
+
+  },
   // 存放 方法
   methods: {
     drop (e) {
-      const comp = e.dataTransfer.getData('comData')
-      console.log('drop:', comp)
+      console.log('drop:')
+      this.$emit('selectComp', e);
     },
     dragover (e) {
       console.log('dragover:', e)
@@ -74,7 +96,10 @@ export default {
   beforeCreate () {},
   created () {},
   beforeMount () {},
-  mounted () {},
+  mounted () {
+    console.log(this.designWidth)
+    console.log(this.designStyle)
+  },
   // 运行期间
   beforeUpdate () {},
   updated () {},
@@ -97,12 +122,12 @@ export default {
   width: 100%;
   height: 100%;
   background: rgb(160, 37, 119);
-    .screen{
-    width: 1000px;
-    height: 600px;
-    // height: 100%;
-    background-color: lightcoral;
+    .design{
+    // width: 1000px;
+    // height: 600px;
+    // background-color: #F0F0F0;
     overflow: hidden;
+    border: 1px dashed #5a5858;
   }
 }
 </style>

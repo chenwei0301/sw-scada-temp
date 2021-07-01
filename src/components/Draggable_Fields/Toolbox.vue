@@ -1,39 +1,25 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-28 15:49:49
- * @LastEditTime: 2021-06-30 10:18:32
+ * @LastEditTime: 2021-07-01 13:55:42
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_Fields\Toolbox_bak.vue
 -->
 <template>
-<div class="Draggable_Fields_Toolbox">
+<div class="Draggable_Fields_Toolbox" >
   <el-collapse  v-model="activeNames" @change="handleChange">
 
-  <el-collapse-item title="一致性 Consistency" name="1">
+  <!-- <el-collapse-item title="一致性 Consistency" name="1">
     <div>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</div>
     <div>在界面中一致：所有的元素和结构需保持一致，比如：设计样式、图标和文本、元素的位置等。</div>
-  </el-collapse-item>
+  </el-collapse-item> -->
 
   <el-collapse-item v-for="group in groups"
     :key="group.name"
     :name="group.name"
     :title="group.name"
     >
-
-<!--
-
-        <vuedraggable
-          tag="ul" class="component-group">
-            <el-row v-for="item in group.children"
-            :key="`${group.name}_${item.name}_${item.label}`"
-            :title="item.label"
-            >
-              <el-col>{{ item.label }}</el-col>
-          </el-row>
-        </vuedraggable>
--->
-
   <div class="subBox">
     <div class="subs" v-for="(item, index) in group.children" :key="`${group.name}_${item.name}_${item.label}_${index}`" draggable="true" @dragstart="dragStart($event,item)">
       <div class="subIco" :style='{"background-image":"url("+item.icon+")"}'>
@@ -49,7 +35,7 @@
 </template>
 
 <script>
-import vuedraggable from 'vuedraggable'
+// import vuedraggable from 'vuedraggable'
 
 import Groups from '@/internal/components.js'
 
@@ -103,7 +89,7 @@ export default {
   directives: {},
   // 存放 子组件
   components: {
-    vuedraggable
+    // vuedraggable
   },
   /*  生命周期函数  */
   // 创建期间
@@ -141,7 +127,7 @@ export default {
     .subBox{
         display: flex;
         flex-flow: row wrap;
-        justify-content: space-between;
+        // justify-content: space-between;
     }
     .subs{
       width: 60px;
@@ -152,6 +138,7 @@ export default {
       display: flex;
       flex-flow: column;
       align-items: center;
+      margin:  0px 5px 5px;
       .subIco{
         width: 32px;
         height: 32px;

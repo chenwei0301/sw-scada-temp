@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-25 14:02:44
- * @LastEditTime: 2021-06-25 15:33:03
+ * @LastEditTime: 2021-06-30 17:17:28
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\DataPoint\Index.vue
@@ -9,10 +9,14 @@
 <template>
   <div class="DataPoint">
     <p>{{title+' '+msg}}</p>
+        <!-- 分页组件 -->
+    <Pagination v-bind:child-msg="pageparm" @callFather="callFather"></Pagination>
   </div>
 </template>
 
 <script>
+import Pagination from '@/components/Pagination/Pagination'
+
 export default {
   name: 'DataPoint',
   // props 中的数据，都是只读的，无法重新赋值
@@ -28,13 +32,24 @@ export default {
   // 存放 数据
   data () {
     return {
-      title: 'DataPoint'
+      title: 'DataPoint',
+      // 分页参数
+      pageparm: {
+        currentPage: 1,
+        pageSize: 10,
+        total: 10
+      }
     };
   },
   // 计算 属性
   computed: {},
   // 存放 方法
-  methods: {},
+  methods: {
+    // 分页插件事件
+    callFather (parm) {
+      console.log('parm:', parm)
+    }
+  },
   // 监听 属性
   watch: {},
   // 存放 过滤器
@@ -42,7 +57,9 @@ export default {
   // 自定义 私有指令
   directives: {},
   // 存放 子组件
-  components: {},
+  components: {
+    Pagination
+  },
   /*  生命周期函数  */
   // 创建期间
   beforeCreate () {},
