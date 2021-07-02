@@ -1,31 +1,50 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-28 09:09:39
- * @LastEditTime: 2021-07-01 15:39:47
+ * @LastEditTime: 2021-07-01 17:51:22
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_Fields\Design.vue
 -->
 <template>
   <div class="Draggable_Fields_Design">
-    <div class="design"
-      @drop="drop($event)"
-      @dragover="dragover($event)"
-      :style="designStyle"
+    <vue-ruler-tool
+      :content-layout="{left:0,top:0}"
+      :is-scale-revise="true"
+      :preset-line="presetLine"
+      style="width:100%"
+      class="vrt"
     >
+        <div class="design"
+          @drop="drop($event)"
+          @dragover="dragover($event)"
+          :style="designStyle"
+          >
+          <div v-for="(item, index) in edrawComps"
+            @dragstart="dragComp($event, item, 'start', index)"
+            @drag="dragComp($event, item, 'drag', index)"
+            :key="index"
+            :style="{
+                    width: item.style.width + 'px',
+                    height: item.style.height + 'px',
+                    top: item.style.top + 'px',
+                    left: item.style.left + 'px',
+                    position: item.style.position,
+                    borderWidth: item.style.borderWidth + 'px',
+                    transform: 'rotate(' + item.style.rotate + 'deg)',
+                    'z-index': item.type === 'room' && '-1',
+                     background: '#333333'
 
-      <div
-          v-for="(item, index) in edrawComps"
-          @dragstart="dragComp($event, item, 'start', index)"
-          @drag="dragComp($event, item, 'drag', index)"
-          :key="index"
-        >
-      </div>
-    </div>
+                }"
+            >
+          </div>
+        </div>
+    </vue-ruler-tool>
   </div>
 </template>
 
 <script>
+import VueRulerTool from 'vue-ruler-tool'
 export default {
   name: 'Draggable_Fields_Design',
   // props 中的数据，都是只读的，无法重新赋值
@@ -43,6 +62,9 @@ export default {
   // 存放 数据
   data () {
     return {
+      presetLine: [{ type: 'l', site: 10 }, { type: 'v', site: 20 }],
+      // ['absolute', 'fixed', 'relative', 'static', 'inherit']
+      vrtPosition: 'inherit',
       title: 'Draggable_Fields_Design'
     };
   },
@@ -68,6 +90,10 @@ export default {
         backgroundColor: this.designBackgroundColor
       }
       return style
+    },
+    edrawCompsTest: function () {
+      console.log('edrawCompsTest:', this.edrawComps)
+      return ''
     }
 
   },
@@ -78,8 +104,10 @@ export default {
       this.$emit('selectComp', e);
     },
     dragover (e) {
-      console.log('dragover:', e)
+      // console.log('dragover:', e)
       e.preventDefault() // 阻止默认不可拖入
+    },
+    dragComp (event, item, type, index) {
     }
   },
   // 监听 属性
@@ -90,6 +118,7 @@ export default {
   directives: {},
   // 存放 子组件
   components: {
+    VueRulerTool
   },
   /*  生命周期函数  */
   // 创建期间
@@ -119,15 +148,14 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .Draggable_Fields_Design{
-  width: 100%;
+  // width: 100%;
   height: 100%;
-  background: rgb(160, 37, 119);
+  .vrt{
+   background: rgb(140, 187, 226);
     .design{
-    // width: 1000px;
-    // height: 600px;
-    // background-color: #F0F0F0;
-    overflow: hidden;
-    border: 1px dashed #5a5858;
+      overflow: hidden;
+      border: 1px dashed #5a5858;
+    }
   }
 }
 </style>

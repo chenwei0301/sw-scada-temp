@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-24 14:53:13
- * @LastEditTime: 2021-07-01 15:33:23
+ * @LastEditTime: 2021-07-01 17:58:23
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_Fields\Index.vue
@@ -20,12 +20,12 @@
       @splitter-click='centerSplitterClick($event)'
       >
 
-      <pane min-size="5" size='10' >
+      <pane min-size="5" size='15' >
         <Toolbox class="Fields-Toolbox"
           />
       </pane>
 
-      <pane min-size="60" size='80' class="pane3">
+      <pane min-size="50" size='70' class="pane-design">
         <Design
           :designConfings="designConfings"
           :edrawComps="edrawComponents"
@@ -34,7 +34,7 @@
           />
       </pane>
 
-      <pane min-size="5" size='10' >
+      <pane min-size="5" size='15' >
         <Property/>
       </pane>
     </splitpanes>
@@ -101,9 +101,57 @@ export default {
     },
     selectComp (e) {
       e.preventDefault() // 阻止拖拽的默认弹出窗口
-      console.log('selectComp--e', e)
-      const item = JSON.parse(e.dataTransfer.getData('comData'))
+      // console.log('selectComp--e', e)
+      var item = JSON.parse(e.dataTransfer.getData('comData'))
+
+      // 设置位置属性等
+      item.style.positionX = e.layerX // layerX相对于父元素的定位
+      item.style.positionY = e.layerY
       console.log('selectComp--item', item)
+
+      // property
+      const {
+        width,
+        height,
+        borderRadius,
+        rotate,
+        borderWidth,
+        background,
+        isApplyShadow,
+        bgiBool,
+        color,
+        border,
+        opacity,
+        positionX,
+        positionY
+      } = item.style
+
+      var _style = {
+        width: width || 100,
+        height: height || 100,
+        position: 'absolute',
+        top: positionY,
+        left: positionX,
+        drag_start_x: 0, // 拖拽相对
+        drag_start_y: 0,
+        color: color || '',
+        border: border || '',
+        borderWidth: borderWidth || 0,
+        background: background || '',
+        borderRadius: borderRadius || 0,
+        rotate: rotate || 0,
+        isApplyShadow: (isApplyShadow === undefined || isApplyShadow === null) ? 'true' : 'false',
+        bgiBool: bgiBool || false, // 材质
+        opacity: opacity || 1,
+        isFixed: 'false'
+      }
+
+      console.log('style:', _style)
+      item.style = _style
+      // var arr = this.edrawComponents
+      // arr.push(item)
+      // this.edrawComponents = arr
+      this.edrawComponents.push(item)
     }
 
   },
@@ -160,7 +208,7 @@ export default {
   display: flex;
   position: relative;
 }
-.pane3{
+.pane-design{
   display: block;
   // height: 200px;
   overflow: auto;

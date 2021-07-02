@@ -74,6 +74,6 @@ export default {
 .Draggable_Fields_Property{
   width: 100%;
   height: 100%;
-  background: rgb(160, 37, 119);
+  background: rgb(204, 224, 128);
 }
 </style>
