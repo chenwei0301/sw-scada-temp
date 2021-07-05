@@ -1,13 +1,13 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-28 09:09:39
- * @LastEditTime: 2021-07-05 14:56:36
+ * @LastEditTime: 2021-07-02 17:29:39
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_Fields\Design.vue
 -->
 <template>
-  <div class="Draggable_Fields_Design" :attr='id'>
+  <div class="Draggable_Fields_Design">
     <vue-ruler-tool
       :content-layout="{left:0,top:0}"
       :is-scale-revise="true"
@@ -21,7 +21,45 @@
           :style="designStyle"
           >
 
+          <!--
+          <div v-for="(item, index) in edrawComps"
+            @dragstart="dragComp($event, item, 'start', index)"
+            @drag="dragComp($event, item, 'drag', index)"
+            :key="index"
+            :style="{
+                    width: item.style.width + 'px',
+                    height: item.style.height + 'px',
+                    top: item.style.top + 'px',
+                    left: item.style.left + 'px',
+                    position: item.style.position,
+                    borderWidth: item.style.borderWidth + 'px',
+                    transform: 'rotate(' + item.style.rotate + 'deg)',
+                    'z-index': item.type === 'room' && '-1',
+                     background: '#333333'
+
+                }"
+            >
+          </div>
+          -->
+
           <DragComp  v-for="(item, index) in edrawComps" :key="index" :item='item'></DragComp>
+<!--
+          <vue-draggable-resizable
+            v-for="(item, index) in edrawComps" :key="index"
+
+            class="vdr"
+            :active.sync="item.active"
+            :grid="[10,10]"
+            :x="item.style.x - item.style.w/2"
+            :y="item.style.y - item.style.h/2"
+            :w="item.style.w"
+            :h="item.style.h"
+            :min-width="20"
+            :min-height="20"
+            >
+            <button class='comp'>{{item.name}}</button>
+          </vue-draggable-resizable>
+          -->
         </div>
     </vue-ruler-tool>
   </div>
@@ -31,11 +69,10 @@
 import VueRulerTool from 'vue-ruler-tool'
 import DragComp from '@/components/Draggable_comps/DragComp'
 export default {
-  // name: 'Draggable_Fields_Design',
+  name: 'Draggable_Fields_Design',
   // props 中的数据，都是只读的，无法重新赋值
   // 把父组件传递过来的 parentmsg 属性，先在 props 数组中，定义一下，这样，才能使用这个数据
   props: {
-    id: {},
     msg: {
       default: 'Draggable_Fields_Design'
     },

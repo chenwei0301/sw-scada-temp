@@ -1,14 +1,14 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-28 15:49:49
- * @LastEditTime: 2021-07-05 14:52:48
+ * @LastEditTime: 2021-07-05 09:48:38
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_Fields\Toolbox_bak.vue
 -->
 <template>
   <div class="Draggable_Fields_Toolbox" >
-    <el-collapse  v-model="activeTools" @change="handleChange">
+    <el-collapse  v-model="activeNames" @change="handleChange">
 
   <!-- <el-collapse-item title="一致性 Consistency" name="1">
     <div>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</div>
@@ -51,26 +51,30 @@ export default {
   // props 中的数据，都是只读的，无法重新赋值
   // 把父组件传递过来的 parentmsg 属性，先在 props 数组中，定义一下，这样，才能使用这个数据
   props: {
+    msg: {
+      default: 'Draggable_Fields_Toolbox'
+    }
+    // ...
   },
   // 创建实例时传递 props。主要作用是方便测试。
   // propsData: {},
   // 存放 数据
   data () {
     return {
-      activeTools: []
+      title: 'Draggable_Fields_Toolbox',
+      activeNames: ['1']
     };
   },
   // 计算 属性
   computed: {
     groups: () => {
-      // var arr = []
-      // const json = {
-      //   name: 'Html',
-      //   children: Groups
-      // }
-      // arr.push(json)
-      // return arr
-      return Groups
+      var arr = []
+      const json = {
+        name: 'Html',
+        children: Groups
+      }
+      arr.push(json)
+      return arr
     }
   },
   // 存放 方法

@@ -30,7 +30,7 @@ var querySync = function (sql, callback) {
 }
 
 var queryAsync = function (sql) {
-  console.log('queryAsync-sql:', sql)
+  // console.log('queryAsync-sql:', sql)
   return new Promise((resolve, reject) => {
     querySync(sql, function (err, vals, fields) {
       if (err) {

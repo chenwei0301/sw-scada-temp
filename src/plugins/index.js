@@ -18,7 +18,7 @@ import '@/plugins/modules/axios'
 import '@/plugins/modules/mysql'
 import '@/plugins/modules/qs'
 import '@/filters/filters'
-import '@/plugins/modules/vue-draggable-resizable'
+// import '@/plugins/modules/vue-draggable-resizable'
 
 import prototype from '@/plugins/modules/prototype'
 
