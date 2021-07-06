@@ -1,11 +1,12 @@
 <!--
  * @Author: your name
- * @Date: 2021-07-02 14:45:51
- * @LastEditTime: 2021-07-06 15:41:56
+ * @Date: 2021-07-06 16:51:45
+ * @LastEditTime: 2021-07-06 17:30:45
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
- * @FilePath: \sw_scada_temp\src\components\Draggable_comps\Comp-img.vue
+ * @FilePath: \sw_scada_temp\src\components\Draggable_comps\Comp-el-image.vue
 -->
+
 <template>
   <vue-draggable-resizable
     class='vdr-comp'
@@ -19,10 +20,11 @@
     :min-height='5'
     >
 
-    <img class='comp'
+    <el-image class='comp'
       :src='item.icon'
       :alt='item.name'
-      >
+      fit='fill'
+      ></el-image>
 <!--
   ['fill', 'contain', 'cover', 'none', 'scale-down']
 -->

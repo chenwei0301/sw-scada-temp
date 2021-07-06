@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-24 14:53:13
- * @LastEditTime: 2021-07-05 16:36:30
+ * @LastEditTime: 2021-07-06 10:04:24
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_Fields\Index.vue
@@ -20,25 +20,26 @@
       @splitter-click='centerSplitterClick($event)'
       >
 
-      <pane min-size="5" size='15' >
+      <pane min-size="5" size='10' class="pane-toolBox" v-if="panelView.Toolbox">
         <Toolbox class="Fields-Toolbox"
           />
       </pane>
 
-      <pane min-size="50" size='70' class="pane-design">
+      <pane min-size="50" size='65' class="pane-design" v-if="panelView.Design">
 
-        <el-tabs v-model="editableTabsValue" type="card" editable
-        @edit="handleTabsEdit"
-        @tab-click="handleClick"
-        >
+        <el-tabs v-model="editableTabsValue"
+          type="card"
+          editable
+          @edit="handleTabsEdit"
+          @tab-click="handleClick"
+          >
           <el-tab-pane
-            :key="index + '-' + Math.random()"
+            :key="index"
             v-for="(item, index) in editableTabs"
             :label="item.title"
             :name="item.name"
-          >{{item.title}}
+          >
             <Design
-            :id="index + '-' + Math.random()"
             :designConfings="editableTabs[tabIndex].designConfings"
             :edrawComps="editableTabs[tabIndex].edrawComponents"
             @dragComp="dragCurrentComp"
@@ -49,7 +50,9 @@
 
       </pane>
 
-      <pane min-size="5" size='15' >
+      <pane min-size="1" size='10' class="pane-html" v-if="panelView.Html">
+      </pane>
+      <pane min-size="5" size='15' class="pane-property" v-if="panelView.Property">
         <Property/>
       </pane>
     </splitpanes>
@@ -80,17 +83,16 @@ export default {
   // 存放 数据
   data () {
     return {
+      panelView: {
+        Toolbox: true,
+        Design: true,
+        Html: true,
+        Property: true
+
+      },
       title: 'Draggable_Fields',
       dblClickSplitter: false,
       firstSplitter: false,
-      // 画布属性
-      // designConfings: {
-      //   width: 800,
-      //   height: 600,
-      //   backgroundUrl: '',
-      //   backgroundColor: ''
-      // },
-      // edrawComponents: [], // 画布组件列表
 
       editableTabsValue: '1',
       editableTabs: [{
@@ -103,17 +105,19 @@ export default {
           backgroundColor: ''
         },
         edrawComponents: [] // 画布组件列表
-      }, {
-        title: 'Tab 2',
-        name: '2',
-        designConfings: { // 画布属性
-          width: 800,
-          height: 600,
-          backgroundUrl: '',
-          backgroundColor: ''
-        },
-        edrawComponents: [] // 画布组件列表
-      }],
+      }
+      // , {
+      //   title: 'Tab 2',
+      //   name: '2',
+      //   designConfings: { // 画布属性
+      //     width: 800,
+      //     height: 600,
+      //     backgroundUrl: '',
+      //     backgroundColor: ''
+      //   },
+      //   edrawComponents: [] // 画布组件列表
+      // }
+      ],
       tabIndex: 0
     }
   },
@@ -152,27 +156,38 @@ export default {
       e.preventDefault()
       const item = await itemProperty(this, e)
       console.log('await-item:', item)
-      // this.edrawComponents.push(item)
       this.editableTabs[this.tabIndex].edrawComponents.push(item)
     },
 
+    setItemName (itemType) {
+      const comps = this.editableTabs[this.tabIndex].edrawComponents
+      const count = comps.filter(comp => comp.htmlType === itemType)
+      return itemType + count
+    },
+
     handleClick (tab, event) {
-      console.log(tab, event)
-      for (var i = 0; i < this.editableTabs.length; i++) {
-        if (this.editableTabs[i].name === this.editableTabsValue) {
-          this.tabIndex = i
+      // console.log(tab, event)
+      this.setTabIndex()
+    },
+    setTabIndex () {
+      if (this.editableTabs.length > 0) {
+        for (var i = 0; i < this.editableTabs.length; i++) {
+          if (this.editableTabs[i].name === this.editableTabsValue) {
+            this.tabIndex = i
+          }
         }
+      } else {
+        this.tabIndex = 0
       }
-      this.tabIndex = 0
     },
 
     handleTabsEdit (targetName, action) {
-      console.log(targetName, action)
+      // console.log(targetName, action)
       if (action === 'add') {
-        var tabLength = this.editableTabs.length
+        const tabLength = this.editableTabs.length
         const newTabName = tabLength + 1 + ''
         const json = {
-          title: 'Unitled' + (tabLength + 1),
+          title: 'Untitled-' + newTabName,
           name: newTabName,
           designConfings: {
             width: 800,
@@ -182,9 +197,9 @@ export default {
           },
           edrawComponents: []
         }
-        console.log(json)
         this.editableTabs.push(json)
         this.editableTabsValue = newTabName
+        this.setTabIndex()
       } else if (action === 'remove') {
         const tabs = this.editableTabs
         let activeName = this.editableTabsValue;
@@ -250,23 +265,24 @@ export default {
   // .Fields-Toolbox{
   //   height: 400px;
   // }
+  .splitpanes__pane {
+    box-shadow: 0 0 3px rgba(0, 0, 0, .2) inset;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    position: relative;
+  }
+  .custom-theme{
+    min-height: 500px;
+    max-height: 940px;
+  }
+  //.pane-toolBox{}
+  .pane-design{
+    display: block;
+    overflow: auto;
+  }
+  //.pane-html{}
+  //.pane-property{}
 }
-.splitpanes__pane {
-  box-shadow: 0 0 3px rgba(0, 0, 0, .2) inset;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-  position: relative;
-}
-.pane-design{
-  display: block;
-  // height: 200px;
-  overflow: auto;
-}
-.custom-theme{
-  // overflow: hidden;
-  // height: 600px;
-  min-height: 500px;
-  max-height: 940px;
-}
+
 </style>

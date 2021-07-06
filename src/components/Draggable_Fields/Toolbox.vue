@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-28 15:49:49
- * @LastEditTime: 2021-07-05 14:52:48
+ * @LastEditTime: 2021-07-06 17:43:39
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_Fields\Toolbox_bak.vue
@@ -38,12 +38,14 @@
       </el-collapse-item>
 
     </el-collapse>
+    <!--
+    <el-image :src="require('@/assets/Element/el-input.png')"></el-image>
+    <img :src="require('@/assets/Element/el-input.png')">
+    -->
   </div>
 </template>
 
 <script>
-// import vuedraggable from 'vuedraggable'
-
 import Groups from '@/internal/components.js'
 
 export default {
@@ -52,8 +54,6 @@ export default {
   // 把父组件传递过来的 parentmsg 属性，先在 props 数组中，定义一下，这样，才能使用这个数据
   props: {
   },
-  // 创建实例时传递 props。主要作用是方便测试。
-  // propsData: {},
   // 存放 数据
   data () {
     return {
@@ -63,13 +63,6 @@ export default {
   // 计算 属性
   computed: {
     groups: () => {
-      // var arr = []
-      // const json = {
-      //   name: 'Html',
-      //   children: Groups
-      // }
-      // arr.push(json)
-      // return arr
       return Groups
     }
   },
@@ -79,7 +72,7 @@ export default {
       console.log(val)
     },
     dragStart (e, item) {
-      console.log(e, item)
+      // console.log(e, item)
       const data = JSON.stringify(item)
       event.dataTransfer.setData('comData', data)
     },
@@ -94,16 +87,14 @@ export default {
   // 自定义 私有指令
   directives: {},
   // 存放 子组件
-  components: {
-    // vuedraggable
-  },
+  components: {},
   /*  生命周期函数  */
   // 创建期间
   beforeCreate () {},
   created () {},
   beforeMount () {},
   mounted () {
-    console.log('groups:', this.groups)
+    // console.log('groups:', this.groups)
   },
   // 运行期间
   beforeUpdate () {},
@@ -126,14 +117,12 @@ export default {
 .Draggable_Fields_Toolbox{
   width: 100%;
   height: 100%;
-  // height: 300px;
   background: rgb(50, 194, 105);
   padding: 1px;
   overflow: auto;
     .subBox{
-        display: flex;
-        flex-flow: row wrap;
-        // justify-content: space-between;
+      display: flex;
+      flex-flow: row wrap;
     }
     .subs{
       width: 60px;

@@ -1,11 +1,12 @@
 <!--
  * @Author: your name
- * @Date: 2021-07-02 14:45:51
- * @LastEditTime: 2021-07-06 15:41:56
+ * @Date: 2021-07-06 16:10:52
+ * @LastEditTime: 2021-07-06 16:15:55
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
- * @FilePath: \sw_scada_temp\src\components\Draggable_comps\Comp-img.vue
+ * @FilePath: \sw_scada_temp\src\components\Draggable_comps\Comp-span.vue
 -->
+
 <template>
   <vue-draggable-resizable
     class='vdr-comp'
@@ -19,13 +20,8 @@
     :min-height='5'
     >
 
-    <img class='comp'
-      :src='item.icon'
-      :alt='item.name'
-      >
-<!--
-  ['fill', 'contain', 'cover', 'none', 'scale-down']
--->
+    <span class='comp'>{{item.name}}</span>
+
   </vue-draggable-resizable>
 </template>
 <script>
@@ -48,9 +44,10 @@ export default {
 </script>
 <style scoped lang="scss">
 .vdr-comp{
+  text-align: left;
   .comp{
-    width: 100%;
-    height: 100%;
+    padding: 0px;
+    margin: 0px;
   }
 }
 </style>

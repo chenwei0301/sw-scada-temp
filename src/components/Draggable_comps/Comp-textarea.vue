@@ -1,10 +1,10 @@
 <!--
  * @Author: your name
- * @Date: 2021-07-02 14:45:51
- * @LastEditTime: 2021-07-06 15:41:56
+ * @Date: 2021-07-06 16:16:48
+ * @LastEditTime: 2021-07-06 16:25:12
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
- * @FilePath: \sw_scada_temp\src\components\Draggable_comps\Comp-img.vue
+ * @FilePath: \sw_scada_temp\src\components\Draggable_comps\Comp-textarea.vue
 -->
 <template>
   <vue-draggable-resizable
@@ -19,13 +19,8 @@
     :min-height='5'
     >
 
-    <img class='comp'
-      :src='item.icon'
-      :alt='item.name'
-      >
-<!--
-  ['fill', 'contain', 'cover', 'none', 'scale-down']
--->
+    <textarea class='comp'></textarea>
+
   </vue-draggable-resizable>
 </template>
 <script>
@@ -48,9 +43,9 @@ export default {
 </script>
 <style scoped lang="scss">
 .vdr-comp{
+  text-align: left;
   .comp{
     width: 100%;
-    height: 100%;
   }
 }
 </style>

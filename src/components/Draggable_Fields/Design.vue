@@ -1,13 +1,13 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-28 09:09:39
- * @LastEditTime: 2021-07-05 14:56:36
+ * @LastEditTime: 2021-07-05 16:45:36
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_Fields\Design.vue
 -->
 <template>
-  <div class="Draggable_Fields_Design" :attr='id'>
+  <div class="Draggable_Fields_Design">
     <vue-ruler-tool
       :content-layout="{left:0,top:0}"
       :is-scale-revise="true"
@@ -35,10 +35,6 @@ export default {
   // props 中的数据，都是只读的，无法重新赋值
   // 把父组件传递过来的 parentmsg 属性，先在 props 数组中，定义一下，这样，才能使用这个数据
   props: {
-    id: {},
-    msg: {
-      default: 'Draggable_Fields_Design'
-    },
     designConfings: Object,
     edrawComps: Array // 绘制组件（图片）列表
     // ...

@@ -1,10 +1,10 @@
 <!--
  * @Author: your name
- * @Date: 2021-07-02 14:45:51
- * @LastEditTime: 2021-07-06 15:41:56
+ * @Date: 2021-07-06 16:32:59
+ * @LastEditTime: 2021-07-06 16:34:28
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
- * @FilePath: \sw_scada_temp\src\components\Draggable_comps\Comp-img.vue
+ * @FilePath: \sw_scada_temp\src\components\Draggable_comps\Comp-el-button.vue
 -->
 <template>
   <vue-draggable-resizable
@@ -19,13 +19,8 @@
     :min-height='5'
     >
 
-    <img class='comp'
-      :src='item.icon'
-      :alt='item.name'
-      >
-<!--
-  ['fill', 'contain', 'cover', 'none', 'scale-down']
--->
+    <el-button class='comp'>{{item.name}}</el-button>
+
   </vue-draggable-resizable>
 </template>
 <script>
@@ -51,6 +46,8 @@ export default {
   .comp{
     width: 100%;
     height: 100%;
+    padding: 0px;
+    margin: 0px;
   }
 }
 </style>

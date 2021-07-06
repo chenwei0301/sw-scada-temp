@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-02 09:07:35
- * @LastEditTime: 2021-07-02 16:40:09
+ * @LastEditTime: 2021-07-06 10:05:20
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\api\design\design.js
@@ -54,10 +54,15 @@ const itemProperty = function (obj, e) {
     }
     item.active = false
     item.style = _style
+    item.name = setItemName(obj.editableTabs[obj.tabIndex].edrawComponents, item.htmlType)
     resolve(item)
   })
 }
-
+// 控件唯一名称设置
+const setItemName = function (comps, itemType) {
+  const count = comps.filter(comp => comp.htmlType === itemType).length
+  return itemType + (count + 1)
+}
 export {
   itemProperty
 }
