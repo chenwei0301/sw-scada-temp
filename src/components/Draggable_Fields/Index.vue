@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-24 14:53:13
- * @LastEditTime: 2021-07-06 10:04:24
+ * @LastEditTime: 2021-07-07 17:37:10
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_Fields\Index.vue
@@ -44,6 +44,7 @@
             :edrawComps="editableTabs[tabIndex].edrawComponents"
             @dragComp="dragCurrentComp"
             @selectComp="selectComp"
+            @compActive=compActive
             />
           </el-tab-pane>
         </el-tabs>
@@ -53,7 +54,7 @@
       <pane min-size="1" size='10' class="pane-html" v-if="panelView.Html">
       </pane>
       <pane min-size="5" size='15' class="pane-property" v-if="panelView.Property">
-        <Property/>
+        <Property :item='designActItem'/>
       </pane>
     </splitpanes>
   </div>
@@ -118,7 +119,8 @@ export default {
       //   edrawComponents: [] // 画布组件列表
       // }
       ],
-      tabIndex: 0
+      tabIndex: 0,
+      designActItem: {}
     }
   },
   // 计算 属性
@@ -144,7 +146,7 @@ export default {
       // console.log('centerPaneClick', e)
     },
     centerReady (e) {
-      console.log('centerReady', e)
+      // console.log('centerReady', e)
     },
     centerSplitterClick (e) {
       console.log('centerSplitterClick', e)
@@ -216,6 +218,28 @@ export default {
         this.editableTabsValue = activeName;
         this.editableTabs = tabs.filter(tab => tab.name !== targetName);
       }
+    },
+    compActive: function (active, activeItem) {
+      // console.log('get3:', activeItem)
+      // ... 向toolbox 传控件属性
+      if (active) {
+        const compIndex = this.getActiveIndex(activeItem)
+        if (compIndex >= 0) {
+          this.designActItem = this.editableTabs[this.tabIndex].edrawComponents[compIndex]
+        } else {
+          this.designActItem = {}
+        }
+      } else {
+        this.designActItem = {}
+      }
+    },
+    getActiveIndex (activeItem) {
+      for (let i = 0; i < this.editableTabs[this.tabIndex].edrawComponents.length; i++) {
+        if (this.editableTabs[this.tabIndex].edrawComponents[i].name === activeItem.name) {
+          return i
+        }
+      }
+      return -1
     }
 
   },

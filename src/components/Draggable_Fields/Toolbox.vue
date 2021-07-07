@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-28 15:49:49
- * @LastEditTime: 2021-07-06 17:43:39
+ * @LastEditTime: 2021-07-07 16:43:27
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_Fields\Toolbox_bak.vue
@@ -62,9 +62,12 @@ export default {
   },
   // 计算 属性
   computed: {
-    groups: () => {
+    groups: function () {
       return Groups
     }
+  },
+  // 监听 属性
+  watch: {
   },
   // 存放 方法
   methods: {
@@ -80,8 +83,6 @@ export default {
       console.log(groupName, item)
     }
   },
-  // 监听 属性
-  watch: {},
   // 存放 过滤器
   filters: {},
   // 自定义 私有指令

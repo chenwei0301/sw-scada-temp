@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-07-02 14:50:12
- * @LastEditTime: 2021-07-06 17:43:18
+ * @LastEditTime: 2021-07-07 17:06:07
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_comps\DragComp.vue
@@ -20,13 +20,19 @@
     <comp-textarea v-if="item.htmlType==='textarea'" :item='item'></comp-textarea>
 
     <!-- Element -->
-    <comp-el-button v-if="item.htmlType==='el-button'" :item='item'></comp-el-button>
+    <comp-el-button
+      v-if="item.htmlType==='el-button'"
+      :item='item'
+      @compActive=compActive
+      ></comp-el-button>
 
-    <comp-el-input v-if="item.htmlType==='el-input'" :item='item'></comp-el-input>
+    <comp-el-input
+      v-if="item.htmlType==='el-input'"
+      :item='item'
+      @compActive=compActive
+      ></comp-el-input>
 
-    <!--
     <comp-el-image v-if="item.htmlType==='el-image'" :item='item'></comp-el-image>
-     -->
 
   </div>
 
@@ -57,7 +63,12 @@ export default {
   // 计算 属性
   computed: {},
   // 存放 方法
-  methods: {},
+  methods: {
+    compActive: function (active, activeItem) {
+      // console.log('get1:', activeItem)
+      this.$emit('compActive', active, activeItem)
+    }
+  },
   // 监听 属性
   watch: {},
   // 存放 过滤器

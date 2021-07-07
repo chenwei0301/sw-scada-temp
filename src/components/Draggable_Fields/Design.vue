@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-28 09:09:39
- * @LastEditTime: 2021-07-05 16:45:36
+ * @LastEditTime: 2021-07-07 17:47:07
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_Fields\Design.vue
@@ -21,7 +21,12 @@
           :style="designStyle"
           >
 
-          <DragComp  v-for="(item, index) in edrawComps" :key="index" :item='item'></DragComp>
+          <DragComp
+          v-for="(item, index) in edrawComps"
+          :key="index"
+          :item='item'
+          @compActive=compActive
+            ></DragComp>
         </div>
     </vue-ruler-tool>
   </div>
@@ -79,7 +84,7 @@ export default {
   // 存放 方法
   methods: {
     drop (e) {
-      console.log('drop:')
+      // console.log('drop:')
       this.$emit('selectComp', e);
     },
     dragover (e) {
@@ -87,6 +92,10 @@ export default {
       e.preventDefault() // 阻止默认不可拖入
     },
     dragComp (event, item, type, index) {
+    },
+    compActive: function (active, activeItem) {
+      // console.log('get2:', activeItem)
+      this.$emit('compActive', active, activeItem)
     }
   },
   // 监听 属性
@@ -106,8 +115,6 @@ export default {
   created () {},
   beforeMount () {},
   mounted () {
-    console.log(this.designWidth)
-    console.log(this.designStyle)
   },
   // 运行期间
   beforeUpdate () {},

@@ -1,14 +1,14 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-24 17:03:46
- * @LastEditTime: 2021-06-24 17:04:12
+ * @LastEditTime: 2021-07-07 17:03:34
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_Fields\Property.vue
 -->
 <template>
   <div class="Draggable_Fields_Property">
-
+  {{item}}
   </div>
 </template>
 
@@ -19,13 +19,9 @@ export default {
   // props 中的数据，都是只读的，无法重新赋值
   // 把父组件传递过来的 parentmsg 属性，先在 props 数组中，定义一下，这样，才能使用这个数据
   props: {
-    msg: {
-      default: 'Draggable_Fields_Property'
-    }
+    item: Object
     // ...
   },
-  // 创建实例时传递 props。主要作用是方便测试。
-  // propsData: {},
   // 存放 数据
   data () {
     return {
@@ -33,13 +29,17 @@ export default {
     };
   },
   // 计算 属性
-  computed: {},
+  computed: {
+  },
   // 存放 方法
   methods: {
-
   },
   // 监听 属性
-  watch: {},
+  watch: {
+    item: function (newVal, oldVal) {
+      console.log('toolbox-item:', newVal, oldVal)
+    }
+  },
   // 存放 过滤器
   filters: {},
   // 自定义 私有指令

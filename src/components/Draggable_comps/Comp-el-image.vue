@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-07-06 16:51:45
- * @LastEditTime: 2021-07-06 17:30:45
+ * @LastEditTime: 2021-07-07 09:07:04
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_comps\Comp-el-image.vue
@@ -34,7 +34,7 @@
 import VueDraggableResizable from 'vue-draggable-resizable'
 import '@/styles/VueDraggableResizable.css'
 export default {
-  name: 'el-image',
+  // name: 'elImage',
   props: {
     item: Object
   },
