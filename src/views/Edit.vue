@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-05-19 17:52:36
- * @LastEditTime: 2021-06-16 10:22:38
+ * @LastEditTime: 2021-07-08 10:55:04
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\views\Edit.vue
@@ -23,9 +23,6 @@
 
     <Toast></Toast>
 
-    <vue-draggable-resizable :active.sync="active" class="vdr1">
-      <p>Controlling the active state from outside the component by providing the <b>:{{active}}</b> prop.</p>
-    </vue-draggable-resizable>
   </div>
 </template>
 

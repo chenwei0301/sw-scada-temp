@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-28 09:09:39
- * @LastEditTime: 2021-07-07 17:47:07
+ * @LastEditTime: 2021-07-08 16:57:46
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_Fields\Design.vue
@@ -26,6 +26,8 @@
           :key="index"
           :item='item'
           @compActive=compActive
+          @compOnResize=compOnResize
+          @compOnDrag=compOnDrag
             ></DragComp>
         </div>
     </vue-ruler-tool>
@@ -93,9 +95,14 @@ export default {
     },
     dragComp (event, item, type, index) {
     },
-    compActive: function (active, activeItem) {
-      // console.log('get2:', activeItem)
-      this.$emit('compActive', active, activeItem)
+    compActive: function (activeItem, active) {
+      this.$emit('compActive', activeItem, active)
+    },
+    compOnResize: function (activeItem, para) {
+      this.$emit('compOnResize', activeItem, para)
+    },
+    compOnDrag: function (activeItem, para) {
+      this.$emit('compOnDrag', activeItem, para)
     }
   },
   // 监听 属性
@@ -138,10 +145,11 @@ export default {
   // width: 100%;
   height: 100%;
   .vrt{
-   background: rgb(140, 187, 226);
+   // background: rgb(140, 187, 226);
     .design{
       overflow: hidden;
       border: 1px dashed #5a5858;
+      background: linear-gradient(-90deg, rgba(0, 0, 0, 0.1) 1px, transparent 1px) repeat scroll 0% 0% / 10px 10px, rgba(0, 0, 0, 0) linear-gradient(rgba(0, 0, 0, 0.1) 1px, transparent 1px) repeat scroll 0% 0% / 10px 10px;
       .vdr{
         // background-color: lightcoral;
         background-color: #fff;

@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-23 14:22:11
- * @LastEditTime: 2021-07-01 15:41:57
+ * @LastEditTime: 2021-07-08 10:38:11
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings EditDraggable_Container.vue
  * @FilePath: \sw_scada_temp\src\components\Draggable\Draggable_Container.vue
@@ -38,6 +38,10 @@
                   <li :class="{ active: current === 'dataPoint' }">数据点</li>
                 </a>
 
+                <a @click="change('edit')">
+                  <li :class="{ active: current === 'edit' }">edit</li>
+                </a>
+
               </ul>
             </div>
           </el-aside>
@@ -48,6 +52,7 @@
         <DraggableListeners v-if="current === 'listeners'"></DraggableListeners>
         <DraggableMetadata v-if="current === 'metadata'"></DraggableMetadata>
         <DataPoint v-if="current === 'dataPoint'"></DataPoint>
+        <Edit v-show="current === 'edit'"></Edit>
       </el-main>
     </el-container>
 
@@ -67,6 +72,7 @@ import DraggableDatasource from '@/components/Draggable_Datasource/Index'
 import DraggableListeners from '@/components/Draggable_Listeners/Index'
 import DraggableMetadata from '@/components/Draggable_Metadata/Index'
 import DataPoint from '@/components/DataPoint/Index'
+import Edit from '@/views/Edit'
 // import SvgIcon from '@/svgicon'
 
 export default {
@@ -92,7 +98,8 @@ export default {
     DraggableDatasource,
     DraggableListeners,
     DraggableMetadata,
-    DataPoint
+    DataPoint,
+    Edit
   },
   mixins: '',
   methods: {

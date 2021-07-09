@@ -1,46 +1,69 @@
 <!--
  * @Author: your name
  * @Date: 2021-07-02 14:50:12
- * @LastEditTime: 2021-07-07 17:06:07
+ * @LastEditTime: 2021-07-08 16:11:36
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_comps\DragComp.vue
 -->
 <template>
-  <div>
+  <div class="dragComp">
     <!-- Base -->
-    <comp-img v-if="item.htmlType==='img'" :item='item'></comp-img>
+    <comp-img
+      v-if="item.htmlType==='img'"
+      :item=item
+      ></comp-img>
 
-    <comp-button v-if="item.htmlType==='button'" :item='item'></comp-button>
+    <comp-button
+      v-if="item.htmlType==='button'"
+      :item=item
+      ></comp-button>
 
-    <comp-span v-if="item.htmlType==='span'" :item='item'></comp-span>
+    <comp-span
+      v-if="item.htmlType==='span'"
+      :item=item
+      ></comp-span>
 
-    <comp-input v-if="item.htmlType==='input'" :item='item'></comp-input>
+    <comp-input
+      v-if="item.htmlType==='input'"
+      :item=item
+      ></comp-input>
 
-    <comp-textarea v-if="item.htmlType==='textarea'" :item='item'></comp-textarea>
+    <comp-textarea
+      v-if="item.htmlType==='textarea'"
+      :item=item
+      ></comp-textarea>
 
     <!-- Element -->
     <comp-el-button
       v-if="item.htmlType==='el-button'"
-      :item='item'
+      :item=item
       @compActive=compActive
+      @compOnResize=compOnResize
+      @compOnDrag=compOnDrag
       ></comp-el-button>
 
     <comp-el-input
       v-if="item.htmlType==='el-input'"
-      :item='item'
+      :item=item
       @compActive=compActive
+      @compOnResize=compOnResize
+      @compOnDrag=compOnDrag
       ></comp-el-input>
 
-    <comp-el-image v-if="item.htmlType==='el-image'" :item='item'></comp-el-image>
+    <comp-el-image
+      v-if="item.htmlType==='el-image'"
+      :item=item
+      @compActive=compActive
+      @compOnResize=compOnResize
+      @compOnDrag=compOnDrag
+      ></comp-el-image>
 
   </div>
 
 </template>
 
 <script>
-// import VueDraggableResizable from 'vue-draggable-resizable'
-// import '@/styles/VueDraggableResizable.css'
 import CompImg from '@/components/Draggable_comps/Comp-img'
 import CompButton from '@/components/Draggable_comps/Comp-button'
 import CompSpan from '@/components/Draggable_comps/Comp-span'
@@ -61,12 +84,22 @@ export default {
     }
   },
   // 计算 属性
-  computed: {},
+  computed: {
+    // compItem: function () {
+    //   this.item.vdrProperty = this.vdrProperty
+    //   return this.item
+    // }
+  },
   // 存放 方法
   methods: {
-    compActive: function (active, activeItem) {
-      // console.log('get1:', activeItem)
-      this.$emit('compActive', active, activeItem)
+    compActive: function (activeItem, active) {
+      this.$emit('compActive', activeItem, active)
+    },
+    compOnResize: function (activeItem, para) {
+      this.$emit('compOnResize', activeItem, para)
+    },
+    compOnDrag: function (activeItem, para) {
+      this.$emit('compOnDrag', activeItem, para)
     }
   },
   // 监听 属性
@@ -110,26 +143,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.vdr{
-  //background-color: lightcoral;
-  .comp-button {
-    width: 100%;
-    height: 100%;
-    padding: 0px;
-    margin: 0px;
-  }
-  .comp-img {
-    width: 100%;
-    height: 100%;
-  }
-  .comp-textarea {
-    width: 100%;
-    height: 100%;
-  }
-  .comp-input {
-    width: 100%;
-    height: 100%;
-    border: 1px solid #000;
-  }
+.dragComp{
+  position: relative;
+  // width: 100%;
+  // height: 100%;
 }
 </style>

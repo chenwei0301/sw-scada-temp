@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-24 14:53:13
- * @LastEditTime: 2021-07-07 17:37:10
+ * @LastEditTime: 2021-07-08 16:19:20
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_Fields\Index.vue
@@ -45,6 +45,8 @@
             @dragComp="dragCurrentComp"
             @selectComp="selectComp"
             @compActive=compActive
+            @compOnResize=compOnResize
+            @compOnDrag=compOnDrag
             />
           </el-tab-pane>
         </el-tabs>
@@ -100,11 +102,12 @@ export default {
         title: 'Tab 1',
         name: '1',
         designConfings: { // 画布属性
-          width: 800,
+          width: 1000,
           height: 600,
           backgroundUrl: '',
           backgroundColor: ''
         },
+        activeIndex: -1,
         edrawComponents: [] // 画布组件列表
       }
       // , {
@@ -192,7 +195,7 @@ export default {
           title: 'Untitled-' + newTabName,
           name: newTabName,
           designConfings: {
-            width: 800,
+            width: 1000,
             height: 600,
             backgroundUrl: '',
             backgroundColor: ''
@@ -219,11 +222,12 @@ export default {
         this.editableTabs = tabs.filter(tab => tab.name !== targetName);
       }
     },
-    compActive: function (active, activeItem) {
+    compActive: function (activeItem, active) {
       // console.log('get3:', activeItem)
       // ... 向toolbox 传控件属性
       if (active) {
         const compIndex = this.getActiveIndex(activeItem)
+        this.editableTabs[this.tabIndex].activeIndex = compIndex
         if (compIndex >= 0) {
           this.designActItem = this.editableTabs[this.tabIndex].edrawComponents[compIndex]
         } else {
@@ -240,6 +244,16 @@ export default {
         }
       }
       return -1
+    },
+    compOnResize: function (activeItem, para) {
+      const compIndex = this.editableTabs[this.tabIndex].activeIndex
+      this.editableTabs[this.tabIndex].edrawComponents[compIndex].style.w = para.w
+      this.editableTabs[this.tabIndex].edrawComponents[compIndex].style.h = para.h
+    },
+    compOnDrag: function (activeItem, para) {
+      const compIndex = this.editableTabs[this.tabIndex].activeIndex
+      this.editableTabs[this.tabIndex].edrawComponents[compIndex].style.x = para.x
+      this.editableTabs[this.tabIndex].edrawComponents[compIndex].style.y = para.y
     }
 
   },

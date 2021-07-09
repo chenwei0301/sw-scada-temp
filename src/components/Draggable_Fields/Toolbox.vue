@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-28 15:49:49
- * @LastEditTime: 2021-07-07 16:43:27
+ * @LastEditTime: 2021-07-08 11:21:56
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_Fields\Toolbox_bak.vue
@@ -9,11 +9,6 @@
 <template>
   <div class="Draggable_Fields_Toolbox" >
     <el-collapse  v-model="activeTools" @change="handleChange">
-
-  <!-- <el-collapse-item title="一致性 Consistency" name="1">
-    <div>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</div>
-    <div>在界面中一致：所有的元素和结构需保持一致，比如：设计样式、图标和文本、元素的位置等。</div>
-  </el-collapse-item> -->
 
       <el-collapse-item v-for="group in groups"
         :key="group.name"
@@ -27,21 +22,17 @@
             @dragstart="dragStart($event,item)"
             @click='clickSelect(group.name,item)'
             draggable="true"
-          >
+            >
             <div class="subIco"
               :style='{"background-image":"url("+item.icon+")"}'
-            >
-            </div>
+              ></div>
             <span class="">{{item.htmlType}}</span>
           </div>
         </div>
+
       </el-collapse-item>
 
     </el-collapse>
-    <!--
-    <el-image :src="require('@/assets/Element/el-input.png')"></el-image>
-    <img :src="require('@/assets/Element/el-input.png')">
-    -->
   </div>
 </template>
 
@@ -58,7 +49,7 @@ export default {
   data () {
     return {
       activeTools: []
-    };
+    }
   },
   // 计算 属性
   computed: {
@@ -72,7 +63,7 @@ export default {
   // 存放 方法
   methods: {
     handleChange (val) {
-      console.log(val)
+      // console.log(val)
     },
     dragStart (e, item) {
       // console.log(e, item)
@@ -80,7 +71,7 @@ export default {
       event.dataTransfer.setData('comData', data)
     },
     clickSelect (groupName, item) {
-      console.log(groupName, item)
+      // console.log(groupName, item)
     }
   },
   // 存放 过滤器

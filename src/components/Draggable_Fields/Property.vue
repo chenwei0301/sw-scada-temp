@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-24 17:03:46
- * @LastEditTime: 2021-07-07 17:03:34
+ * @LastEditTime: 2021-07-08 14:20:17
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_Fields\Property.vue
@@ -37,7 +37,7 @@ export default {
   // 监听 属性
   watch: {
     item: function (newVal, oldVal) {
-      console.log('toolbox-item:', newVal, oldVal)
+      console.info('toolbox-item:', newVal)
     }
   },
   // 存放 过滤器
