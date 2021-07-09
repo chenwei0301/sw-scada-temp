@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-07-06 16:51:45
- * @LastEditTime: 2021-07-08 18:01:38
+ * @LastEditTime: 2021-07-09 08:53:28
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_comps\Comp-el-image.vue
@@ -192,7 +192,8 @@ export default {
     // border-radius: 50%;
     height: 5px;
     width: 5px;
-    box-model: border-box;
+    //box-model: border-box;
+    box-sizing: border-box;
     -webkit-transition: all 300ms linear;
     -ms-transition: all 300ms linear;
     transition: all 300ms linear;

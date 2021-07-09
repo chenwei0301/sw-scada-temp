@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-24 14:53:13
- * @LastEditTime: 2021-07-08 16:19:20
+ * @LastEditTime: 2021-07-09 09:42:48
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_Fields\Index.vue
@@ -98,18 +98,19 @@ export default {
       firstSplitter: false,
 
       editableTabsValue: '1',
-      editableTabs: [{
-        title: 'Tab 1',
-        name: '1',
-        designConfings: { // 画布属性
-          width: 1000,
-          height: 600,
-          backgroundUrl: '',
-          backgroundColor: ''
-        },
-        activeIndex: -1,
-        edrawComponents: [] // 画布组件列表
-      }
+      editableTabs: [
+      //   {
+      //   title: 'Tab 1',
+      //   name: '1',
+      //   designConfings: { // 画布属性
+      //     width: 1000,
+      //     height: 600,
+      //     backgroundUrl: '',
+      //     backgroundColor: ''
+      //   },
+      //   activeIndex: -1,
+      //   edrawComponents: [] // 画布组件列表
+      // }
       // , {
       //   title: 'Tab 2',
       //   name: '2',
@@ -122,19 +123,20 @@ export default {
       //   edrawComponents: [] // 画布组件列表
       // }
       ],
-      tabIndex: 0,
+      // tabIndex: 0,
       designActItem: {}
     }
   },
   // 计算 属性
   computed: {
-    // tabIndex: () => {
-    //   for (var i = 0; i < this.editableTabs.length; i++) {
-    //     if (this.editableTabs[i].name === this.editableTabsValue) {
-    //       return i
-    //     }
-    //   }
-    // }
+    tabIndex: function () {
+      for (var i = 0; i < this.editableTabs.length; i++) {
+        if (this.editableTabs[i].name === this.editableTabsValue) {
+          return i
+        }
+      }
+      return 0
+    }
   },
   // 存放 方法
   methods: {
@@ -172,18 +174,6 @@ export default {
 
     handleClick (tab, event) {
       // console.log(tab, event)
-      this.setTabIndex()
-    },
-    setTabIndex () {
-      if (this.editableTabs.length > 0) {
-        for (var i = 0; i < this.editableTabs.length; i++) {
-          if (this.editableTabs[i].name === this.editableTabsValue) {
-            this.tabIndex = i
-          }
-        }
-      } else {
-        this.tabIndex = 0
-      }
     },
 
     handleTabsEdit (targetName, action) {
@@ -200,11 +190,11 @@ export default {
             backgroundUrl: '',
             backgroundColor: ''
           },
+          activeIndex: -1,
           edrawComponents: []
         }
         this.editableTabs.push(json)
         this.editableTabsValue = newTabName
-        this.setTabIndex()
       } else if (action === 'remove') {
         const tabs = this.editableTabs
         let activeName = this.editableTabsValue;
@@ -214,12 +204,13 @@ export default {
               const nextTab = tabs[index + 1] || tabs[index - 1];
               if (nextTab) {
                 activeName = nextTab.name;
+                // this.tabIndex = tabs.length < index ? index - 1 : tabs.length - 1
               }
             }
           })
         }
-        this.editableTabsValue = activeName;
         this.editableTabs = tabs.filter(tab => tab.name !== targetName);
+        this.editableTabsValue = activeName
       }
     },
     compActive: function (activeItem, active) {
