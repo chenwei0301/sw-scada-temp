@@ -27,7 +27,9 @@
           :item='item'
           @compActive=compActive
           @compOnResize=compOnResize
+          @onResizeStop=onResizeStop
           @compOnDrag=compOnDrag
+          @onDragStop=onDragStop
             ></DragComp>
         </div>
     </vue-ruler-tool>
@@ -101,8 +103,14 @@ export default {
     compOnResize: function (activeItem, para) {
       this.$emit('compOnResize', activeItem, para)
     },
+    onResizeStop: function (activeItem, para) {
+      this.$emit('onResizeStop', activeItem, para)
+    },
     compOnDrag: function (activeItem, para) {
       this.$emit('compOnDrag', activeItem, para)
+    },
+    onDragStop: function (activeItem, para) {
+      this.$emit('onDragStop', activeItem, para)
     }
   },
   // 监听 属性

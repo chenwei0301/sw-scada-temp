@@ -1,8 +1,8 @@
 <!--
  * @Author: your name
  * @Date: 2021-07-09 09:49:33
- * @LastEditTime: 2021-07-09 09:49:34
- * @LastEditors: your name
+ * @LastEditTime: 2021-07-09 16:14:57
+ * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_comps\Comp-el-image_bak.vue
 -->
@@ -174,11 +174,11 @@ export default {
   border: 1px solid black;
 }
 // 调整大小时具有自定义类名的组件
-.my-resizing-class {
+//.my-resizing-class {
     // background-color: blue;
     // border: 1px solid black;
     // color: white;
-}
+//}
 // 活动状态下具有自定义类名的组件
 .my-active-class {
   border: 1px dashed #000

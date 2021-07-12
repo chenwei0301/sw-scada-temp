@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-07-02 14:50:12
- * @LastEditTime: 2021-07-08 16:11:36
+ * @LastEditTime: 2021-07-09 16:36:44
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_comps\DragComp.vue
@@ -40,7 +40,9 @@
       :item=item
       @compActive=compActive
       @compOnResize=compOnResize
+      @onResizeStop=onResizeStop
       @compOnDrag=compOnDrag
+      @onDragStop=onDragStop
       ></comp-el-button>
 
     <comp-el-input
@@ -48,7 +50,9 @@
       :item=item
       @compActive=compActive
       @compOnResize=compOnResize
+      @onResizeStop=onResizeStop
       @compOnDrag=compOnDrag
+      @onDragStop=onDragStop
       ></comp-el-input>
 
     <comp-el-image
@@ -56,7 +60,9 @@
       :item=item
       @compActive=compActive
       @compOnResize=compOnResize
+      @onResizeStop=onResizeStop
       @compOnDrag=compOnDrag
+      @onDragStop=onDragStop
       ></comp-el-image>
 
   </div>
@@ -98,8 +104,14 @@ export default {
     compOnResize: function (activeItem, para) {
       this.$emit('compOnResize', activeItem, para)
     },
+    onResizeStop: function (activeItem, para) {
+      this.$emit('onResizeStop', activeItem, para)
+    },
     compOnDrag: function (activeItem, para) {
       this.$emit('compOnDrag', activeItem, para)
+    },
+    onDragStop: function (activeItem, para) {
+      this.$emit('onDragStop', activeItem, para)
     }
   },
   // 监听 属性

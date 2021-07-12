@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-07-06 16:51:45
- * @LastEditTime: 2021-07-09 09:56:31
+ * @LastEditTime: 2021-07-09 16:37:52
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_comps\Comp-el-image.vue
@@ -10,10 +10,10 @@
 <template>
   <vue-draggable-resizable
     class-name='my-class'
-
+    :key="item.name"
     :active.sync=item.active
-
-    :x='item.style.x - (item.style.w/2)'
+    :grid=[1,1]
+    :x='item.style.x - item.style.w/2'
     :y='item.style.y - item.style.h/2'
     :w=item.style.w
     :h=item.style.h
@@ -29,6 +29,11 @@
     :parent='false'
     :onResizeStart=onResizeStartCallback
     :onResize=onResizeCallback
+
+    :isConflictCheck="false"
+    :snap="false"
+    :snap-tolerance="10"
+
     @resizing=onResize
     @resizestop=onResizeStop
     @dragging=onDrag
@@ -36,7 +41,7 @@
 
     @activated=onActivated
     @deactivated=onDeactivated
-    :scale="0.5"
+
     >
 
     <el-image class='comp'
@@ -116,26 +121,38 @@ export default {
       return true
     },
     onResize: function (x, y, width, height) {
+      // const para = {
+      //   x: x,
+      //   y: y,
+      //   w: width,
+      //   h: height
+      // }
+      // this.$emit('compOnResize', this.item, para)
+    },
+    onResizeStop: function (x, y, width, height) {
+      console.log('onResizeStop:', x, y, width, height)
       const para = {
         x: x,
         y: y,
         w: width,
         h: height
       }
-      this.$emit('compOnResize', this.item, para)
-    },
-    onResizeStop: function (x, y, width, height) {
-      console.log('onResizeStop:', x, y, width, height)
+      this.$emit('onResizeStop', this.item, para)
     },
     onDrag: function (x, y) {
+      // const para = {
+      //   x: x,
+      //   y: y
+      // }
+      // this.$emit('compOnDrag', this.item, para)
+    },
+    onDragStop: function (x, y) {
+      console.log('onDragStop:', x, y)
       const para = {
         x: x,
         y: y
       }
-      this.$emit('compOnDrag', this.item, para)
-    },
-    onDragStop: function (x, y) {
-      console.log('onDragStop:', x, y)
+      this.$emit('onDragStop', this.item, para)
     },
     onActivated: function () {
       console.log('active:', true)

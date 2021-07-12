@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-07-06 16:32:59
- * @LastEditTime: 2021-07-08 15:39:30
+ * @LastEditTime: 2021-07-12 09:28:33
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_comps\Comp-el-button.vue
@@ -9,8 +9,9 @@
 <template>
   <vue-draggable-resizable
     class-name='vdr-comp'
+    :key="item.name"
     :active.sync=item.active
-    :grid=[10,10]
+    :grid=[1,1]
     :x='item.style.x - item.style.w/2'
     :y='item.style.y - item.style.h/2'
     :w=item.style.w
@@ -23,8 +24,20 @@
     :resizable=resizable
     :enable-native-drag=enableNativeDrag
     :z-index=zIndex
+    :axis=axis
+    :parent='false'
+    :onResizeStart=onResizeStartCallback
+    :onResize=onResizeCallback
+
+    :isConflictCheck="false"
+    :snap="false"
+    :snap-tolerance="10"
+
     @resizing=onResize
+    @resizestop=onResizeStop
     @dragging=onDrag
+    @dragstop=onDragStop
+
     >
 
     <el-button class='comp'
@@ -112,21 +125,53 @@ export default {
     }
   },
   methods: {
+    onResizeStartCallback: function (handle, ev) {
+      // console.log('onResizeStartCallback:', handle, ev)
+      return true
+    },
+    onResizeCallback: function (handle, x, y, width, height) {
+      // console.log('onResizeCallback:', handle, x, y, width, height)
+      return true
+    },
     onResize: function (left, top, width, height) {
+      // const para = {
+      //   x: left,
+      //   y: top,
+      //   w: width,
+      //   h: height
+      // }
+      // this.$emit('compOnResize', this.item, para)
+    },
+    onResizeStop: function (x, y, width, height) {
+      // console.log('onResizeStop:', x, y, width, height)
       const para = {
-        x: left,
-        y: top,
+        x: x,
+        y: y,
         w: width,
         h: height
       }
-      this.$emit('compOnResize', this.item, para)
+      this.$emit('onResizeStop', this.item, para)
     },
-    onDrag: function (left, top) {
+    onDrag: function (x, y) {
+      // const para = {
+      //   x: x,
+      //   y: y
+      // }
+      // this.$emit('compOnDrag', this.item, para)
+    },
+    onDragStop: function (x, y) {
+      // console.log('onDragStop:', x, y)
       const para = {
-        x: left,
-        y: top
+        x: x,
+        y: y
       }
-      this.$emit('compOnDrag', this.item, para)
+      this.$emit('onDragStop', this.item, para)
+    },
+    onActivated: function () {
+      console.log('active:', true)
+    },
+    onDeactivated: function () {
+      console.log('active:', false)
     }
   },
   components: {

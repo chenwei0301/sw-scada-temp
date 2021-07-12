@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-24 14:53:13
- * @LastEditTime: 2021-07-09 09:42:48
+ * @LastEditTime: 2021-07-09 14:31:47
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_Fields\Index.vue
@@ -46,7 +46,9 @@
             @selectComp="selectComp"
             @compActive=compActive
             @compOnResize=compOnResize
+            @onResizeStop=onResizeStop
             @compOnDrag=compOnDrag
+            @onDragStop=onDragStop
             />
           </el-tab-pane>
         </el-tabs>
@@ -237,14 +239,33 @@ export default {
       return -1
     },
     compOnResize: function (activeItem, para) {
+      console.log('compOnResize', para)
+      // const compIndex = this.editableTabs[this.tabIndex].activeIndex
+      // this.editableTabs[this.tabIndex].edrawComponents[compIndex].style.w = para.w
+      // this.editableTabs[this.tabIndex].edrawComponents[compIndex].style.h = para.h
+      // this.designActItem = this.editableTabs[this.tabIndex].edrawComponents[compIndex]
+    },
+    onResizeStop: function (activeItem, para) {
+      console.log('onResizeStop', para)
       const compIndex = this.editableTabs[this.tabIndex].activeIndex
       this.editableTabs[this.tabIndex].edrawComponents[compIndex].style.w = para.w
       this.editableTabs[this.tabIndex].edrawComponents[compIndex].style.h = para.h
+      this.designActItem = this.editableTabs[this.tabIndex].edrawComponents[compIndex]
     },
+
     compOnDrag: function (activeItem, para) {
+      console.log('compOnDrag', para)
+      // const compIndex = this.editableTabs[this.tabIndex].activeIndex
+      // this.editableTabs[this.tabIndex].edrawComponents[compIndex].style.x = para.x
+      // this.editableTabs[this.tabIndex].edrawComponents[compIndex].style.y = para.y
+      // this.designActItem = this.editableTabs[this.tabIndex].edrawComponents[compIndex]
+    },
+    onDragStop: function (activeItem, para) {
+      console.log('onDragStop', para)
       const compIndex = this.editableTabs[this.tabIndex].activeIndex
       this.editableTabs[this.tabIndex].edrawComponents[compIndex].style.x = para.x
       this.editableTabs[this.tabIndex].edrawComponents[compIndex].style.y = para.y
+      this.designActItem = this.editableTabs[this.tabIndex].edrawComponents[compIndex]
     }
 
   },
