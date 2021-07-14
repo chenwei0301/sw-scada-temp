@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-02 09:07:35
- * @LastEditTime: 2021-07-06 10:05:20
+ * @LastEditTime: 2021-07-14 10:34:18
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\api\design\design.js

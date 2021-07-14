@@ -1,15 +1,14 @@
 <!--
  * @Author: your name
- * @Date: 2021-07-06 16:51:45
- * @LastEditTime: 2021-07-12 15:57:07
- * @LastEditors: Please set LastEditors
+ * @Date: 2021-07-14 17:09:16
+ * @LastEditTime: 2021-07-14 17:09:17
+ * @LastEditors: your name
  * @Description: In User Settings Edit
- * @FilePath: \sw_scada_temp\src\components\Draggable_comps\Comp-el-image.vue
+ * @FilePath: \sw_scada_temp\src\components\Draggable_comps\Comp-el- inputNumber.vue
 -->
-
 <template>
   <vue-draggable-resizable
-    class-name='my-class'
+    class-name='vdr-comp'
     :key="item.name"
     :active.sync=item.active
     :grid=[1,1]
@@ -20,56 +19,37 @@
     :min-width=5
     :min-height=5
 
-    :prevent-deactivation=preventDeactivation
-    :draggable=draggable
-    :resizable=resizable
-    :enable-native-drag=enableNativeDrag
-    :z-index=zIndex
-    :axis=axis
-    :parent='false'
-    :onResizeStart=onResizeStartCallback
-    :onResize=onResizeCallback
-
-    :isConflictCheck="false"
-    :snap="false"
-    :snap-tolerance="10"
-
-    @resizing=onResize
     @resizestop=onResizeStop
-    @dragging=onDrag
     @dragstop=onDragStop
-
     >
 
-    <el-image class='comp'
-      :src=src
-      :alt=alt
-      :fit=fit
-      @load=load
-      @error=error
-      >
-      <div slot="placeholder" class="image-slot">
-        加载中<span class="dot">...</span>
-      </div>
-    </el-image>
+    <el-input-number
+      class='comp'
+      v-model="item.Value"
+      :min="min"
+      :max="max"
+      :step="step"
+      ></el-input-number>
+
   </vue-draggable-resizable>
 </template>
 <script>
 import VueDraggableResizable from 'vue-draggable-resizable'
-// import 'vue-draggable-resizable/dist/VueDraggableResizable.css'
 import '@/styles/VueDraggableResizable.css'
 export default {
-  // name: 'elImage',
+  // name: 'elButton',
   props: {
     item: Object,
-    vdrProperty: Object
+    id: String
   },
   data () {
-    return {}
+    return {
+    }
   },
   computed: {
     // 拖拽组件 vdr 属性
     active: function () {
+      console.log('computed-active:', this.item.active)
       return this.item.active
     },
     preventDeactivation: function () {
@@ -91,20 +71,38 @@ export default {
       return this.item.vdrProperty.axis
     },
 
-    // el-image组件 属性
-    src: function () {
-      return this.item.property.src
+    // el-button组件 属性
+    type: function () {
+      return this.item.property.type
     },
-    alt: function () {
-      return this.item.property.alt
+    size: function () {
+      return this.item.property.size
     },
-    fit: function () {
-      return this.item.property.fit
+    loading: function () {
+      return this.item.property.loading
+    },
+    disabled: function () {
+      return this.item.property.disabled
+    },
+    autofocus: function () {
+      return this.item.property.autofocus
+    },
+    icon: function () {
+      return this.item.property.icon
+    },
+    plain: function () {
+      return this.item.property.plain
+    },
+    round: function () {
+      return this.item.property.round
+    },
+    circle: function () {
+      return this.item.property.circle
     }
-
   },
   watch: {
     active: function (newVal, oldVal) {
+      console.log('watch:', newVal)
       this.$emit('compActive', this.item, newVal)
     }
   },
@@ -117,17 +115,17 @@ export default {
       // console.log('onResizeCallback:', handle, x, y, width, height)
       return true
     },
-    onResize: function (x, y, width, height) {
+    onResize: function (left, top, width, height) {
       // const para = {
-      //   x: x,
-      //   y: y,
+      //   x: left,
+      //   y: top,
       //   w: width,
       //   h: height
       // }
       // this.$emit('compOnResize', this.item, para)
     },
     onResizeStop: function (x, y, width, height) {
-      console.log('onResizeStop:', x, y, width, height)
+      // console.log('onResizeStop:', x, y, width, height)
       const para = {
         x: x,
         y: y,
@@ -158,14 +156,6 @@ export default {
     onDeactivated: function () {
       console.log('active:', false)
       this.$emit('compActive', this.item, false)
-    },
-    // 图片加载成功触发
-    load: function (e) {
-      // console.log('load', e)
-    },
-    // 图片加载失败触发
-    error: function (err) {
-      throw err
     }
   },
   components: {
@@ -173,12 +163,14 @@ export default {
   }
 }
 </script>
-<style lang="scss">
-// 具有自定义类名的组件
-.my-class{
+<style scoped lang="scss">
+.vdr-comp{
+  position: absolute;
   .comp{
     width: 100%;
     height: 100%;
+    padding: 0px;
+    margin: 0px;
   }
 }
 </style>

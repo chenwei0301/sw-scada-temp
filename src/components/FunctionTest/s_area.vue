@@ -3,7 +3,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-03 10:14:51
- * @LastEditTime: 2021-06-08 11:09:23
+ * @LastEditTime: 2021-07-12 10:17:57
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\FunctionTest\s_area.vue
@@ -71,8 +71,8 @@ export default {
     },
 
     async insertAreas () {
-      var areaId = '431'
-      var areaName = '测试车站431'
+      var areaId = '400'
+      var areaName = '控制中心400'
 
       const para = {
         selectFilter: '*',

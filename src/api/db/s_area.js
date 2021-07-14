@@ -3,7 +3,7 @@
 /*
  * @Author: your name
  * @Date: 2021-05-21 09:34:07
- * @LastEditTime: 2021-06-08 13:56:22
+ * @LastEditTime: 2021-07-12 10:24:58
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\api\db\s_area.js
@@ -50,8 +50,9 @@ function insertAreasSync (obj, para) {
               " VALUES(" +
               "null" + ",'" +
               para.areaId + "','" +
-              para.areaName + "','" +
-              para.updateTime + "'," +
+              para.areaName + "'," +
+              // para.updateTime + "'," +
+              "NOW()" + "," +
               para.updateTimeMs +
               ")"
   querySync(sql, function (err, vals, fields) {
@@ -88,10 +89,13 @@ async function insertAreasAsync (para) {
               " VALUES(" +
               "null" + ",'" +
               para.areaId + "','" +
-              para.areaName + "','" +
-              para.updateTime + "'," +
+              // para.areaName + "','" +
+              para.areaName + "'," +
+              // para.updateTime + "'," +
+              "NOW()" + "," +
               para.updateTimeMs +
               ")"
+  console.log('sql:', sql)
   return await queryAsync(sql)
 }
 

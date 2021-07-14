@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-07-06 16:32:59
- * @LastEditTime: 2021-07-12 09:28:33
+ * @LastEditTime: 2021-07-12 15:39:32
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_comps\Comp-el-button.vue
@@ -12,32 +12,15 @@
     :key="item.name"
     :active.sync=item.active
     :grid=[1,1]
-    :x='item.style.x - item.style.w/2'
-    :y='item.style.y - item.style.h/2'
+    :x='item.style.x'
+    :y='item.style.y'
     :w=item.style.w
     :h=item.style.h
     :min-width=5
     :min-height=5
 
-    :prevent-deactivation=preventDeactivation
-    :draggable=draggable
-    :resizable=resizable
-    :enable-native-drag=enableNativeDrag
-    :z-index=zIndex
-    :axis=axis
-    :parent='false'
-    :onResizeStart=onResizeStartCallback
-    :onResize=onResizeCallback
-
-    :isConflictCheck="false"
-    :snap="false"
-    :snap-tolerance="10"
-
-    @resizing=onResize
     @resizestop=onResizeStop
-    @dragging=onDrag
     @dragstop=onDragStop
-
     >
 
     <el-button class='comp'
@@ -60,7 +43,8 @@ import '@/styles/VueDraggableResizable.css'
 export default {
   // name: 'elButton',
   props: {
-    item: Object
+    item: Object,
+    id: String
   },
   data () {
     return {
@@ -69,6 +53,7 @@ export default {
   computed: {
     // 拖拽组件 vdr 属性
     active: function () {
+      console.log('computed-active:', this.item.active)
       return this.item.active
     },
     preventDeactivation: function () {
@@ -121,6 +106,7 @@ export default {
   },
   watch: {
     active: function (newVal, oldVal) {
+      console.log('watch:', newVal)
       this.$emit('compActive', this.item, newVal)
     }
   },
@@ -160,7 +146,7 @@ export default {
       // this.$emit('compOnDrag', this.item, para)
     },
     onDragStop: function (x, y) {
-      // console.log('onDragStop:', x, y)
+      console.log('onDragStop:', x, y)
       const para = {
         x: x,
         y: y
@@ -169,9 +155,11 @@ export default {
     },
     onActivated: function () {
       console.log('active:', true)
+      this.$emit('compActive', this.item, true)
     },
     onDeactivated: function () {
       console.log('active:', false)
+      this.$emit('compActive', this.item, false)
     }
   },
   components: {
@@ -181,6 +169,7 @@ export default {
 </script>
 <style scoped lang="scss">
 .vdr-comp{
+  position: absolute;
   .comp{
     width: 100%;
     height: 100%;

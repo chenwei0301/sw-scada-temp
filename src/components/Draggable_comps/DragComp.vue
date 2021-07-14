@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-07-02 14:50:12
- * @LastEditTime: 2021-07-09 16:36:44
+ * @LastEditTime: 2021-07-13 11:25:12
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_comps\DragComp.vue
@@ -81,7 +81,7 @@ import CompElInput from '@/components/Draggable_comps/Comp-el-input'
 import CompElImage from '@/components/Draggable_comps/Comp-el-image'
 
 export default {
-  name: 'DragComp',
+  // name: 'DragComp',
   props: {
     item: Object
   },
@@ -99,7 +99,9 @@ export default {
   // 存放 方法
   methods: {
     compActive: function (activeItem, active) {
-      this.$emit('compActive', activeItem, active)
+      if (active) {
+        this.$emit('compActive', activeItem, active)
+      }
     },
     compOnResize: function (activeItem, para) {
       this.$emit('compOnResize', activeItem, para)

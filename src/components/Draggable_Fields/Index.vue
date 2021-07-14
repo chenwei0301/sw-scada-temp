@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-24 14:53:13
- * @LastEditTime: 2021-07-09 14:31:47
+ * @LastEditTime: 2021-07-14 16:19:35
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_Fields\Index.vue
@@ -31,15 +31,17 @@
           type="card"
           editable
           @edit="handleTabsEdit"
-          @tab-click="handleClick"
           >
           <el-tab-pane
             :key="index"
             v-for="(item, index) in editableTabs"
             :label="item.title"
             :name="item.name"
+            :closable="true"
+            :lazy="true"
           >
             <Design
+            :designId=editableTabs[tabIndex].name
             :designConfings="editableTabs[tabIndex].designConfings"
             :edrawComps="editableTabs[tabIndex].edrawComponents"
             @dragComp="dragCurrentComp"
@@ -55,10 +57,15 @@
 
       </pane>
 
-      <pane min-size="1" size='10' class="pane-html" v-if="panelView.Html">
+      <pane min-size="1" size='5' class="pane-html" v-if="panelView.Html">
       </pane>
-      <pane min-size="5" size='15' class="pane-property" v-if="panelView.Property">
-        <Property :item='designActItem'/>
+      <pane min-size="5" size='20' class="pane-property" v-if="panelView.Property">
+        <Property
+        :designConfig=designActConfig
+        :property='designActItem'
+        @reSetStandardConfig=reSetStandardConfig
+        @reSetDesignConfig=reSetDesignConfig
+        />
       </pane>
     </splitpanes>
   </div>
@@ -73,6 +80,7 @@ import Design from '@/components/Draggable_Fields/Design'
 // import Tabs from '@/components/Draggable_Fields/Tabs'
 import Property from '@/components/Draggable_Fields/Property'
 import { itemProperty } from '@/api/draggable/design'
+import designConfigs from '@/components/Draggable_Fields/designConfig'
 export default {
   name: 'Draggable_Fields',
   // props 中的数据，都是只读的，无法重新赋值
@@ -99,7 +107,7 @@ export default {
       dblClickSplitter: false,
       firstSplitter: false,
 
-      editableTabsValue: '1',
+      editableTabsValue: '',
       editableTabs: [
       //   {
       //   title: 'Tab 1',
@@ -126,6 +134,7 @@ export default {
       // }
       ],
       // tabIndex: 0,
+      // designActConfig: {},
       designActItem: {}
     }
   },
@@ -134,10 +143,18 @@ export default {
     tabIndex: function () {
       for (var i = 0; i < this.editableTabs.length; i++) {
         if (this.editableTabs[i].name === this.editableTabsValue) {
+          // this.designActConfig = this.editableTabs[i].designConfings
           return i
         }
       }
-      return 0
+      return -1
+    },
+    designActConfig: function () {
+      if (this.tabIndex >= 0) {
+        return this.editableTabs[this.tabIndex].designConfings
+      } else {
+        return {}
+      }
     }
   },
   // 存放 方法
@@ -183,15 +200,19 @@ export default {
       if (action === 'add') {
         const tabLength = this.editableTabs.length
         const newTabName = tabLength + 1 + ''
+        const _designConfigs = designConfigs
+        _designConfigs.Name = 'Untitled-' + newTabName
         const json = {
           title: 'Untitled-' + newTabName,
           name: newTabName,
-          designConfings: {
-            width: 1000,
-            height: 600,
-            backgroundUrl: '',
-            backgroundColor: ''
-          },
+          designConfings: _designConfigs,
+          // designConfings: {
+          //   title: 'Untitled-' + newTabName,
+          //   width: 1000,
+          //   height: 600,
+          //   backgroundUrl: '',
+          //   backgroundColor: ''
+          // },
           activeIndex: -1,
           edrawComponents: []
         }
@@ -266,6 +287,23 @@ export default {
       this.editableTabs[this.tabIndex].edrawComponents[compIndex].style.x = para.x
       this.editableTabs[this.tabIndex].edrawComponents[compIndex].style.y = para.y
       this.designActItem = this.editableTabs[this.tabIndex].edrawComponents[compIndex]
+    },
+
+    reSetStandardConfig: function (v) {
+      console.log('reSetStandardConfig-3', v)
+      const vPro = v.Property
+      if (vPro === 'x' || vPro === 'y' || vPro === 'w' || vPro === 'h') {
+        this.designActItem.style[vPro] = v.Value
+      }
+    },
+    reSetDesignConfig: function (v) {
+      console.log('reSetDesignConfig-3', v)
+      // const dConfig = this.editableTabs[this.tabIndex].designConfings
+      if (v.Property === 'x') {
+        this.editableTabs[this.tabIndex].designConfings.Size.x = v.Value
+      } else if (v.Property === 'y') {
+        this.editableTabs[this.tabIndex].designConfings.Size.y = v.Value
+      }
     }
 
   },

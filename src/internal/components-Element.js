@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-06 14:26:24
- * @LastEditTime: 2021-07-08 15:49:21
+ * @LastEditTime: 2021-07-14 17:47:48
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\internal\components-Element.js
@@ -50,6 +50,7 @@ export default [
     label: 'Image图片',
     icon: require('@/assets/Element/el-image.png'),
     property: {
+      size: '',
       src: require('@/assets/Element/el-image.png'),
       fit: 'fill', // ['fill', 'contain', 'cover', 'none', 'scale-down']
       alt: ''
@@ -66,6 +67,7 @@ export default [
     label: 'Input输入框',
     icon: require('@/assets/Element/el-input.png'),
     property: {
+      size: '',
       type: 'text',
       placeholder: '',
       value: '',
@@ -82,6 +84,30 @@ export default [
     style: {
       w: 180,
       h: 42
+    }
+  },
+  {
+    htmlType: 'el-input-number',
+    title: 'el-input-number',
+    label: 'InputNumber计数器',
+    icon: require('@/assets/Element/el-input-number.png'),
+    property: {
+      size: '', // large, small
+      disabled: false,
+      min: 0,
+      max: 0,
+      step: 1,
+      stepStrictly: false,
+      precision: 1,
+      controls: true,
+      controlsPosition: '', // right
+      label: '',
+      placeholder: ''
+    },
+    vdrProperty: vdrProperty,
+    style: {
+      w: 100,
+      h: 100
     }
   }
 

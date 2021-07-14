@@ -1,0 +1,179 @@
+<!--
+ * @Author: your name
+ * @Date: 2021-07-14 08:59:42
+ * @LastEditTime: 2021-07-14 17:56:00
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \sw_scada_temp\src\components\Draggable_Fields\Property_Data.vue
+-->
+
+<template>
+  <div class="property_Data">
+    <el-table
+      :data="PropertyList"
+      stripe
+      border
+      lazy
+      default-expand-all
+      empty-text=" "
+      row-key="id"
+      height="600"
+      max-height="800"
+      style="width: 100%"
+      :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
+      :row-class-name="tableRowClassName"
+      @row-click="rowDetail"
+      >
+      <el-table-column
+        prop="Property"
+        label="Property"
+        width="160">
+      </el-table-column>
+      <el-table-column
+        prop="Value"
+        label="Value"
+        width="130">
+      </el-table-column>
+    </el-table>
+  </div>
+</template>
+
+<script>
+
+export default {
+  // name: 'property_Data',
+
+  props: {
+    property: Object
+    // ...
+  },
+  // 存放 数据
+  data () {
+    return {
+      moder: [
+        { value: 'true' },
+        { value: 'false' }
+      ],
+      tableData: [
+        {
+          id: '1',
+          Property: 'name',
+          Value: 'el-button1'
+        },
+        {
+          id: '2',
+          Property: 'name',
+          Value: 'el-button2',
+          children: [{
+            id: 31,
+            Property: 'name',
+            Value: 'el-button5'
+          }, {
+            id: 32,
+            Property: 'name',
+            Value: 'el-button4'
+          }]
+        },
+        {
+          id: '3',
+          Property: 'name',
+          Value: 'el-button3'
+        }
+      ]
+    }
+  },
+  // 计算 属性
+  computed: {
+    PropertyList: function () {
+      return this.getPropertyList(this.property)
+    }
+  },
+  // 存放 方法
+  methods: {
+    tableRowClassName () {
+      return 'design-row'
+    },
+    addSubList: function (id, obj) {
+      const arr = []
+      const arrKey = Object.keys(obj)
+      for (var i = 0; i < arrKey.length; i++) {
+        const element = obj[arrKey[i]]
+        if (typeof (element) !== 'object') {
+          arr.push({ id: id + '-' + String(i), Property: arrKey[i], Value: String(element) })
+        }
+      }
+      return arr
+    },
+    getPropertyList: function (obj) {
+      const list = []
+      const arrKey = Object.keys(obj)
+      for (var i = 0; i < arrKey.length; i++) {
+        const element = arrKey[i]
+        if (typeof (obj[element]) === 'object') {
+          list.push({ id: String(i), Property: element, Value: '', children: this.addSubList(String(i), obj[element]) })
+        } else {
+          list.push({ id: String(i), Property: element, Value: String(obj[element]) })
+        }
+      }
+      return list
+    },
+    rowDetail: function (row) {
+      console.log('row:', row)
+    }
+  },
+  // 监听 属性
+  watch: {
+  },
+  // 存放 过滤器
+  filters: {},
+  // 自定义 私有指令
+  directives: {},
+  // 存放 子组件
+  components: {
+  },
+  /*  生命周期函数  */
+  // 创建期间
+  beforeCreate () {},
+  created () {},
+  beforeMount () {
+  },
+  mounted () {},
+  // 运行期间
+  beforeUpdate () {},
+  updated () {},
+  // 被 keep-alive 缓存的组件激活时调用
+  activated () {},
+  // 被 keep-alive 缓存的组件停用时调用
+  deactivated () {},
+  // 销毁时期
+  beforeDestroy () {},
+  destroyed () {},
+  // 当捕获一个来自子孙组件的错误时被调用。
+  // eslint-disable-next-line handle-callback-err
+  errorCaptured: (err, vm, info) => {}
+}
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style lang="scss">
+.property_Data{
+  width: 100%;
+  height: 100%;
+  .standard-row {
+    // color: rgba(61, 59, 59, 0.377);
+    font-size: 12px;
+  }
+  .el-table .standard-row > td{
+    padding: 1px;
+  }
+  .el-table td, .el-table th{
+    padding: 1px;
+  }
+  .el-table .cell, .el-table--border td:first-child .cell, .el-table--border th:first-child .cell{
+    padding: 0;
+  }
+  .el-table__indent {
+    padding: 0;
+  }
+}
+</style>
