@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-28 09:09:39
- * @LastEditTime: 2021-07-14 10:27:04
+ * @LastEditTime: 2021-07-16 16:43:31
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_Fields\Design.vue
@@ -20,13 +20,13 @@
           :style="designStyle"
           >
           <DragComp
-          v-for="(item, index) in edrawComps"
-          :key="index"
-          :item='item'
-          class="dragComp"
-          @compActive=compActive
-          @onResizeStop=onResizeStop
-          @onDragStop=onDragStop
+            v-for="(item, index) in edrawComps"
+            :key="index"
+            :item='item'
+            class="dragComp"
+            @compActive=compActive
+            @onResizeStop=onResizeStop
+            @onDragStop=onDragStop
             ></DragComp>
 
         </div>
@@ -70,7 +70,7 @@ export default {
       return val
     },
     designBackgroundColor: function () {
-      const bgColor = this.designConfings.PanelBackground.backgroundColor
+      const bgColor = this.designConfings.PanelBack.backgroundColor
       const val = bgColor !== '' ? bgColor : '#F0F0F0'
       return val
     },
@@ -78,7 +78,7 @@ export default {
       const style = {
         width: this.designConfings.Size.x + 'px',
         height: this.designConfings.Size.y + 'px',
-        backgroundColor: this.designConfings.PanelBackground.backgroundColor
+        backgroundColor: this.designConfings.PanelBack.backgroundColor
       }
       return style
     }
@@ -87,11 +87,9 @@ export default {
   // 存放 方法
   methods: {
     drop (e) {
-      // console.log('drop:')
       this.$emit('selectComp', e);
     },
     dragover (e) {
-      // console.log('dragover:', e)
       e.preventDefault() // 阻止默认不可拖入
     },
     dragComp (event, item, type, index) {

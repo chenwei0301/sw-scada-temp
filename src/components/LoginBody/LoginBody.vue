@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-02-01 10:19:36
- * @LastEditTime: 2021-06-25 13:47:00
+ * @LastEditTime: 2021-07-16 15:06:30
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \swiscs_3d\src\components\LoginBody\LoginBody.vue
@@ -61,7 +61,9 @@
 
     <el-button @click.prevent="handleLogin" class="login-btn" type="primary">登 录</el-button>
 
+<!--
     <el-button @click.prevent="full" class="login-btn" type="primary">full</el-button>
+-->
 
     <FooterCopyright class="login-copyright"></FooterCopyright>
 

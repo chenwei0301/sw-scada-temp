@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-24 14:53:13
- * @LastEditTime: 2021-07-14 16:19:35
+ * @LastEditTime: 2021-07-16 17:40:12
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_Fields\Index.vue
@@ -64,7 +64,8 @@
         :designConfig=designActConfig
         :property='designActItem'
         @reSetStandardConfig=reSetStandardConfig
-        @reSetDesignConfig=reSetDesignConfig
+        @designConfigChange=designConfigChange
+        @standardConfigChange=standardConfigChange
         />
       </pane>
     </splitpanes>
@@ -77,10 +78,9 @@ import { Splitpanes, Pane } from 'splitpanes'
 import '@/styles/splitpanes.css'
 import Toolbox from '@/components/Draggable_Fields/Toolbox'
 import Design from '@/components/Draggable_Fields/Design'
-// import Tabs from '@/components/Draggable_Fields/Tabs'
 import Property from '@/components/Draggable_Fields/Property'
-import { itemProperty } from '@/api/draggable/design'
-import designConfigs from '@/components/Draggable_Fields/designConfig'
+import DesignApi from '@/api/draggable/design'
+
 export default {
   name: 'Draggable_Fields',
   // props 中的数据，都是只读的，无法重新赋值
@@ -89,7 +89,6 @@ export default {
     msg: {
       default: 'Draggable_Fields 1'
     }
-    // ...
   },
   // 创建实例时传递 props。主要作用是方便测试。
   // propsData: {},
@@ -121,17 +120,6 @@ export default {
       //   activeIndex: -1,
       //   edrawComponents: [] // 画布组件列表
       // }
-      // , {
-      //   title: 'Tab 2',
-      //   name: '2',
-      //   designConfings: { // 画布属性
-      //     width: 800,
-      //     height: 600,
-      //     backgroundUrl: '',
-      //     backgroundColor: ''
-      //   },
-      //   edrawComponents: [] // 画布组件列表
-      // }
       ],
       // tabIndex: 0,
       // designActConfig: {},
@@ -143,7 +131,6 @@ export default {
     tabIndex: function () {
       for (var i = 0; i < this.editableTabs.length; i++) {
         if (this.editableTabs[i].name === this.editableTabsValue) {
-          // this.designActConfig = this.editableTabs[i].designConfings
           return i
         }
       }
@@ -180,7 +167,7 @@ export default {
     },
     async selectComp (e) {
       e.preventDefault()
-      const item = await itemProperty(this, e)
+      const item = await DesignApi.itemProperty(this, e)
       console.log('await-item:', item)
       this.editableTabs[this.tabIndex].edrawComponents.push(item)
     },
@@ -196,46 +183,9 @@ export default {
     },
 
     handleTabsEdit (targetName, action) {
-      // console.log(targetName, action)
-      if (action === 'add') {
-        const tabLength = this.editableTabs.length
-        const newTabName = tabLength + 1 + ''
-        const _designConfigs = designConfigs
-        _designConfigs.Name = 'Untitled-' + newTabName
-        const json = {
-          title: 'Untitled-' + newTabName,
-          name: newTabName,
-          designConfings: _designConfigs,
-          // designConfings: {
-          //   title: 'Untitled-' + newTabName,
-          //   width: 1000,
-          //   height: 600,
-          //   backgroundUrl: '',
-          //   backgroundColor: ''
-          // },
-          activeIndex: -1,
-          edrawComponents: []
-        }
-        this.editableTabs.push(json)
-        this.editableTabsValue = newTabName
-      } else if (action === 'remove') {
-        const tabs = this.editableTabs
-        let activeName = this.editableTabsValue;
-        if (activeName === targetName) {
-          tabs.forEach((tab, index) => {
-            if (tab.name === targetName) {
-              const nextTab = tabs[index + 1] || tabs[index - 1];
-              if (nextTab) {
-                activeName = nextTab.name;
-                // this.tabIndex = tabs.length < index ? index - 1 : tabs.length - 1
-              }
-            }
-          })
-        }
-        this.editableTabs = tabs.filter(tab => tab.name !== targetName);
-        this.editableTabsValue = activeName
-      }
+      DesignApi.handleDesignTabsEdit(this, targetName, action)
     },
+
     compActive: function (activeItem, active) {
       // console.log('get3:', activeItem)
       // ... 向toolbox 传控件属性
@@ -297,13 +247,17 @@ export default {
       }
     },
     reSetDesignConfig: function (v) {
-      console.log('reSetDesignConfig-3', v)
-      // const dConfig = this.editableTabs[this.tabIndex].designConfings
-      if (v.Property === 'x') {
-        this.editableTabs[this.tabIndex].designConfings.Size.x = v.Value
-      } else if (v.Property === 'y') {
-        this.editableTabs[this.tabIndex].designConfings.Size.y = v.Value
-      }
+      DesignApi.reSetDesignConfig(this, v)
+      // if (v.Property === 'x') {
+      //   this.editableTabs[this.tabIndex].designConfings.Size.x = v.Value
+      // } else if (v.Property === 'y') {
+      //   this.editableTabs[this.tabIndex].designConfings.Size.y = v.Value
+      // }
+    },
+    standardConfigChange (v) {
+    },
+    designConfigChange (v) {
+      DesignApi.designConfigChange(this, v)
     }
 
   },

@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-07-12 17:06:39
- * @LastEditTime: 2021-07-15 10:49:25
+ * @LastEditTime: 2021-07-16 17:40:53
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_Fields\Property_Standard.vue
@@ -55,7 +55,7 @@
           <el-input-number
             v-else-if='InputNumberProperty.indexOf(scope.row.Property)>=0'
             v-model="scope.row.Value"
-            @change="handleChange(scope.row)"
+            @change="standardConfigChange(scope.row)"
             size="small"
             label=""
             :min="1"
@@ -142,7 +142,7 @@ export default {
     rowDetail: function (row) {
       // console.log('row:', row)
     },
-    handleChange (v) {
+    standardConfigChange (v) {
       console.log(v)
       this.$emit('reSetStandardConfig', v)
     }

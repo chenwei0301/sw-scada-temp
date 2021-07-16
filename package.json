@@ -1,10 +1,10 @@
 {
   "name": "sw_scada_temp",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "author": "WillChen",
   "repository": "https://github.com/chenwei0301/sw-scada-temp.git",
-  "description": "SunWin SCADA OA",
+  "description": "SW-HMI-IDE V1.0",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",

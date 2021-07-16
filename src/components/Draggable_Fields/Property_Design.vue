@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-07-13 17:16:58
- * @LastEditTime: 2021-07-14 17:02:26
+ * @LastEditTime: 2021-07-16 17:34:26
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_Fields\Property_Design.vue
@@ -40,44 +40,56 @@
             v-if='spanProperty.indexOf(scope.row.Property)>=0'
             size="small"
             >{{scope.row.Value}}
-            </span>
+          </span>
 
           <el-select
             v-else-if='selectProperty.indexOf(scope.row.Property)>=0' v-model="scope.row.Value"
             placeholder=""
             size="small"
+            @change="designConfigChange(scope.row)"
             >
             <el-option v-for="item in backGroundType"
                       :key="item.value"
                       :label="item.label"
                       :value="item.value">
             </el-option>
-            </el-select>
+          </el-select>
 
-            <el-input-number
+          <el-input-number
             v-else-if='InputNumberProperty.indexOf(scope.row.Property)>=0'
             v-model="scope.row.Value"
-            @change="handleChange(scope.row)"
+            @change="designConfigChange(scope.row)"
             size="small"
             label=""
             :min="0"
             controls-position="right"
             >
-            </el-input-number>
+          </el-input-number>
 
             <!-- <el-cascader v-else-if="scope.row.Property==='ActiveLayer'"
               v-model="scope.row.Value"
               :options="layerOption"
               :props='{ multiple: true }'
-              @change="ActiveLayerChange"
+              @change="designConfigChange(scope.row)"
               >
               </el-cascader> -->
 
-            <el-input
-              v-else
-              v-model="scope.row.Value"
-              size="small"
-              ></el-input>
+          <el-color-picker
+            v-else-if="scope.row.Property==='backgroundColor'"
+            v-model="scope.row.Value"
+            show-alpha
+            size='mini'
+            @change="designConfigChange(scope.row)"
+            >
+          </el-color-picker>
+
+          <el-input
+            v-else
+            v-model="scope.row.Value"
+            @change="designConfigChange(scope.row)"
+            size="small"
+            >
+          </el-input>
 
         </template>
       </el-table-column>
@@ -87,6 +99,7 @@
 </template>
 
 <script>
+import DesignApi from '@/api/draggable/design'
 
 export default {
   // name: 'Property_Design',
@@ -102,7 +115,7 @@ export default {
         { value: 'picture', label: '图片' },
         { value: 'groundColor', label: '背景色' }
       ],
-      spanProperty: ['Size', 'PanelBackground'],
+      spanProperty: ['Size', 'PanelBack', 'designId'],
       InputNumberProperty: ['x', 'y'],
       selectProperty: ['type'],
       layerOption: [{
@@ -135,7 +148,7 @@ export default {
   // 计算 属性
   computed: {
     PropertyList: function () {
-      return this.getPropertyList(this.property)
+      return DesignApi.getPropertyList(this.property)
     }
   },
   // 存放 方法
@@ -143,41 +156,11 @@ export default {
     tableRowClassName () {
       return 'design-row'
     },
-    addSubList: function (id, obj) {
-      const arr = []
-      const arrKey = Object.keys(obj)
-      for (var i = 0; i < arrKey.length; i++) {
-        const element = obj[arrKey[i]]
-        if (typeof (element) !== 'object') {
-          arr.push({ id: id + '-' + String(i), Property: arrKey[i], Value: String(element) })
-        }
-      }
-      return arr
-    },
-    getPropertyList: function (obj) {
-      const list = []
-      const arrKey = Object.keys(obj)
-      for (var i = 0; i < arrKey.length; i++) {
-        const element = arrKey[i]
-        if (typeof (obj[element]) === 'object') {
-          list.push({ id: String(i), Property: element, Value: '', children: this.addSubList(String(i), obj[element]) })
-        } else {
-          list.push({ id: String(i), Property: element, Value: String(obj[element]) })
-        }
-      }
-      return list
-    },
     rowDetail: function (row) {
       // console.log('row:', row)
     },
-    handleChange (v) {
-      if (this.InputNumberProperty.indexOf(v.Property) >= 0) {
-        console.log('reSetDesignConfig-1', v)
-        this.$emit('reSetDesignConfig', v)
-      }
-    },
-    ActiveLayerChange (v) {
-      console.log('ActiveLayerChange:', v)
+    designConfigChange (v) {
+      this.$emit('designConfigChange', v)
     }
   },
   // 监听 属性
