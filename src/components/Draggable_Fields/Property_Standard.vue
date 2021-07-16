@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-07-12 17:06:39
- * @LastEditTime: 2021-07-14 17:55:20
+ * @LastEditTime: 2021-07-15 10:49:25
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_Fields\Property_Standard.vue
@@ -45,7 +45,7 @@
             placeholder="请选择"
             size="small"
             >
-            <el-option v-for="item in moder"
+            <el-option v-for="item in Boolean_Options"
                       :key="item.value"
                       :label="item.value"
                       :value="item.value">
@@ -87,9 +87,16 @@ export default {
   // 存放 数据
   data () {
     return {
-      moder: [
+      Boolean_Options: [
         { value: 'true' },
         { value: 'false' }
+      ],
+      compSize_Options: [
+        { value: '' },
+        { value: 'mini' },
+        { value: 'small' },
+        { value: 'medium' },
+        { value: 'large' }
       ],
       spanProperty: ['htmlType', 'property', 'vdrProperty', 'style', 'size'],
       selectProperty: ['default', 'plain', 'round', 'circle', 'type', 'loading', 'disabled', 'autofocus', 'draggable', 'resizable', 'enableNativeDrag', 'axis', 'position', 'isApplyShadow', 'isFixed'],

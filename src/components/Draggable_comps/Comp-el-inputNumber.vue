@@ -1,10 +1,10 @@
 <!--
  * @Author: your name
  * @Date: 2021-07-14 17:09:16
- * @LastEditTime: 2021-07-14 17:09:17
- * @LastEditors: your name
+ * @LastEditTime: 2021-07-15 10:32:59
+ * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
- * @FilePath: \sw_scada_temp\src\components\Draggable_comps\Comp-el- inputNumber.vue
+ * @FilePath: \sw_scada_temp\src\components\Draggable_comps\Comp-el-inputNumber.vue
 -->
 <template>
   <vue-draggable-resizable
@@ -26,9 +26,17 @@
     <el-input-number
       class='comp'
       v-model="item.Value"
-      :min="min"
-      :max="max"
-      :step="step"
+      :size='size'
+      :disabled='disabled'
+      :min='min'
+      :max='max'
+      :step='step'
+      :step-strictly='stepStrictly'
+      :precision='precision'
+      :controls='controls'
+      :controls-position='controlsPosition'
+      :label='label'
+      :placeholder='placeholder'
       ></el-input-number>
 
   </vue-draggable-resizable>
@@ -72,32 +80,38 @@ export default {
     },
 
     // el-button组件 属性
-    type: function () {
-      return this.item.property.type
-    },
     size: function () {
       return this.item.property.size
-    },
-    loading: function () {
-      return this.item.property.loading
     },
     disabled: function () {
       return this.item.property.disabled
     },
-    autofocus: function () {
-      return this.item.property.autofocus
+    min: function () {
+      return this.item.property.min
     },
-    icon: function () {
-      return this.item.property.icon
+    max: function () {
+      return this.item.property.max
     },
-    plain: function () {
-      return this.item.property.plain
+    step: function () {
+      return this.item.property.step
     },
-    round: function () {
-      return this.item.property.round
+    stepStrictly: function () {
+      return this.item.property.stepStrictly
     },
-    circle: function () {
-      return this.item.property.circle
+    precision: function () {
+      return this.item.property.precision
+    },
+    controls: function () {
+      return this.item.property.controls
+    },
+    controlsPosition: function () {
+      return this.item.property.controlsPosition
+    },
+    label: function () {
+      return this.item.property.label
+    },
+    placeholder: function () {
+      return this.item.property.placeholder
     }
   },
   watch: {
@@ -163,14 +177,26 @@ export default {
   }
 }
 </script>
-<style scoped lang="scss">
+<style lang="scss">
 .vdr-comp{
   position: absolute;
   .comp{
     width: 100%;
     height: 100%;
-    padding: 0px;
-    margin: 0px;
+    .el-input {
+      height: 100%;
+      input {
+        height: 100%;
+      }
+    }
+    // padding: 0px;
+    // margin: 0px;
+    // .el-input--small .el-input__inner {
+    //   height: 32px !important;
+    // }
+    // .el-input__inner {
+    //   height: 100% !important;
+    // }
   }
 }
 </style>

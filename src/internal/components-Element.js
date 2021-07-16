@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-06 14:26:24
- * @LastEditTime: 2021-07-14 17:47:48
+ * @LastEditTime: 2021-07-15 10:28:36
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\internal\components-Element.js
@@ -100,14 +100,14 @@ export default [
       stepStrictly: false,
       precision: 1,
       controls: true,
-      controlsPosition: '', // right
+      controlsPosition: 'right', // right
       label: '',
       placeholder: ''
     },
     vdrProperty: vdrProperty,
     style: {
-      w: 100,
-      h: 100
+      w: 140,
+      h: 40
     }
   }
 

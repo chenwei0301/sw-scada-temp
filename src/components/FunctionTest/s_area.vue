@@ -3,7 +3,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-03 10:14:51
- * @LastEditTime: 2021-07-12 10:17:57
+ * @LastEditTime: 2021-07-15 15:40:49
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\FunctionTest\s_area.vue
@@ -64,7 +64,8 @@ export default {
       console.log('whereAreas')
       const para = {
         selectFilter: '*',
-        whereFilter: "area_id='410' or area_name='测试车站'"
+        // whereFilter: "area_id='410' or area_name='测试车站'"
+        whereFilter: 'true limit 1, 20'
       }
       var ret = await sArea.whereAreasAsync(para)
       console.info(ret, ret.length)

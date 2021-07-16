@@ -3,7 +3,7 @@
 /*
  * @Author: your name
  * @Date: 2021-05-21 09:34:07
- * @LastEditTime: 2021-07-12 10:24:58
+ * @LastEditTime: 2021-07-15 15:38:46
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\api\db\s_area.js
@@ -33,8 +33,8 @@ async function whereAreasAsync (para) {
   const sql = "select " +
               para.selectFilter +
               " from " + tableName.area +
-              " where " + para.whereFilter +
-              " order by area_id ASC"
+              " where " + para.whereFilter + ''
+  // " order by area_id ASC"
   return await queryAsync(sql)
 }
 

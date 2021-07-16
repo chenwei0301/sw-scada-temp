@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-07-02 14:50:12
- * @LastEditTime: 2021-07-13 11:25:12
+ * @LastEditTime: 2021-07-15 09:55:58
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_comps\DragComp.vue
@@ -65,6 +65,16 @@
       @onDragStop=onDragStop
       ></comp-el-image>
 
+    <comp-el-inputNumber
+      v-if="item.htmlType==='el-input-number'"
+      :item=item
+      @compActive=compActive
+      @compOnResize=compOnResize
+      @onResizeStop=onResizeStop
+      @compOnDrag=compOnDrag
+      @onDragStop=onDragStop
+      ></comp-el-inputNumber>
+
   </div>
 
 </template>
@@ -79,6 +89,7 @@ import CompTextarea from '@/components/Draggable_comps/Comp-textarea'
 import CompElButton from '@/components/Draggable_comps/Comp-el-button'
 import CompElInput from '@/components/Draggable_comps/Comp-el-input'
 import CompElImage from '@/components/Draggable_comps/Comp-el-image'
+import CompElInputNumber from '@/components/Draggable_comps/Comp-el-inputNumber'
 
 export default {
   // name: 'DragComp',
@@ -132,7 +143,8 @@ export default {
 
     CompElButton,
     CompElInput,
-    CompElImage
+    CompElImage,
+    CompElInputNumber
   },
   /*  生命周期函数  */
   // 创建期间
