@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-07-13 17:16:58
- * @LastEditTime: 2021-07-16 17:34:26
+ * @LastEditTime: 2021-07-20 09:16:48
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_Fields\Property_Design.vue
@@ -31,6 +31,12 @@
       </el-table-column>
 
       <el-table-column
+        prop=""
+        label=""
+        width="20">
+      </el-table-column>
+
+      <el-table-column
         prop="Value"
         label="Value"
         width="130"
@@ -56,6 +62,7 @@
           </el-select>
 
           <el-input-number
+            :style="{width:'100%'}"
             v-else-if='InputNumberProperty.indexOf(scope.row.Property)>=0'
             v-model="scope.row.Value"
             @change="designConfigChange(scope.row)"
@@ -74,20 +81,35 @@
               >
               </el-cascader> -->
 
+          <div v-else-if="scope.row.Property==='backgroundColor'">
+          <el-color-picker
+            v-model="scope.row.Value"
+            show-alpha
+            size='mini'
+            @change="designConfigChange(scope.row)"
+            :style="{top:'7px'}"
+            >
+          </el-color-picker>
+          <span>{{scope.row.Value}}</span>
+          </div>
+<!--
           <el-color-picker
             v-else-if="scope.row.Property==='backgroundColor'"
             v-model="scope.row.Value"
             show-alpha
             size='mini'
             @change="designConfigChange(scope.row)"
+            :style="{top:'7px'}"
             >
           </el-color-picker>
+-->
 
           <el-input
             v-else
             v-model="scope.row.Value"
             @change="designConfigChange(scope.row)"
             size="small"
+            @dblclick.native = "setBackUrl"
             >
           </el-input>
 
@@ -111,6 +133,7 @@ export default {
   // 存放 数据
   data () {
     return {
+      hiddenProperty: ['designId', 'ActiveLayer', 'backgroundUrl', 'backgroundColor'],
       backGroundType: [
         { value: 'picture', label: '图片' },
         { value: 'groundColor', label: '背景色' }
@@ -142,13 +165,21 @@ export default {
       }, {
         value: '8',
         label: '8层'
-      }]
+      }],
+      list: []
     }
   },
   // 计算 属性
   computed: {
     PropertyList: function () {
-      return DesignApi.getPropertyList(this.property)
+      var temp = DesignApi.getPropertyList(this.property)
+      temp.forEach(element => {
+        element.visible = this.hiddenProperty.indexOf(element.Property) >= 0 ? 0 : 1
+      })
+      // return temp.filter((element) => {
+      //   return element.visible === 1
+      // })
+      return temp
     }
   },
   // 存放 方法
@@ -161,6 +192,27 @@ export default {
     },
     designConfigChange (v) {
       this.$emit('designConfigChange', v)
+    },
+    setBackUrl: function (v) {
+      console.log('setBackUrl:', v)
+      this.$electron.remote.dialog
+        .showOpenDialog({
+          title: '选择图片',
+          defaultPath: this.$path.resolve(__dirname),
+          properties: ['openFile', 'createDirectory'],
+          filters: [
+            { name: 'Images', extensions: ['jpg', 'png'] }
+          ]
+        }).then(result => {
+          console.log(result)
+          const temp = Object.values(result.filePaths)
+          console.log(temp)
+
+          // const list = this.PropertyList.filter((element) => { return element.Property === 'backgroundUrl' })
+          // console.log(list)
+        }).catch(err => {
+          console.log(err)
+        })
     }
   },
   // 监听 属性
@@ -201,6 +253,9 @@ export default {
 .Property_Design{
   width: 100%;
   height: 100%;
+  .einClass {
+    width: 100%;
+  }
   .design-row {
     // color: rgba(61, 59, 59, 0.377);
     font-size: 12px;

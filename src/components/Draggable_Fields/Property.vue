@@ -17,7 +17,7 @@
     <el-tab-pane label="标准属性" name="standard">
       <PropertyStandard
       :property=property
-      @reSetStandardConfig=reSetStandardConfig
+      @standardConfigChange=standardConfigChange
       ></PropertyStandard>
     </el-tab-pane>
 
@@ -67,9 +67,8 @@ export default {
     handleClick (tab, event) {
       // console.log(tab, event);
     },
-    reSetStandardConfig: function (v) {
-      console.log('reSetStandardConfig-2', v)
-      this.$emit('reSetStandardConfig', v)
+    standardConfigChange: function (v) {
+      this.$emit('standardConfigChange', v)
     },
     designConfigChange (v) {
       this.$emit('designConfigChange', v)

@@ -2,7 +2,7 @@
   "name": "sw_scada_temp",
   "version": "1.0.0",
   "private": true,
-  "author": "WillChen",
+  "author": "SunWin",
   "repository": "https://github.com/chenwei0301/sw-scada-temp.git",
   "description": "SW-HMI-IDE V1.0",
   "scripts": {

@@ -1,11 +1,12 @@
 /*
  * @Author: your name
  * @Date: 2021-07-02 09:07:35
- * @LastEditTime: 2021-07-16 17:38:13
+ * @LastEditTime: 2021-07-21 17:44:31
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
- * @FilePath: \sw_scada_temp\src\api\design\design.js
+ * @FilePath: \sw_scada_temp\src\api\draggable\design.js
  */
+import proElButtonApi from '@/api/draggable/property_elButton'
 
 const itemProperty = function (obj, e) {
   return new Promise((resolve, reject) => {
@@ -21,36 +22,46 @@ const itemProperty = function (obj, e) {
     const {
       w,
       h,
-      borderRadius,
-      rotate,
-      borderWidth,
+      // borderRadius,
+      // rotate,
+      // borderWidth,
       background,
-      isApplyShadow,
-      bgiBool,
+      // isApplyShadow,
+      // bgiBool,
       color,
       border,
-      opacity,
+      fontSize,
+      fontFamily,
+      fontStyle,
+      // opacity,
       x,
-      y
+      y,
+      customCss,
+      zIndex
     } = item.style
     var _style = {
       w: w || 100,
       h: h || 100,
-      position: 'absolute',
+      // position: 'absolute',
       y: y,
       x: x,
-      drag_start_x: 0, // 拖拽相对
-      drag_start_y: 0,
+      // drag_start_x: 0, // 拖拽相对
+      // drag_start_y: 0,
       color: color || '',
       border: border || '',
-      borderWidth: borderWidth || 0,
+      fontSize: fontSize || 14,
+      fontFamily: fontFamily || 'auto',
+      fontStyle: fontStyle || 'normal',
+      // borderWidth: borderWidth || 0,
       background: background || '',
-      borderRadius: borderRadius || 0,
-      rotate: rotate || 0,
-      isApplyShadow: (isApplyShadow === undefined || isApplyShadow === null) ? 'true' : 'false',
-      bgiBool: bgiBool || false, // 材质
-      opacity: opacity || 1,
-      isFixed: 'false'
+      // borderRadius: borderRadius || 0,
+      // rotate: rotate || 0,
+      customCss: customCss || '',
+      zIndex: zIndex || 1
+      // isApplyShadow: (isApplyShadow === undefined || isApplyShadow === null) ? 'true' : 'false',
+      // bgiBool: bgiBool || false, // 材质
+      // opacity: opacity || 1,
+      // isFixed: 'false'
     }
     item.active = false
     item.style = _style
@@ -73,7 +84,6 @@ const handleDesignTabsEdit = function (obj, targetName, action) {
     const json = {
       title: 'Untitled-' + newTabName,
       name: newTabName,
-      // designConfings: _designConfigs,
       designConfings: {
         designId: newTabName,
         Name: 'Untitled-' + newTabName,
@@ -87,7 +97,6 @@ const handleDesignTabsEdit = function (obj, targetName, action) {
           backgroundColor: ''
         },
         ActiveLayer: '11111111'
-        // ActiveLayer: []
       },
       activeIndex: -1,
       edrawComponents: []
@@ -122,14 +131,19 @@ const reSetDesignConfig = function (obj, v) {
 }
 
 const backColorChange = function (obj, v) {
-  obj.editableTabs[obj.tabIndex].designConfings.PanelBack.backgroundColor = v.Value
+  // if (v.Value === null) {
+  //   obj.editableTabs[obj.tabIndex].designConfings.PanelBack.backgroundColor = ''
+  // } else {
+  //   obj.editableTabs[obj.tabIndex].designConfings.PanelBack.backgroundColor = v.Value
+  // }
+  obj.editableTabs[obj.tabIndex].designConfings.PanelBack.backgroundColor = v.Value || ''
 }
 
 const activeLayerChange = function (obj, v) {
   obj.editableTabs[obj.tabIndex].designConfings.ActiveLayer = v.Value
 }
 
-const densignNameChange = function (obj, v) {
+const designNameChange = function (obj, v) {
   obj.editableTabs[obj.tabIndex].designConfings.Name = v.Value
   obj.editableTabs[obj.tabIndex].title = v.Value
 }
@@ -156,7 +170,7 @@ const designConfigChange = function (obj, v) {
       break
     }
     case 'Name': {
-      densignNameChange(obj, v)
+      designNameChange(obj, v)
       break
     }
     case 'ActiveLayer': {
@@ -192,9 +206,30 @@ const getPropertyList = function (obj) {
   return list
 }
 
+const getPropertyListDependHtmltype = function (obj) {
+  let propertyList = []
+  switch (obj.htmlType) {
+    case 'el-button': {
+      propertyList = proElButtonApi.getPropertyList(obj)
+      break
+    }
+    case 'el-image': {
+      break
+    }
+    case 'el-input': {
+      break
+    }
+    case 'el-input-number': {
+      break
+    }
+  }
+  return propertyList
+}
+
 export default {
   itemProperty,
   handleDesignTabsEdit,
   designConfigChange,
-  getPropertyList
+  getPropertyList,
+  getPropertyListDependHtmltype
 }

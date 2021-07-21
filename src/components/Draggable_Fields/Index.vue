@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-24 14:53:13
- * @LastEditTime: 2021-07-16 17:40:12
+ * @LastEditTime: 2021-07-21 15:14:40
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_Fields\Index.vue
@@ -63,7 +63,6 @@
         <Property
         :designConfig=designActConfig
         :property='designActItem'
-        @reSetStandardConfig=reSetStandardConfig
         @designConfigChange=designConfigChange
         @standardConfigChange=standardConfigChange
         />
@@ -80,6 +79,7 @@ import Toolbox from '@/components/Draggable_Fields/Toolbox'
 import Design from '@/components/Draggable_Fields/Design'
 import Property from '@/components/Draggable_Fields/Property'
 import DesignApi from '@/api/draggable/design'
+import PropertyApi from '@/api/draggable/property'
 
 export default {
   name: 'Draggable_Fields',
@@ -100,29 +100,13 @@ export default {
         Design: true,
         Html: true,
         Property: true
-
       },
       title: 'Draggable_Fields',
       dblClickSplitter: false,
       firstSplitter: false,
 
       editableTabsValue: '',
-      editableTabs: [
-      //   {
-      //   title: 'Tab 1',
-      //   name: '1',
-      //   designConfings: { // 画布属性
-      //     width: 1000,
-      //     height: 600,
-      //     backgroundUrl: '',
-      //     backgroundColor: ''
-      //   },
-      //   activeIndex: -1,
-      //   edrawComponents: [] // 画布组件列表
-      // }
-      ],
-      // tabIndex: 0,
-      // designActConfig: {},
+      editableTabs: [],
       designActItem: {}
     }
   },
@@ -187,7 +171,6 @@ export default {
     },
 
     compActive: function (activeItem, active) {
-      // console.log('get3:', activeItem)
       // ... 向toolbox 传控件属性
       if (active) {
         const compIndex = this.getActiveIndex(activeItem)
@@ -211,10 +194,6 @@ export default {
     },
     compOnResize: function (activeItem, para) {
       console.log('compOnResize', para)
-      // const compIndex = this.editableTabs[this.tabIndex].activeIndex
-      // this.editableTabs[this.tabIndex].edrawComponents[compIndex].style.w = para.w
-      // this.editableTabs[this.tabIndex].edrawComponents[compIndex].style.h = para.h
-      // this.designActItem = this.editableTabs[this.tabIndex].edrawComponents[compIndex]
     },
     onResizeStop: function (activeItem, para) {
       console.log('onResizeStop', para)
@@ -226,10 +205,6 @@ export default {
 
     compOnDrag: function (activeItem, para) {
       console.log('compOnDrag', para)
-      // const compIndex = this.editableTabs[this.tabIndex].activeIndex
-      // this.editableTabs[this.tabIndex].edrawComponents[compIndex].style.x = para.x
-      // this.editableTabs[this.tabIndex].edrawComponents[compIndex].style.y = para.y
-      // this.designActItem = this.editableTabs[this.tabIndex].edrawComponents[compIndex]
     },
     onDragStop: function (activeItem, para) {
       console.log('onDragStop', para)
@@ -239,24 +214,11 @@ export default {
       this.designActItem = this.editableTabs[this.tabIndex].edrawComponents[compIndex]
     },
 
-    reSetStandardConfig: function (v) {
-      console.log('reSetStandardConfig-3', v)
-      const vPro = v.Property
-      if (vPro === 'x' || vPro === 'y' || vPro === 'w' || vPro === 'h') {
-        this.designActItem.style[vPro] = v.Value
-      }
+    standardConfigChange: function (v) {
+      PropertyApi.standardConfigChange(this, v)
     },
-    reSetDesignConfig: function (v) {
-      DesignApi.reSetDesignConfig(this, v)
-      // if (v.Property === 'x') {
-      //   this.editableTabs[this.tabIndex].designConfings.Size.x = v.Value
-      // } else if (v.Property === 'y') {
-      //   this.editableTabs[this.tabIndex].designConfings.Size.y = v.Value
-      // }
-    },
-    standardConfigChange (v) {
-    },
-    designConfigChange (v) {
+
+    designConfigChange: function (v) {
       DesignApi.designConfigChange(this, v)
     }
 

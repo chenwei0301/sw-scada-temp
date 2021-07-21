@@ -2,7 +2,7 @@
 /*
  * @Author: sw0447
  * @Date: 2021-01-29 10:22:58
- * @LastEditTime: 2021-06-17 16:16:16
+ * @LastEditTime: 2021-07-19 15:37:48
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \swiscs_3d\vue.config.js
@@ -19,13 +19,13 @@ module.exports = {
         // options placed here will be merged with default configuration and passed to  electron-builder
         // 在这里的配置将会和默认配置合并，然后传递给electron-builder
         appId: 'com.szsunwin.www', // 项目唯一标识
-        productName: 'SunWin SCADA OA', // 打包产物的前缀
+        productName: 'SW-HMI-IDE V1.0.0', // 打包产物的前缀
         // eslint-disable-next-line no-template-curly-in-string
         copyright: 'Copyright © 2021 Sunwin',
         // copyright: 'Copyright © 2021 ${author}',
         // 可用使用${}引用package.json里面配置项，配置yarn项不存在会报错
         directories: {
-          output: 'dist_electron_v1.0.1' // 打包产物的位置
+          output: 'dist_electron_V1.0.1' // 打包产物的位置
         },
         win: {
           target: 'nsis',
@@ -42,7 +42,7 @@ module.exports = {
           installerIcon: 'public/favicon.ico', // 安装图标
           uninstallerIcon: 'public/favicon.ico', // 卸载图标
           installerHeaderIcon: 'public/favicon.ico', // 安装时头部图标
-          shortcutName: 'SunWin SCADA OA', // 图标名称
+          shortcutName: 'SW-HMI-IDE V1.0.0', // 图标名称
           createDesktopShortcut: true, // 创建桌面图标
           createStartMenuShortcut: true // 创建开始菜单图标
         }

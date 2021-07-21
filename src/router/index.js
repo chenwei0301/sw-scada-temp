@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-01-28 15:50:04
- * @LastEditTime: 2021-06-22 17:34:13
+ * @LastEditTime: 2021-07-21 09:19:24
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \swiscs_3d\src\router\index.js
@@ -116,8 +116,8 @@ const router = new VueRouter({
 
 router.beforeEach(async (to, from, next) => { // beforeEach是router的钩子函数，在进入路由前执行
   NProgress.start()
-  console.log('from:', from)
-  console.log('to:', to)
+  // console.log('from:', from)
+  // console.log('to:', to)
   // if (from.path === '/') {
   // }
   // if (to.meta.title) { // 判断是否有标题
