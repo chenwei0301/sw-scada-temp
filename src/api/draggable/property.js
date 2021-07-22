@@ -2,7 +2,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-14 10:34:32
- * @LastEditTime: 2021-07-21 17:35:02
+ * @LastEditTime: 2021-07-22 17:41:47
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\api\draggable\property.js
@@ -10,7 +10,7 @@
 
 const options_Style = ['x', 'y', 'w', 'h', 'background', 'color', 'fontSize', 'zIndex', 'customCss', 'fontStyle', 'fontFamily']
 const options_Property = ['size', 'styleType', 'type', 'loading', 'disabled', 'icon', 'autofocus', 'visible']
-const options_VdrProperty = ['preventDeactivation', 'draggable', 'resizable', 'enableNativeDrag', 'zIndex', 'axis']
+const options_VdrProperty = ['preventDeactivation', 'draggable', 'resizable', 'enableNativeDrag', 'axis']
 // const options_ColorPicker = ['background', 'color']
 
 const standardConfigChange = function (obj, v) {

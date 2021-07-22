@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-28 09:09:39
- * @LastEditTime: 2021-07-16 16:43:31
+ * @LastEditTime: 2021-07-22 15:51:37
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_Fields\Design.vue
@@ -77,8 +77,12 @@ export default {
     designStyle: function () {
       const style = {
         width: this.designConfings.Size.x + 'px',
-        height: this.designConfings.Size.y + 'px',
-        backgroundColor: this.designConfings.PanelBack.backgroundColor
+        height: this.designConfings.Size.y + 'px'
+      }
+      if (this.designConfings.PanelBack.type === 'backgroundColor') {
+        style.background = this.designConfings.PanelBack.backgroundColor
+      } else if (this.designConfings.PanelBack.type === 'backgroundUrl') {
+        style.background = 'url(' + this.designConfings.PanelBack.backgroundUrl + ')'
       }
       return style
     }

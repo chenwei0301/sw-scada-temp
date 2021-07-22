@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-05-19 17:52:36
- * @LastEditTime: 2021-07-21 09:20:08
+ * @LastEditTime: 2021-07-22 11:35:02
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\views\Edit.vue
@@ -27,6 +27,10 @@
 
     <span>{{picPath}}</span>
 
+    <el-button @click='picTest'>picTest</el-button>
+    <img :src="src" alt="">
+    <img :src="src2" alt="">
+
   </div>
 </template>
 
@@ -45,7 +49,9 @@ export default {
       active: false,
       msg: 'this is an function page',
       testPath: '',
-      picPath: []
+      picPath: [],
+      src: '',
+      src2: ''
     }
   },
   components: {
@@ -87,6 +93,10 @@ export default {
         }).catch(err => {
           console.log(err)
         })
+    },
+    picTest: function () {
+      this.src = '/WebConfigure/pictures/Element/el-button.png'
+      this.src2 = '/WebConfigure/pictures/Element/el-image.png'
     }
   },
   beforeCreate () {},

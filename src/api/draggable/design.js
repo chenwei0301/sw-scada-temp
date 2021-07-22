@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-02 09:07:35
- * @LastEditTime: 2021-07-21 17:44:31
+ * @LastEditTime: 2021-07-22 15:24:59
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\api\draggable\design.js
@@ -92,7 +92,7 @@ const handleDesignTabsEdit = function (obj, targetName, action) {
           y: 600
         },
         PanelBack: {
-          type: '',
+          type: 'default',
           backgroundUrl: '',
           backgroundColor: ''
         },
@@ -138,7 +138,12 @@ const backColorChange = function (obj, v) {
   // }
   obj.editableTabs[obj.tabIndex].designConfings.PanelBack.backgroundColor = v.Value || ''
 }
-
+const backUrlChange = function (obj, v) {
+  obj.editableTabs[obj.tabIndex].designConfings.PanelBack.backgroundUrl = v.Value || ''
+}
+const backTypeChange = function (obj, v) {
+  obj.editableTabs[obj.tabIndex].designConfings.PanelBack.type = v.Value || ''
+}
 const activeLayerChange = function (obj, v) {
   obj.editableTabs[obj.tabIndex].designConfings.ActiveLayer = v.Value
 }
@@ -160,6 +165,7 @@ const designConfigChange = function (obj, v) {
       break
     }
     case 'type': {
+      backTypeChange(obj, v)
       break
     }
     case 'backgroundColor': {
@@ -167,6 +173,7 @@ const designConfigChange = function (obj, v) {
       break
     }
     case 'backgroundUrl': {
+      backUrlChange(obj, v)
       break
     }
     case 'Name': {
@@ -226,10 +233,26 @@ const getPropertyListDependHtmltype = function (obj) {
   return propertyList
 }
 
+const getPicSrc = function (src) {
+  let picSrc = ''
+  // const arr = src.split('\\')
+  // const sPox = arr.indexOf('WebConfigure')
+  // if (sPox > -1) {
+  //   for (var i = sPox; i < arr.length; i++) {
+  //     picSrc += '/' + arr[i]
+  //   }
+  // }
+  const arr = src.split('\\WebConfigure')
+  if (arr.length > 1) {
+    picSrc = '/WebConfigure' + arr[1].replace(/\\/g, '/')
+  }
+  return picSrc
+}
 export default {
   itemProperty,
   handleDesignTabsEdit,
   designConfigChange,
   getPropertyList,
-  getPropertyListDependHtmltype
+  getPropertyListDependHtmltype,
+  getPicSrc
 }

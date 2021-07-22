@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-07-13 17:16:58
- * @LastEditTime: 2021-07-20 09:16:48
+ * @LastEditTime: 2021-07-22 16:05:18
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_Fields\Property_Design.vue
@@ -105,11 +105,20 @@
 -->
 
           <el-input
-            v-else
+            v-else-if="scope.row.Property==='backgroundUrl'"
             v-model="scope.row.Value"
             @change="designConfigChange(scope.row)"
             size="small"
             @dblclick.native = "setBackUrl"
+            @contextmenu.prevent="show"
+            >
+          </el-input>
+
+          <el-input
+            v-else
+            v-model="scope.row.Value"
+            @change="designConfigChange(scope.row)"
+            size="small"
             >
           </el-input>
 
@@ -135,8 +144,9 @@ export default {
     return {
       hiddenProperty: ['designId', 'ActiveLayer', 'backgroundUrl', 'backgroundColor'],
       backGroundType: [
-        { value: 'picture', label: '图片' },
-        { value: 'groundColor', label: '背景色' }
+        { value: 'default', label: '' },
+        { value: 'backgroundColor', label: '背景色' },
+        { value: 'backgroundUrl', label: '图片' }
       ],
       spanProperty: ['Size', 'PanelBack', 'designId'],
       InputNumberProperty: ['x', 'y'],
@@ -204,15 +214,20 @@ export default {
             { name: 'Images', extensions: ['jpg', 'png'] }
           ]
         }).then(result => {
-          console.log(result)
+          // console.log(result)
           const temp = Object.values(result.filePaths)
-          console.log(temp)
-
-          // const list = this.PropertyList.filter((element) => { return element.Property === 'backgroundUrl' })
-          // console.log(list)
+          // console.log(temp)
+          if (temp.length > 0) {
+            const picSrc = DesignApi.getPicSrc(temp[0])
+            console.log('picSrc:', picSrc)
+            this.$emit('designConfigChange', { Property: 'backgroundUrl', Value: picSrc })
+          }
         }).catch(err => {
           console.log(err)
         })
+    },
+    show () {
+      console.log(11111)
     }
   },
   // 监听 属性

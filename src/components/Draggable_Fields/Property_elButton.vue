@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-07-12 17:06:39
- * @LastEditTime: 2021-07-21 17:33:22
+ * @LastEditTime: 2021-07-22 16:48:57
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_Fields\Property_elButton.vue
@@ -161,6 +161,15 @@
           </div>
 
           <el-input
+            v-else-if="scope.row.Property==='customCss'"
+            v-model="scope.row.Value"
+            size="small"
+            type="textarea"
+            :autosize="{ minRows: 2}"
+            @change="standardConfigChange(scope.row)"
+            ></el-input>
+
+          <el-input
             v-else
             v-model="scope.row.Value"
             size="small"
@@ -223,7 +232,7 @@ export default {
         { value: 'oblique', label: '倾斜' },
         { value: 'inherit', label: '继承' }
       ],
-      spanProperty: ['htmlType', 'property', 'vdrProperty', 'style'],
+      spanProperty: ['htmlType', 'property', 'vdrProperty', 'style', 'active', 'name'],
       selectProperty: ['loading', 'disabled', 'autofocus', 'visible', 'draggable', 'resizable', 'enableNativeDrag', 'axis', 'isFixed'],
       InputNumberProperty: ['w', 'h', 'y', 'x', 'zIndex', 'fontSize'],
       ColorPickerProperty: ['background', 'color']

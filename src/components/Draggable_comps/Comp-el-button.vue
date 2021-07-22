@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-07-06 16:32:59
- * @LastEditTime: 2021-07-21 17:45:13
+ * @LastEditTime: 2021-07-22 17:51:20
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_comps\Comp-el-button.vue
@@ -18,6 +18,7 @@
     :h=item.style.h
     :min-width=5
     :min-height=5
+    :style=vdrCssArr
 
     @resizestop=onResizeStop
     @dragstop=onDragStop
@@ -107,6 +108,13 @@ export default {
     visible: function () {
       return this.booleanCheck(this.item.property.visible)
     },
+    vdrCssArr: function () {
+      const arr = {}
+      if (this.item.style.zIndex !== '') {
+        arr['z-index'] = this.item.style.zIndex
+      }
+      return arr
+    },
     cssArr: function () {
       const arr = {}
       if (this.item.style.color !== '') {
@@ -124,9 +132,6 @@ export default {
       if (this.item.style.fontStyle !== '') {
         arr['font-style'] = this.item.style.fontStyle
       }
-      if (this.item.style.zIndex !== '') {
-        arr['z-index'] = this.item.style.zIndex
-      }
       if (this.item.style.fontStyle !== '') {
         arr['font-style'] = this.item.style.fontStyle
       }
@@ -143,6 +148,10 @@ export default {
         }
       }
       // {"font-family":"Arial","border":"1px dashed #4444ff"}
+
+      // if (this.item.style.zIndex !== '') {
+      //   arr['z-index'] = this.item.style.zIndex
+      // }
       console.log('arr:', arr)
       return arr
     }
