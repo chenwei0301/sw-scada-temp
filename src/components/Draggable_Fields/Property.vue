@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-24 17:03:46
- * @LastEditTime: 2021-07-16 16:37:34
+ * @LastEditTime: 2021-07-14 15:14:41
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_Fields\Property.vue
@@ -17,7 +17,7 @@
     <el-tab-pane label="标准属性" name="standard">
       <PropertyStandard
       :property=property
-      @standardConfigChange=standardConfigChange
+      @reSetStandardConfig=reSetStandardConfig
       ></PropertyStandard>
     </el-tab-pane>
 
@@ -28,7 +28,7 @@
     <el-tab-pane label="界面属性" name="design">
       <PropertyDesign
         :property=designConfig
-        @designConfigChange=designConfigChange
+        @reSetDesignConfig=reSetDesignConfig
         ></PropertyDesign>
     </el-tab-pane>
 
@@ -49,7 +49,8 @@ export default {
   // 把父组件传递过来的 parentmsg 属性，先在 props 数组中，定义一下，这样，才能使用这个数据
   props: {
     designConfig: Object,
-    property: Object
+    property: Object,
+    id: String
     // ...
   },
   // 存放 数据
@@ -67,11 +68,13 @@ export default {
     handleClick (tab, event) {
       // console.log(tab, event);
     },
-    standardConfigChange: function (v) {
-      this.$emit('standardConfigChange', v)
+    reSetDesignConfig: function (v) {
+      console.log('reSetDesignConfig-2', v)
+      this.$emit('reSetDesignConfig', v)
     },
-    designConfigChange (v) {
-      this.$emit('designConfigChange', v)
+    reSetStandardConfig: function (v) {
+      console.log('reSetStandardConfig-2', v)
+      this.$emit('reSetStandardConfig', v)
     }
   },
   // 监听 属性

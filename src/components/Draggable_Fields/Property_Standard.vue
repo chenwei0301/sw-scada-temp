@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-07-12 17:06:39
- * @LastEditTime: 2021-07-21 09:40:57
+ * @LastEditTime: 2021-07-15 10:49:25
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_Fields\Property_Standard.vue
@@ -9,62 +9,142 @@
 
 <template>
   <div class="Property_Standard">
+    <el-table
+      :data="PropertyList"
+      stripe
+      border
+      lazy
+      default-expand-all
+      empty-text=" "
+      row-key="id"
+      height="600"
+      max-height="800"
+      style="width: 100%"
+      :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
+      :row-class-name="tableRowClassName"
+      @row-click="rowDetail"
+      >
+      <el-table-column
+        prop="Property"
+        label="Property"
+        width="160">
+      </el-table-column>
+      <el-table-column
+        prop="Value"
+        label="Value"
+        width="130">
+        <template scope="scope">
+          <span
+            v-if='spanProperty.indexOf(scope.row.Property)>=0'
+            size="small"
+            >{{scope.row.Value}}
+            </span>
 
-    <PropertyElButton
-      v-if="checkHtmlType('el-button')"
-      :property=property
-      @standardConfigChange=standardConfigChange
-    >
-    </PropertyElButton>
+          <el-select
+            v-else-if='selectProperty.indexOf(scope.row.Property)>=0' v-model="scope.row.Value"
+            placeholder="请选择"
+            size="small"
+            >
+            <el-option v-for="item in Boolean_Options"
+                      :key="item.value"
+                      :label="item.value"
+                      :value="item.value">
+            </el-option>
+          </el-select>
 
-    <PropertyElImage
-      v-if="checkHtmlType('el-image')"
-      :property=property
-      @standardConfigChange=standardConfigChange
-    >
-    </PropertyElImage>
+          <el-input-number
+            v-else-if='InputNumberProperty.indexOf(scope.row.Property)>=0'
+            v-model="scope.row.Value"
+            @change="handleChange(scope.row)"
+            size="small"
+            label=""
+            :min="1"
+            controls-position="right"
+            >
+            </el-input-number>
 
-    <PropertyElInput
-      v-if="checkHtmlType('el-input')"
-      :property=property
-      @standardConfigChange=standardConfigChange
-    >
-    </PropertyElInput>
+          <el-input
+            v-else
+            v-model="scope.row.Value"
+            size="small"
+            ></el-input>
 
-    <PropertyElInputNumber
-      v-if="checkHtmlType('el-input-number')"
-      :property=property
-      @standardConfigChange=standardConfigChange
-    >
-    </PropertyElInputNumber>
+        </template>
+      </el-table-column>
+    </el-table>
   </div>
 </template>
 
 <script>
-import PropertyElButton from '@/components/Draggable_Fields/Property_elButton'
-import PropertyElImage from '@/components/Draggable_Fields/Property_elImage'
-import PropertyElInput from '@/components/Draggable_Fields/Property_elInput'
-import PropertyElInputNumber from '@/components/Draggable_Fields/Property_elInputNumber'
 
 export default {
+  // name: 'Property_Standard',
+
   props: {
     property: Object
+    // ...
   },
   // 存放 数据
   data () {
     return {
+      Boolean_Options: [
+        { value: 'true' },
+        { value: 'false' }
+      ],
+      compSize_Options: [
+        { value: '' },
+        { value: 'mini' },
+        { value: 'small' },
+        { value: 'medium' },
+        { value: 'large' }
+      ],
+      spanProperty: ['htmlType', 'property', 'vdrProperty', 'style', 'size'],
+      selectProperty: ['default', 'plain', 'round', 'circle', 'type', 'loading', 'disabled', 'autofocus', 'draggable', 'resizable', 'enableNativeDrag', 'axis', 'position', 'isApplyShadow', 'isFixed'],
+      InputNumberProperty: ['w', 'h', 'y', 'x']
     }
   },
   // 计算 属性
   computed: {
+    PropertyList: function () {
+      return this.getPropertyList(this.property)
+    }
   },
   // 存放 方法
   methods: {
-    checkHtmlType: function (htmlType) {
-      return this.property.htmlType === htmlType
+    tableRowClassName () {
+      return 'standard-row'
     },
-    standardConfigChange (v) {
-      this.$emit('standardConfigChange', v)
+    addSubList: function (id, obj) {
+      const arr = []
+      const arrKey = Object.keys(obj)
+      for (var i = 0; i < arrKey.length; i++) {
+        const element = obj[arrKey[i]]
+        if (typeof (element) !== 'object') {
+          arr.push({ id: id + '-' + String(i), Property: arrKey[i], Value: String(element) })
+        }
+      }
+      return arr
+    },
+    getPropertyList: function (obj) {
+      const list = []
+      const arrKey = Object.keys(obj)
+      for (var i = 0; i < arrKey.length; i++) {
+        const element = arrKey[i]
+        if (typeof (obj[element]) === 'object') {
+          list.push({ id: String(i), Property: element, Value: '', children: this.addSubList(String(i), obj[element]) })
+        } else {
+          list.push({ id: String(i), Property: element, Value: String(obj[element]) })
+        }
+      }
+      return list
+    },
+
+    rowDetail: function (row) {
+      // console.log('row:', row)
+    },
+    handleChange (v) {
+      console.log(v)
+      this.$emit('reSetStandardConfig', v)
     }
   },
   // 监听 属性
@@ -76,10 +156,6 @@ export default {
   directives: {},
   // 存放 子组件
   components: {
-    PropertyElButton,
-    PropertyElImage,
-    PropertyElInput,
-    PropertyElInputNumber
   },
   /*  生命周期函数  */
   // 创建期间
@@ -109,5 +185,21 @@ export default {
 .Property_Standard{
   width: 100%;
   height: 100%;
+  .standard-row {
+    // color: rgba(61, 59, 59, 0.377);
+    font-size: 12px;
+  }
+  .el-table .standard-row > td{
+    padding: 1px;
+  }
+  .el-table td, .el-table th{
+    padding: 1px;
+  }
+  .el-table .cell, .el-table--border td:first-child .cell, .el-table--border th:first-child .cell{
+    padding: 0;
+  }
+  .el-table__indent {
+    padding: 0;
+  }
 }
 </style>

@@ -7,7 +7,7 @@
  * @FilePath: \sw_scada_temp\src\api\config\defaultConfig.js
  */
 export default {
-  appTitle: 'SW-HMI-IDE V1.0',
+  appTitle: 'SunWin SCADA OA',
   isDist: 0,
   isRedu: 0,
   ip: '127.0.0.1',

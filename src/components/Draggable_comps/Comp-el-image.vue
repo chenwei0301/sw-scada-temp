@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-07-06 16:51:45
- * @LastEditTime: 2021-07-22 17:54:03
+ * @LastEditTime: 2021-07-12 15:57:07
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_comps\Comp-el-image.vue
@@ -20,8 +20,25 @@
     :min-width=5
     :min-height=5
 
+    :prevent-deactivation=preventDeactivation
+    :draggable=draggable
+    :resizable=resizable
+    :enable-native-drag=enableNativeDrag
+    :z-index=zIndex
+    :axis=axis
+    :parent='false'
+    :onResizeStart=onResizeStartCallback
+    :onResize=onResizeCallback
+
+    :isConflictCheck="false"
+    :snap="false"
+    :snap-tolerance="10"
+
+    @resizing=onResize
     @resizestop=onResizeStop
+    @dragging=onDrag
     @dragstop=onDragStop
+
     >
 
     <el-image class='comp'
