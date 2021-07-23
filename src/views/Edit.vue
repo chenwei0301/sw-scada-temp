@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-05-19 17:52:36
- * @LastEditTime: 2021-07-22 11:35:02
+ * @LastEditTime: 2021-07-23 16:19:19
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\views\Edit.vue
@@ -23,7 +23,9 @@
 
     <Toast></Toast>
 
-    <el-button @click='test'>test</el-button>{{testPath}}
+    <el-button @click='EncryptFunc'>Encrypt</el-button>{{testPath}}
+
+    <el-button @click='DecryptFunc'>Decrypt</el-button>{{testPath}}
 
     <span>{{picPath}}</span>
 
@@ -43,6 +45,7 @@ import Toast from '@/components/FunctionTest/toast.vue'
 import staticRouter from '@/../public/WebConfigure/components/static_router.vue'
 
 import Vue2Filters from 'vue2-filters'
+import { Encrypt, Decrypt } from '@/utils/crypto'
 export default {
   data () {
     return {
@@ -51,7 +54,9 @@ export default {
       testPath: '',
       picPath: [],
       src: '',
-      src2: ''
+      src2: '',
+      cryptEn: 'sunwin',
+      cryptDn: ''
     }
   },
   components: {
@@ -97,6 +102,15 @@ export default {
     picTest: function () {
       this.src = '/WebConfigure/pictures/Element/el-button.png'
       this.src2 = '/WebConfigure/pictures/Element/el-image.png'
+    },
+    EncryptFunc: function () {
+      console.log('Encrypt-1:', this.cryptEn)
+      this.cryptDn = Encrypt(this.cryptEn)
+      console.log('Encrypt-2:', this.cryptDn)
+    },
+    DecryptFunc: function () {
+      console.log('Decrypt-1:', this.cryptDn)
+      console.log('Decrypt-2:', Decrypt(this.cryptDn))
     }
   },
   beforeCreate () {},
