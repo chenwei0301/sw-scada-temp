@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-06 14:26:24
- * @LastEditTime: 2021-07-22 17:18:01
+ * @LastEditTime: 2021-07-26 14:28:37
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\internal\components-Element.js
@@ -66,9 +66,11 @@ export default [
     icon: 'assets/Element/el-image.png',
     property: {
       // size: '',
-      src: require('@/assets/Element/el-image.png'),
+      src: 'assets/Element/el-image.png',
       fit: 'fill', // ['fill', 'contain', 'cover', 'none', 'scale-down']
       alt: '',
+      placeholder: true,
+      error: false,
       visible: true
     },
     style: {

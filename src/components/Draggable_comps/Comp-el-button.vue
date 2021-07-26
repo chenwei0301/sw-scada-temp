@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-07-06 16:32:59
- * @LastEditTime: 2021-07-22 17:51:20
+ * @LastEditTime: 2021-07-26 11:49:02
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_comps\Comp-el-button.vue
@@ -43,6 +43,8 @@
 <script>
 import VueDraggableResizable from 'vue-draggable-resizable'
 import '@/styles/VueDraggableResizable.css'
+import PropertyApi from '@/api/draggable/property'
+
 export default {
   props: {
     item: Object,
@@ -55,23 +57,19 @@ export default {
   computed: {
     // 拖拽组件 vdr 属性
     active: function () {
-      console.log('computed-active:', this.item.active)
       return this.item.active
     },
     preventDeactivation: function () {
-      return this.booleanCheck(this.item.vdrProperty.preventDeactivation)
+      return PropertyApi.booleanCheck(this.item.vdrProperty.preventDeactivation)
     },
     draggable: function () {
-      return this.booleanCheck(this.item.vdrProperty.draggable)
+      return PropertyApi.booleanCheck(this.item.vdrProperty.draggable)
     },
     resizable: function () {
-      return this.booleanCheck(this.item.vdrProperty.resizable)
+      return PropertyApi.booleanCheck(this.item.vdrProperty.resizable)
     },
     enableNativeDrag: function () {
-      return this.booleanCheck(this.item.vdrProperty.enableNativeDrag)
-    },
-    zIndex: function () {
-      return this.item.vdrProperty.zIndex
+      return PropertyApi.booleanCheck(this.item.vdrProperty.enableNativeDrag)
     },
     axis: function () {
       return this.item.vdrProperty.axis
@@ -85,13 +83,13 @@ export default {
       return this.item.property.size
     },
     loading: function () {
-      return this.booleanCheck(this.item.property.loading)
+      return PropertyApi.booleanCheck(this.item.property.loading)
     },
     disabled: function () {
-      return this.booleanCheck(this.item.property.disabled)
+      return PropertyApi.booleanCheck(this.item.property.disabled)
     },
     autofocus: function () {
-      return this.booleanCheck(this.item.property.autofocus)
+      return PropertyApi.booleanCheck(this.item.property.autofocus)
     },
     icon: function () {
       return this.item.property.icon
@@ -106,7 +104,7 @@ export default {
       return this.item.property.styleType === 'circle'
     },
     visible: function () {
-      return this.booleanCheck(this.item.property.visible)
+      return PropertyApi.booleanCheck(this.item.property.visible)
     },
     vdrCssArr: function () {
       const arr = {}
@@ -132,45 +130,24 @@ export default {
       if (this.item.style.fontStyle !== '') {
         arr['font-style'] = this.item.style.fontStyle
       }
-      if (this.item.style.fontStyle !== '') {
-        arr['font-style'] = this.item.style.fontStyle
-      }
-      if (this.item.style.fontFamily !== '') {
-        arr['font-family'] = this.item.style.fontFamily
-      }
       if (this.item.style.customCss !== '') {
-        console.log('customCss:', this.item.style.customCss, typeof (this.item.style.customCss))
         const cssObj = JSON.parse(this.item.style.customCss)
-        console.log(cssObj)
+        // console.log(cssObj)
         for (var index in cssObj) {
-          console.log(index, cssObj[index])
           arr[index] = cssObj[index]
         }
       }
       // {"font-family":"Arial","border":"1px dashed #4444ff"}
-
-      // if (this.item.style.zIndex !== '') {
-      //   arr['z-index'] = this.item.style.zIndex
-      // }
-      console.log('arr:', arr)
       return arr
     }
 
   },
   watch: {
     active: function (newVal, oldVal) {
-      // console.log('watch:', newVal)
       this.$emit('compActive', this.item, newVal)
     }
   },
   methods: {
-    booleanCheck: function (val) {
-      if (val === 'true' || val === 'TRUE') {
-        return true
-      } else if (val === 'false' || val === 'FALSE') {
-        return false
-      }
-    },
     onResizeStartCallback: function (handle, ev) {
       return true
     },
@@ -199,11 +176,9 @@ export default {
       this.$emit('onDragStop', this.item, para)
     },
     onActivated: function () {
-      // console.log('active:', true)
       this.$emit('compActive', this.item, true)
     },
     onDeactivated: function () {
-      // console.log('active:', false)
       this.$emit('compActive', this.item, false)
     }
   },

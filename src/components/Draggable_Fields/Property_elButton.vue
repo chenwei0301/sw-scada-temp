@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-07-12 17:06:39
- * @LastEditTime: 2021-07-22 16:48:57
+ * @LastEditTime: 2021-07-26 14:17:06
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_Fields\Property_elButton.vue
@@ -17,7 +17,7 @@
       empty-text=" "
       row-key="id"
       height="600"
-      max-height="800"
+      max-height="1000"
       style="width: 100%"
       :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
       :row-class-name="tableRowClassName"
@@ -140,7 +140,7 @@
             @change="standardConfigChange(scope.row)"
             size="small"
             label=""
-            :min="1"
+            :min="0"
             controls-position="right"
             :style="{width:'100%'}"
             >
@@ -244,6 +244,9 @@ export default {
       return DesignApi.getPropertyList(this.property)
     }
   },
+  // 监听 属性
+  watch: {
+  },
   // 存放 方法
   methods: {
     tableRowClassName () {
@@ -253,12 +256,10 @@ export default {
     rowDetail: function (row) {
       // console.log('row:', row)
     },
+
     standardConfigChange (v) {
       this.$emit('standardConfigChange', v)
     }
-  },
-  // 监听 属性
-  watch: {
   },
   // 存放 过滤器
   filters: {},
@@ -293,7 +294,6 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style  lang="scss">
 .standard-row {
-  // color: rgba(61, 59, 59, 0.377);
   font-size: 12px;
 }
 .el-table .standard-row > td{

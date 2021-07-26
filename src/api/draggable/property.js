@@ -25,6 +25,15 @@ const standardConfigChange = function (obj, v) {
   }
 }
 
+const booleanCheck = function (params) {
+  if (params === 'true' || params === 'TRUE') {
+    return true
+  } else if (params === 'false' || params === 'FALSE') {
+    return false
+  }
+}
+
 export default {
-  standardConfigChange
+  standardConfigChange,
+  booleanCheck
 }

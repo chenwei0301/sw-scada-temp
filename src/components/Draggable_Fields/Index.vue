@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-24 14:53:13
- * @LastEditTime: 2021-07-21 15:14:40
+ * @LastEditTime: 2021-07-26 15:56:59
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_Fields\Index.vue
@@ -51,6 +51,8 @@
             @onResizeStop=onResizeStop
             @compOnDrag=compOnDrag
             @onDragStop=onDragStop
+            @compDelete=compDelete
+            @compMove=compMove
             />
           </el-tab-pane>
         </el-tabs>
@@ -220,6 +222,14 @@ export default {
 
     designConfigChange: function (v) {
       DesignApi.designConfigChange(this, v)
+    },
+
+    compDelete: function () {
+      DesignApi.compDelete(this)
+    },
+
+    compMove: function (moveType, index) {
+      DesignApi.compMove(this, moveType, index)
     }
 
   },
@@ -243,7 +253,9 @@ export default {
   beforeCreate () {},
   created () {},
   beforeMount () {},
-  mounted () {},
+  mounted () {
+    // DesignApi.compDelete(this)
+  },
   // 运行期间
   beforeUpdate () {},
   updated () {},

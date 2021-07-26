@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-07-12 17:06:39
- * @LastEditTime: 2021-07-19 09:00:18
+ * @LastEditTime: 2021-07-26 14:03:13
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_Fields\Property_elButton.vue
@@ -17,7 +17,7 @@
       empty-text=" "
       row-key="id"
       height="600"
-      max-height="800"
+      max-height="1000"
       style="width: 100%"
       :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
       :row-class-name="tableRowClassName"
@@ -44,7 +44,19 @@
             placeholder="请选择"
             size="small"
             >
-            <el-option v-for="item in Boolean_Options"
+            <el-option v-for="item in options_Boolean"
+                      :key="item.value"
+                      :label="item.value"
+                      :value="item.value">
+            </el-option>
+          </el-select>
+
+          <el-select
+            v-else-if="scope.row.Property==='fit'" v-model="scope.row.Value"
+            placeholder="请选择"
+            size="small"
+            >
+            <el-option v-for="item in options_fit"
                       :key="item.value"
                       :label="item.value"
                       :value="item.value">
@@ -57,15 +69,32 @@
             @change="standardConfigChange(scope.row)"
             size="small"
             label=""
-            :min="1"
+            :min="0"
             controls-position="right"
-            >
-            </el-input-number>
+            ></el-input-number>
+
+          <el-input
+            v-else-if="scope.row.Property==='customCss'"
+            v-model="scope.row.Value"
+            size="small"
+            type="textarea"
+            :autosize="{ minRows: 2}"
+            @change="standardConfigChange(scope.row)"
+            ></el-input>
+
+          <el-input
+            v-else-if="scope.row.Property==='src'"
+            v-model="scope.row.Value"
+            size="small"
+            @change="standardConfigChange(scope.row)"
+            @dblclick.native = "setImageSrc"
+            ></el-input>
 
           <el-input
             v-else
             v-model="scope.row.Value"
             size="small"
+            @change="standardConfigChange(scope.row)"
             ></el-input>
 
         </template>
@@ -84,20 +113,27 @@ export default {
   // 存放 数据
   data () {
     return {
-      Boolean_Options: [
+      options_Boolean: [
         { value: 'true' },
         { value: 'false' }
       ],
-      compSize_Options: [
-        { value: '' },
-        { value: 'mini' },
-        { value: 'small' },
-        { value: 'medium' },
-        { value: 'large' }
+      // options_size: [
+      //   { value: '' },
+      //   { value: 'mini' },
+      //   { value: 'small' },
+      //   { value: 'medium' },
+      //   { value: 'large' }
+      // ],
+      options_fit: [
+        { value: 'none' },
+        { value: 'fill' },
+        { value: 'contain' },
+        { value: 'cover' },
+        { value: 'scale-down' }
       ],
-      spanProperty: ['htmlType', 'property', 'vdrProperty', 'style', 'size'],
-      selectProperty: ['default', 'plain', 'round', 'circle', 'type', 'loading', 'disabled', 'autofocus', 'draggable', 'resizable', 'enableNativeDrag', 'axis', 'position', 'isApplyShadow', 'isFixed'],
-      InputNumberProperty: ['w', 'h', 'y', 'x']
+      spanProperty: ['htmlType', 'property', 'vdrProperty', 'style', 'active', 'name'],
+      selectProperty: ['visible', 'draggable', 'resizable', 'enableNativeDrag', 'axis'],
+      InputNumberProperty: ['w', 'h', 'y', 'x', 'zIndex']
     }
   },
   // 计算 属性
@@ -105,6 +141,9 @@ export default {
     PropertyList: function () {
       return DesignApi.getPropertyList(this.property)
     }
+  },
+  // 监听 属性
+  watch: {
   },
   // 存放 方法
   methods: {
@@ -115,13 +154,34 @@ export default {
     rowDetail: function (row) {
       // console.log('row:', row)
     },
+
     standardConfigChange (v) {
-      console.log(v)
       this.$emit('standardConfigChange', v)
+    },
+
+    setImageSrc: function (v) {
+      console.log('setImageSrc:', v)
+      this.$electron.remote.dialog
+        .showOpenDialog({
+          title: '选择图片',
+          defaultPath: this.$path.resolve(__dirname),
+          properties: ['openFile', 'createDirectory'],
+          filters: [
+            { name: 'Images', extensions: ['jpg', 'png'] }
+          ]
+        }).then(result => {
+          // console.log(result)
+          const temp = Object.values(result.filePaths)
+          // console.log(temp)
+          if (temp.length > 0) {
+            const picSrc = DesignApi.getPicSrc(temp[0])
+            console.log('picSrc:', picSrc)
+            this.$emit('standardConfigChange', { Property: 'backgroundUrl', Value: picSrc })
+          }
+        }).catch(err => {
+          console.log(err)
+        })
     }
-  },
-  // 监听 属性
-  watch: {
   },
   // 存放 过滤器
   filters: {},
@@ -156,7 +216,6 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style  lang="scss">
 .standard-row {
-  // color: rgba(61, 59, 59, 0.377);
   font-size: 12px;
 }
 .el-table .standard-row > td{

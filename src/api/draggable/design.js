@@ -1,12 +1,41 @@
 /*
  * @Author: your name
  * @Date: 2021-07-02 09:07:35
- * @LastEditTime: 2021-07-22 15:24:59
+ * @LastEditTime: 2021-07-26 16:11:55
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\api\draggable\design.js
  */
 import proElButtonApi from '@/api/draggable/property_elButton'
+
+const compDelete = function (obj) {
+  const comps = obj.editableTabs[obj.tabIndex].edrawComponents
+  for (var i = comps.length - 1; i >= 0; i--) {
+    if (comps[i].active) {
+      obj.editableTabs[obj.tabIndex].edrawComponents.splice(i, 1)
+    }
+  }
+}
+const compMove = function (obj, moveType, index) {
+  switch (moveType) {
+    case 'up': {
+      --obj.designActItem.style.y
+      break
+    }
+    case 'down': {
+      ++obj.designActItem.style.y
+      break
+    }
+    case 'left': {
+      --obj.designActItem.style.x
+      break
+    }
+    case 'right': {
+      ++obj.designActItem.style.x
+      break
+    }
+  }
+}
 
 const itemProperty = function (obj, e) {
   return new Promise((resolve, reject) => {
@@ -249,6 +278,8 @@ const getPicSrc = function (src) {
   return picSrc
 }
 export default {
+  compDelete,
+  compMove,
   itemProperty,
   handleDesignTabsEdit,
   designConfigChange,

@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-28 15:49:49
- * @LastEditTime: 2021-07-22 11:00:11
+ * @LastEditTime: 2021-07-26 09:57:58
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_Fields\Toolbox_bak.vue
@@ -63,19 +63,13 @@ export default {
   // 存放 方法
   methods: {
     requirePic: function (src) {
-      console.log('src:', src)
-      const temp = require('@/' + src)
-      // const temp = require('@/' + '../public/WebConfigure/pictures/Element/el-button.png')
-      console.log('temp:', temp)
-      return temp
+      return require('@/' + src)
     },
     handleChange (val) {
       // console.log(val)
     },
     dragStart (e, item) {
-      // console.log(e, item)
-      const data = JSON.stringify(item)
-      event.dataTransfer.setData('comData', data)
+      event.dataTransfer.setData('comData', JSON.stringify(item))
     },
     clickSelect (groupName, item) {
       // console.log(groupName, item)

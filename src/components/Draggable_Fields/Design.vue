@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-28 09:09:39
- * @LastEditTime: 2021-07-22 15:51:37
+ * @LastEditTime: 2021-07-26 15:14:41
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_Fields\Design.vue
@@ -15,9 +15,10 @@
       class="vrt"
     >
         <div class="design"
+          :style="designStyle"
           @drop="drop($event)"
           @dragover="dragover($event)"
-          :style="designStyle"
+          @keyup.delete="DragCompDelete"
           >
           <DragComp
             v-for="(item, index) in edrawComps"
@@ -27,6 +28,10 @@
             @compActive=compActive
             @onResizeStop=onResizeStop
             @onDragStop=onDragStop
+            @keyup.up.native="DragCompMove('up', index)"
+            @keyup.down.native="DragCompMove('down', index)"
+            @keyup.left.native="DragCompMove('left', index)"
+            @keyup.right.native="DragCompMove('right', index)"
             ></DragComp>
 
         </div>
@@ -37,6 +42,8 @@
 <script>
 import VueRulerTool from 'vue-ruler-tool'
 import DragComp from '@/components/Draggable_comps/DragComp'
+import DesignApi from '@/api/draggable/design'
+
 export default {
   // name: 'Draggable_Fields_Design',
   // props 中的数据，都是只读的，无法重新赋值
@@ -90,6 +97,12 @@ export default {
   },
   // 存放 方法
   methods: {
+    DragCompDelete: function () {
+      this.$emit('compDelete')
+    },
+    DragCompMove: function (moveType, index) {
+      this.$emit('compMove', moveType, index)
+    },
     drop (e) {
       this.$emit('selectComp', e);
     },

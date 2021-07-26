@@ -2,7 +2,7 @@
 /*
  * @Author: your name
  * @Date: 2021-06-15 13:47:10
- * @LastEditTime: 2021-07-23 16:23:53
+ * @LastEditTime: 2021-07-26 09:49:52
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\api\base\login.js
@@ -13,7 +13,7 @@ import { queryAsync } from '@/plugins/modules/mysql'
 import { decodeBase64, encodeBase64 } from '@/api/base/common.js'
 import { ipcRenderer } from 'electron'
 import sSysInfo from '@/api/db/s_sysinfo'
-import { Encrypt } from '@/utils/crypto'
+import { Encrypt, Decrypt } from '@/utils/crypto'
 
 // import { constantRoutes } from '@/router'
 // import { asyncRoutes, constantRoutes } from '@/router'
@@ -48,14 +48,12 @@ const handleLoginLocal = async function (obj) {
     password: Encrypt(obj.ruleForm.password),
     ui: obj.ruleForm.ui
   }
-  console.log(param)
   const sqlFilter = {
     selectFilter: '*',
     whereFilter: "user_name='" + param.username + "' and user_password='" + param.password + "'"
   }
 
   const ret = await whereUserAsync(sqlFilter)
-  console.log(ret)
   if (ret.length === 0) {
     const msg = '用户名或密码错误！'
     obj.$layer.msg('<span style="color:#8a0606">' + msg + '</span>')
@@ -65,21 +63,21 @@ const handleLoginLocal = async function (obj) {
   const userInfo = ret[0]
 
   // localStorage
-  localStorage.setItem('SCADA_ui', param.ui)
+  localStorage.setItem('SWHMI_ui', param.ui)
   if (obj.ruleForm.remeber) {
-    localStorage.setItem('SCADA_username', encodeBase64(userInfo.user_name))
-    localStorage.setItem('SCADA_password', encodeBase64(userInfo.user_password))
-    localStorage.setItem('SCADA_uiType', obj.ruleForm.uiType)
-    localStorage.setItem('SCADA_rember', obj.ruleForm.remeber)
-    localStorage.setItem('SCADA_fullScreen', obj.ruleForm.fullScreen)
-    localStorage.setItem('SCADA_display', obj.ruleForm.displaySeleted)
+    localStorage.setItem('SWHMI_username', encodeBase64(userInfo.user_name))
+    localStorage.setItem('SWHMI_password', userInfo.user_password)
+    localStorage.setItem('SWHMI_uiType', obj.ruleForm.uiType)
+    localStorage.setItem('SWHMI_rember', obj.ruleForm.remeber)
+    localStorage.setItem('SWHMI_fullScreen', obj.ruleForm.fullScreen)
+    localStorage.setItem('SWHMI_display', obj.ruleForm.displaySeleted)
   }
 
   // sessionStorage
-  sessionStorage.setItem('SCADA_username', encodeBase64(userInfo.user_name))
-  // sessionStorage.setItem('SCADA_token', userInfo.token)
-  sessionStorage.setItem('SCADA_userComment', userInfo.user_des)
-  sessionStorage.setItem('SCADA_ui', param.ui)
+  sessionStorage.setItem('SWHMI_username', encodeBase64(userInfo.user_name))
+  // sessionStorage.setItem('SWHMI_token', userInfo.token)
+  sessionStorage.setItem('SWHMI_userComment', userInfo.user_des)
+  sessionStorage.setItem('SWHMI_ui', param.ui)
 
   loginEnterPush(obj)
 
@@ -105,7 +103,7 @@ const handleLogin = function (obj) {
   }
   const param = {
     username: obj.ruleForm.username,
-    password: obj.ruleForm.password,
+    password: Encrypt(obj.ruleForm.password),
     ui: obj.ruleForm.ui
   }
   obj.$axios.post('/login', obj.$Qs.stringify(param)).then(res => {
@@ -116,21 +114,21 @@ const handleLogin = function (obj) {
 
     if (status === 200) {
       // localStorage
-      localStorage.setItem('SCADA_ui', param.ui)
+      localStorage.setItem('SWHMI_ui', param.ui)
       if (obj.ruleForm.remeber) {
-        localStorage.setItem('SCADA_username', encodeBase64(param.username))
-        localStorage.setItem('SCADA_password', encodeBase64(param.password))
-        localStorage.setItem('SCADA_uiType', obj.ruleForm.uiType)
-        localStorage.setItem('SCADA_rember', obj.ruleForm.remeber)
-        localStorage.setItem('SCADA_fullScreen', obj.ruleForm.fullScreen)
-        localStorage.setItem('SCADA_display', obj.ruleForm.displaySeleted)
+        localStorage.setItem('SWHMI_username', encodeBase64(param.username))
+        localStorage.setItem('SWHMI_password', param.password)
+        localStorage.setItem('SWHMI_uiType', obj.ruleForm.uiType)
+        localStorage.setItem('SWHMI_rember', obj.ruleForm.remeber)
+        localStorage.setItem('SWHMI_fullScreen', obj.ruleForm.fullScreen)
+        localStorage.setItem('SWHMI_display', obj.ruleForm.displaySeleted)
       }
 
       // sessionStorage
-      sessionStorage.setItem('SCADA_username', encodeBase64(param.username))
-      sessionStorage.setItem('SCADA_token', data.token)
-      sessionStorage.setItem('SCADA_userComment', data.userComment)
-      sessionStorage.setItem('SCADA_ui', param.ui)
+      sessionStorage.setItem('SWHMI_username', encodeBase64(param.username))
+      sessionStorage.setItem('SWHMI_token', data.token)
+      sessionStorage.setItem('SWHMI_userComment', data.userComment)
+      sessionStorage.setItem('SWHMI_ui', param.ui)
 
       loginEnterPush(obj)
     }
@@ -141,17 +139,17 @@ const handleLogin = function (obj) {
 }
 
 const initLoginParam = function (obj) {
-  var ui = localStorage.getItem('SCADA_ui')
+  var ui = localStorage.getItem('SWHMI_ui')
   if (ui !== undefined) {
     obj.ruleForm.ui = ui
   }
-  var flag = localStorage.getItem('SCADA_rember') === 'true'
+  var flag = localStorage.getItem('SWHMI_rember') === 'true'
   if (flag) {
-    obj.ruleForm.uiType = localStorage.getItem('SCADA_uiType')
-    obj.ruleForm.username = decodeBase64(localStorage.getItem('SCADA_username'))
-    obj.ruleForm.password = decodeBase64(localStorage.getItem('SCADA_password'))
+    obj.ruleForm.uiType = localStorage.getItem('SWHMI_uiType')
+    obj.ruleForm.username = decodeBase64(localStorage.getItem('SWHMI_username'))
+    obj.ruleForm.password = Decrypt(localStorage.getItem('SWHMI_password'))
     obj.ruleForm.remeber = flag
-    obj.ruleForm.fullScreen = localStorage.getItem('SCADA_fullScreen') === 'true'
+    obj.ruleForm.fullScreen = localStorage.getItem('SWHMI_fullScreen') === 'true'
   }
 }
 

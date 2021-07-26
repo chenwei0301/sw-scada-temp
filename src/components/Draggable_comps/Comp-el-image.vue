@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-07-06 16:51:45
- * @LastEditTime: 2021-07-22 17:54:03
+ * @LastEditTime: 2021-07-26 14:27:28
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_comps\Comp-el-image.vue
@@ -9,7 +9,7 @@
 
 <template>
   <vue-draggable-resizable
-    class-name='my-class'
+    class-name='vdr-comp'
     :key="item.name"
     :active.sync=item.active
     :grid=[1,1]
@@ -19,6 +19,7 @@
     :h=item.style.h
     :min-width=5
     :min-height=5
+    :style=vdrCssArr
 
     @resizestop=onResizeStop
     @dragstop=onDragStop
@@ -28,13 +29,18 @@
       :src=src
       :alt=alt
       :fit=fit
-      @load=load
-      @error=error
+      @load=srcLoadSuccess
+      @error=srcLoadError
+      :style=cssArr
       >
-      <div slot="placeholder" class="image-slot">
+      <div slot="placeholder" class="image-slot" v-if='placeholder'>
         加载中<span class="dot">...</span>
       </div>
+      <div slot="error" class="image-slot" v-if='error'>
+        <i class="el-icon-picture-outline"></i>
+      </div>
     </el-image>
+
   </vue-draggable-resizable>
 </template>
 <script>
@@ -67,9 +73,9 @@ export default {
     enableNativeDrag: function () {
       return this.item.vdrProperty.enableNativeDrag
     },
-    zIndex: function () {
-      return this.item.vdrProperty.zIndex
-    },
+    // zIndex: function () {
+    //   return this.item.vdrProperty.zIndex
+    // },
     axis: function () {
       return this.item.vdrProperty.axis
     },
@@ -77,12 +83,28 @@ export default {
     // el-image组件 属性
     src: function () {
       return this.item.property.src
+      // return require('@/' + this.item.property.src)
     },
     alt: function () {
       return this.item.property.alt
     },
     fit: function () {
       return this.item.property.fit
+    },
+    placeholder: function () {
+      return this.item.property.placeholder
+    },
+    error: function () {
+      return this.item.property.error
+    },
+
+    vdrCssArr: function () {
+      const arr = {}
+      return arr
+    },
+    cssArr: function () {
+      const arr = {}
+      return arr
     }
 
   },
@@ -93,24 +115,14 @@ export default {
   },
   methods: {
     onResizeStartCallback: function (handle, ev) {
-      // console.log('onResizeStartCallback:', handle, ev)
       return true
     },
     onResizeCallback: function (handle, x, y, width, height) {
-      // console.log('onResizeCallback:', handle, x, y, width, height)
       return true
     },
     onResize: function (x, y, width, height) {
-      // const para = {
-      //   x: x,
-      //   y: y,
-      //   w: width,
-      //   h: height
-      // }
-      // this.$emit('compOnResize', this.item, para)
     },
     onResizeStop: function (x, y, width, height) {
-      console.log('onResizeStop:', x, y, width, height)
       const para = {
         x: x,
         y: y,
@@ -120,14 +132,8 @@ export default {
       this.$emit('onResizeStop', this.item, para)
     },
     onDrag: function (x, y) {
-      // const para = {
-      //   x: x,
-      //   y: y
-      // }
-      // this.$emit('compOnDrag', this.item, para)
     },
     onDragStop: function (x, y) {
-      console.log('onDragStop:', x, y)
       const para = {
         x: x,
         y: y
@@ -135,20 +141,18 @@ export default {
       this.$emit('onDragStop', this.item, para)
     },
     onActivated: function () {
-      console.log('active:', true)
       this.$emit('compActive', this.item, true)
     },
     onDeactivated: function () {
-      console.log('active:', false)
       this.$emit('compActive', this.item, false)
     },
     // 图片加载成功触发
-    load: function (e) {
-      // console.log('load', e)
+    srcLoadSuccess: function (e) {
+      // console.log('srcLoadSuccess', e)
     },
     // 图片加载失败触发
-    error: function (err) {
-      throw err
+    srcLoadError: function (err) {
+      console.log('srcLoadError', err)
     }
   },
   components: {
@@ -158,7 +162,7 @@ export default {
 </script>
 <style lang="scss">
 // 具有自定义类名的组件
-.my-class{
+.vdr-comp{
   .comp{
     width: 100%;
     height: 100%;
