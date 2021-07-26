@@ -2,7 +2,7 @@
 /*
  * @Author: your name
  * @Date: 2021-06-15 13:47:10
- * @LastEditTime: 2021-06-22 14:42:16
+ * @LastEditTime: 2021-07-23 16:23:53
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\api\base\login.js
@@ -13,6 +13,8 @@ import { queryAsync } from '@/plugins/modules/mysql'
 import { decodeBase64, encodeBase64 } from '@/api/base/common.js'
 import { ipcRenderer } from 'electron'
 import sSysInfo from '@/api/db/s_sysinfo'
+import { Encrypt } from '@/utils/crypto'
+
 // import { constantRoutes } from '@/router'
 // import { asyncRoutes, constantRoutes } from '@/router'
 
@@ -43,16 +45,17 @@ const handleLoginLocal = async function (obj) {
   }
   const param = {
     username: obj.ruleForm.username,
-    password: obj.ruleForm.password,
+    password: Encrypt(obj.ruleForm.password),
     ui: obj.ruleForm.ui
   }
-
+  console.log(param)
   const sqlFilter = {
     selectFilter: '*',
     whereFilter: "user_name='" + param.username + "' and user_password='" + param.password + "'"
   }
 
   const ret = await whereUserAsync(sqlFilter)
+  console.log(ret)
   if (ret.length === 0) {
     const msg = '用户名或密码错误！'
     obj.$layer.msg('<span style="color:#8a0606">' + msg + '</span>')

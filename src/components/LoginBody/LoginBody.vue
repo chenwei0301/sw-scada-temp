@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-02-01 10:19:36
- * @LastEditTime: 2021-06-25 13:47:00
+ * @LastEditTime: 2021-07-19 16:29:18
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \swiscs_3d\src\components\LoginBody\LoginBody.vue
@@ -27,19 +27,19 @@
         <el-option
           v-for="(item, index) in ruleForm.uiOptions"
           :key=index
-          :label="item.label"
+          :label="item.value"
           :value="item.value">
         </el-option>
       </el-select>
     </el-form-item>
 
-    <el-form-item label="工作站编号" prop="ui" v-show="ruleForm.uiType==='home'">
+    <el-form-item label="工作站编号" prop="ui" v-show="ruleForm.uiType==='Home'">
       <el-col :span="24">
         <el-input-number v-model="ruleForm.ui" controls-position="right" :min="1" :max="100" class="login-stepui"></el-input-number>
       </el-col>
     </el-form-item>
 
-    <el-form-item label="多屏选择" prop="displaySeleted" v-show="ruleForm.uiType==='home'">
+    <el-form-item label="多屏选择" prop="displaySeleted" v-show="ruleForm.uiType==='Home'">
       <el-checkbox-group v-model="ruleForm.displaySeleted">
         <el-checkbox v-for="(item, index) in ruleForm.displayInfo" :label="item.id" :key="index" :disabled="index === 0">{{item.text}}</el-checkbox>
       </el-checkbox-group>
@@ -50,7 +50,7 @@
       </el-switch>
     </el-form-item>
 
-    <el-form-item label="登录后全屏" v-if="ruleForm.uiType==='home'">
+    <el-form-item label="登录后全屏" v-if="ruleForm.uiType==='Home'">
       <el-switch v-model="ruleForm.fullScreen">
     </el-switch>
     </el-form-item>
@@ -61,7 +61,9 @@
 
     <el-button @click.prevent="handleLogin" class="login-btn" type="primary">登 录</el-button>
 
+<!--
     <el-button @click.prevent="full" class="login-btn" type="primary">full</el-button>
+-->
 
     <FooterCopyright class="login-copyright"></FooterCopyright>
 
@@ -89,19 +91,15 @@ export default {
         password: '',
         uiOptions: [
           {
-            lable: 'gedi',
             value: 'Gedi'
           },
           {
-            lable: 'draggable',
             value: 'Draggable'
           },
           {
-            lable: 'edit',
             value: 'Edit'
           },
           {
-            lable: 'home',
             value: 'Home'
           }],
         uiType: '',

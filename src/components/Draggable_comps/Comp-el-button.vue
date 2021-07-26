@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-07-06 16:32:59
- * @LastEditTime: 2021-07-12 15:39:32
+ * @LastEditTime: 2021-07-22 17:51:20
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_comps\Comp-el-button.vue
@@ -18,6 +18,7 @@
     :h=item.style.h
     :min-width=5
     :min-height=5
+    :style=vdrCssArr
 
     @resizestop=onResizeStop
     @dragstop=onDragStop
@@ -33,6 +34,8 @@
       :plain=plain
       :round=round
       :circle=circle
+      :hidden=visible
+      :style=cssArr
       >{{item.name}}</el-button>
 
   </vue-draggable-resizable>
@@ -41,7 +44,6 @@
 import VueDraggableResizable from 'vue-draggable-resizable'
 import '@/styles/VueDraggableResizable.css'
 export default {
-  // name: 'elButton',
   props: {
     item: Object,
     id: String
@@ -57,16 +59,16 @@ export default {
       return this.item.active
     },
     preventDeactivation: function () {
-      return this.item.vdrProperty.preventDeactivation
+      return this.booleanCheck(this.item.vdrProperty.preventDeactivation)
     },
     draggable: function () {
-      return this.item.vdrProperty.draggable
+      return this.booleanCheck(this.item.vdrProperty.draggable)
     },
     resizable: function () {
-      return this.item.vdrProperty.resizable
+      return this.booleanCheck(this.item.vdrProperty.resizable)
     },
     enableNativeDrag: function () {
-      return this.item.vdrProperty.enableNativeDrag
+      return this.booleanCheck(this.item.vdrProperty.enableNativeDrag)
     },
     zIndex: function () {
       return this.item.vdrProperty.zIndex
@@ -83,53 +85,101 @@ export default {
       return this.item.property.size
     },
     loading: function () {
-      return this.item.property.loading
+      return this.booleanCheck(this.item.property.loading)
     },
     disabled: function () {
-      return this.item.property.disabled
+      return this.booleanCheck(this.item.property.disabled)
     },
     autofocus: function () {
-      return this.item.property.autofocus
+      return this.booleanCheck(this.item.property.autofocus)
     },
     icon: function () {
       return this.item.property.icon
     },
     plain: function () {
-      return this.item.property.plain
+      return this.item.property.styleType === 'plain'
     },
     round: function () {
-      return this.item.property.round
+      return this.item.property.styleType === 'round'
     },
     circle: function () {
-      return this.item.property.circle
+      return this.item.property.styleType === 'circle'
+    },
+    visible: function () {
+      return this.booleanCheck(this.item.property.visible)
+    },
+    vdrCssArr: function () {
+      const arr = {}
+      if (this.item.style.zIndex !== '') {
+        arr['z-index'] = this.item.style.zIndex
+      }
+      return arr
+    },
+    cssArr: function () {
+      const arr = {}
+      if (this.item.style.color !== '') {
+        arr.color = this.item.style.color
+      }
+      if (this.item.style.background !== '') {
+        arr.background = this.item.style.background
+      }
+      if (this.item.style.fontSize !== '') {
+        arr['font-size'] = this.item.style.fontSize + 'px'
+      }
+      if (this.item.style.fontFamily !== '') {
+        arr['font-family'] = this.item.style.fontFamily
+      }
+      if (this.item.style.fontStyle !== '') {
+        arr['font-style'] = this.item.style.fontStyle
+      }
+      if (this.item.style.fontStyle !== '') {
+        arr['font-style'] = this.item.style.fontStyle
+      }
+      if (this.item.style.fontFamily !== '') {
+        arr['font-family'] = this.item.style.fontFamily
+      }
+      if (this.item.style.customCss !== '') {
+        console.log('customCss:', this.item.style.customCss, typeof (this.item.style.customCss))
+        const cssObj = JSON.parse(this.item.style.customCss)
+        console.log(cssObj)
+        for (var index in cssObj) {
+          console.log(index, cssObj[index])
+          arr[index] = cssObj[index]
+        }
+      }
+      // {"font-family":"Arial","border":"1px dashed #4444ff"}
+
+      // if (this.item.style.zIndex !== '') {
+      //   arr['z-index'] = this.item.style.zIndex
+      // }
+      console.log('arr:', arr)
+      return arr
     }
+
   },
   watch: {
     active: function (newVal, oldVal) {
-      console.log('watch:', newVal)
+      // console.log('watch:', newVal)
       this.$emit('compActive', this.item, newVal)
     }
   },
   methods: {
+    booleanCheck: function (val) {
+      if (val === 'true' || val === 'TRUE') {
+        return true
+      } else if (val === 'false' || val === 'FALSE') {
+        return false
+      }
+    },
     onResizeStartCallback: function (handle, ev) {
-      // console.log('onResizeStartCallback:', handle, ev)
       return true
     },
     onResizeCallback: function (handle, x, y, width, height) {
-      // console.log('onResizeCallback:', handle, x, y, width, height)
       return true
     },
     onResize: function (left, top, width, height) {
-      // const para = {
-      //   x: left,
-      //   y: top,
-      //   w: width,
-      //   h: height
-      // }
-      // this.$emit('compOnResize', this.item, para)
     },
     onResizeStop: function (x, y, width, height) {
-      // console.log('onResizeStop:', x, y, width, height)
       const para = {
         x: x,
         y: y,
@@ -139,14 +189,9 @@ export default {
       this.$emit('onResizeStop', this.item, para)
     },
     onDrag: function (x, y) {
-      // const para = {
-      //   x: x,
-      //   y: y
-      // }
-      // this.$emit('compOnDrag', this.item, para)
     },
     onDragStop: function (x, y) {
-      console.log('onDragStop:', x, y)
+      // console.log('onDragStop:', x, y)
       const para = {
         x: x,
         y: y
@@ -154,11 +199,11 @@ export default {
       this.$emit('onDragStop', this.item, para)
     },
     onActivated: function () {
-      console.log('active:', true)
+      // console.log('active:', true)
       this.$emit('compActive', this.item, true)
     },
     onDeactivated: function () {
-      console.log('active:', false)
+      // console.log('active:', false)
       this.$emit('compActive', this.item, false)
     }
   },

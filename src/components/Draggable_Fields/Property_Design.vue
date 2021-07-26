@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-07-13 17:16:58
- * @LastEditTime: 2021-07-14 17:02:26
+ * @LastEditTime: 2021-07-22 16:05:18
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_Fields\Property_Design.vue
@@ -31,6 +31,12 @@
       </el-table-column>
 
       <el-table-column
+        prop=""
+        label=""
+        width="20">
+      </el-table-column>
+
+      <el-table-column
         prop="Value"
         label="Value"
         width="130"
@@ -40,44 +46,81 @@
             v-if='spanProperty.indexOf(scope.row.Property)>=0'
             size="small"
             >{{scope.row.Value}}
-            </span>
+          </span>
 
           <el-select
             v-else-if='selectProperty.indexOf(scope.row.Property)>=0' v-model="scope.row.Value"
             placeholder=""
             size="small"
+            @change="designConfigChange(scope.row)"
             >
             <el-option v-for="item in backGroundType"
                       :key="item.value"
                       :label="item.label"
                       :value="item.value">
             </el-option>
-            </el-select>
+          </el-select>
 
-            <el-input-number
+          <el-input-number
+            :style="{width:'100%'}"
             v-else-if='InputNumberProperty.indexOf(scope.row.Property)>=0'
             v-model="scope.row.Value"
-            @change="handleChange(scope.row)"
+            @change="designConfigChange(scope.row)"
             size="small"
             label=""
             :min="0"
             controls-position="right"
             >
-            </el-input-number>
+          </el-input-number>
 
             <!-- <el-cascader v-else-if="scope.row.Property==='ActiveLayer'"
               v-model="scope.row.Value"
               :options="layerOption"
               :props='{ multiple: true }'
-              @change="ActiveLayerChange"
+              @change="designConfigChange(scope.row)"
               >
               </el-cascader> -->
 
-            <el-input
-              v-else
-              v-model="scope.row.Value"
-              size="small"
-              ></el-input>
+          <div v-else-if="scope.row.Property==='backgroundColor'">
+          <el-color-picker
+            v-model="scope.row.Value"
+            show-alpha
+            size='mini'
+            @change="designConfigChange(scope.row)"
+            :style="{top:'7px'}"
+            >
+          </el-color-picker>
+          <span>{{scope.row.Value}}</span>
+          </div>
+<!--
+          <el-color-picker
+            v-else-if="scope.row.Property==='backgroundColor'"
+            v-model="scope.row.Value"
+            show-alpha
+            size='mini'
+            @change="designConfigChange(scope.row)"
+            :style="{top:'7px'}"
+            >
+          </el-color-picker>
+-->
+
+          <el-input
+            v-else-if="scope.row.Property==='backgroundUrl'"
+            v-model="scope.row.Value"
+            @change="designConfigChange(scope.row)"
+            size="small"
+            @dblclick.native = "setBackUrl"
+            @contextmenu.prevent="show"
+            >
+          </el-input>
+
+          <el-input
+            v-else
+            v-model="scope.row.Value"
+            @change="designConfigChange(scope.row)"
+            size="small"
+            >
+          </el-input>
 
         </template>
       </el-table-column>
@@ -87,6 +130,7 @@
 </template>
 
 <script>
+import DesignApi from '@/api/draggable/design'
 
 export default {
   // name: 'Property_Design',
@@ -98,11 +142,13 @@ export default {
   // 存放 数据
   data () {
     return {
+      hiddenProperty: ['designId', 'ActiveLayer', 'backgroundUrl', 'backgroundColor'],
       backGroundType: [
-        { value: 'picture', label: '图片' },
-        { value: 'groundColor', label: '背景色' }
+        { value: 'default', label: '' },
+        { value: 'backgroundColor', label: '背景色' },
+        { value: 'backgroundUrl', label: '图片' }
       ],
-      spanProperty: ['Size', 'PanelBackground'],
+      spanProperty: ['Size', 'PanelBack', 'designId'],
       InputNumberProperty: ['x', 'y'],
       selectProperty: ['type'],
       layerOption: [{
@@ -129,13 +175,21 @@ export default {
       }, {
         value: '8',
         label: '8层'
-      }]
+      }],
+      list: []
     }
   },
   // 计算 属性
   computed: {
     PropertyList: function () {
-      return this.getPropertyList(this.property)
+      var temp = DesignApi.getPropertyList(this.property)
+      temp.forEach(element => {
+        element.visible = this.hiddenProperty.indexOf(element.Property) >= 0 ? 0 : 1
+      })
+      // return temp.filter((element) => {
+      //   return element.visible === 1
+      // })
+      return temp
     }
   },
   // 存放 方法
@@ -143,41 +197,37 @@ export default {
     tableRowClassName () {
       return 'design-row'
     },
-    addSubList: function (id, obj) {
-      const arr = []
-      const arrKey = Object.keys(obj)
-      for (var i = 0; i < arrKey.length; i++) {
-        const element = obj[arrKey[i]]
-        if (typeof (element) !== 'object') {
-          arr.push({ id: id + '-' + String(i), Property: arrKey[i], Value: String(element) })
-        }
-      }
-      return arr
-    },
-    getPropertyList: function (obj) {
-      const list = []
-      const arrKey = Object.keys(obj)
-      for (var i = 0; i < arrKey.length; i++) {
-        const element = arrKey[i]
-        if (typeof (obj[element]) === 'object') {
-          list.push({ id: String(i), Property: element, Value: '', children: this.addSubList(String(i), obj[element]) })
-        } else {
-          list.push({ id: String(i), Property: element, Value: String(obj[element]) })
-        }
-      }
-      return list
-    },
     rowDetail: function (row) {
       // console.log('row:', row)
     },
-    handleChange (v) {
-      if (this.InputNumberProperty.indexOf(v.Property) >= 0) {
-        console.log('reSetDesignConfig-1', v)
-        this.$emit('reSetDesignConfig', v)
-      }
+    designConfigChange (v) {
+      this.$emit('designConfigChange', v)
     },
-    ActiveLayerChange (v) {
-      console.log('ActiveLayerChange:', v)
+    setBackUrl: function (v) {
+      console.log('setBackUrl:', v)
+      this.$electron.remote.dialog
+        .showOpenDialog({
+          title: '选择图片',
+          defaultPath: this.$path.resolve(__dirname),
+          properties: ['openFile', 'createDirectory'],
+          filters: [
+            { name: 'Images', extensions: ['jpg', 'png'] }
+          ]
+        }).then(result => {
+          // console.log(result)
+          const temp = Object.values(result.filePaths)
+          // console.log(temp)
+          if (temp.length > 0) {
+            const picSrc = DesignApi.getPicSrc(temp[0])
+            console.log('picSrc:', picSrc)
+            this.$emit('designConfigChange', { Property: 'backgroundUrl', Value: picSrc })
+          }
+        }).catch(err => {
+          console.log(err)
+        })
+    },
+    show () {
+      console.log(11111)
     }
   },
   // 监听 属性
@@ -218,6 +268,9 @@ export default {
 .Property_Design{
   width: 100%;
   height: 100%;
+  .einClass {
+    width: 100%;
+  }
   .design-row {
     // color: rgba(61, 59, 59, 0.377);
     font-size: 12px;

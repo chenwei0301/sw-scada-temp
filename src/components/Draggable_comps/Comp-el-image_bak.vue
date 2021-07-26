@@ -1,24 +1,20 @@
 <!--
  * @Author: your name
- * @Date: 2021-07-09 09:49:33
- * @LastEditTime: 2021-07-09 16:14:57
+ * @Date: 2021-07-06 16:51:45
+ * @LastEditTime: 2021-07-12 15:57:07
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
- * @FilePath: \sw_scada_temp\src\components\Draggable_comps\Comp-el-image_bak.vue
+ * @FilePath: \sw_scada_temp\src\components\Draggable_comps\Comp-el-image.vue
 -->
 
 <template>
   <vue-draggable-resizable
     class-name='my-class'
-    class-name-dragging="my-dragging-class"
-    class-name-resizing="my-resizing-class"
-    class-name-active="my-active-class"
-    class-name-handle="my-handle-class"
-
+    :key="item.name"
     :active.sync=item.active
-
-    :x='item.style.x - (item.style.w/2)'
-    :y='item.style.y - item.style.h/2'
+    :grid=[1,1]
+    :x='item.style.x'
+    :y='item.style.y'
     :w=item.style.w
     :h=item.style.h
     :min-width=5
@@ -33,14 +29,15 @@
     :parent='false'
     :onResizeStart=onResizeStartCallback
     :onResize=onResizeCallback
+    :isConflictCheck="false"
+    :snap="false"
+    :snap-tolerance="10"
     @resizing=onResize
-    @resizestop=onResizeStop
     @dragging=onDrag
+
+    @resizestop=onResizeStop
     @dragstop=onDragStop
 
-    @activated=onActivated
-    @deactivated=onDeactivated
-    :scale="0.5"
     >
 
     <el-image class='comp'
@@ -58,8 +55,8 @@
 </template>
 <script>
 import VueDraggableResizable from 'vue-draggable-resizable'
-import 'vue-draggable-resizable/dist/VueDraggableResizable.css'
-// import '@/styles/VueDraggableResizable.css'
+// import 'vue-draggable-resizable/dist/VueDraggableResizable.css'
+import '@/styles/VueDraggableResizable.css'
 export default {
   // name: 'elImage',
   props: {
@@ -120,32 +117,46 @@ export default {
       return true
     },
     onResize: function (x, y, width, height) {
+      // const para = {
+      //   x: x,
+      //   y: y,
+      //   w: width,
+      //   h: height
+      // }
+      // this.$emit('compOnResize', this.item, para)
+    },
+    onResizeStop: function (x, y, width, height) {
+      console.log('onResizeStop:', x, y, width, height)
       const para = {
         x: x,
         y: y,
         w: width,
         h: height
       }
-      this.$emit('compOnResize', this.item, para)
-    },
-    onResizeStop: function (x, y, width, height) {
-      console.log('onResizeStop:', x, y, width, height)
+      this.$emit('onResizeStop', this.item, para)
     },
     onDrag: function (x, y) {
+      // const para = {
+      //   x: x,
+      //   y: y
+      // }
+      // this.$emit('compOnDrag', this.item, para)
+    },
+    onDragStop: function (x, y) {
+      console.log('onDragStop:', x, y)
       const para = {
         x: x,
         y: y
       }
-      this.$emit('compOnDrag', this.item, para)
-    },
-    onDragStop: function (x, y) {
-      console.log('onDragStop:', x, y)
+      this.$emit('onDragStop', this.item, para)
     },
     onActivated: function () {
       console.log('active:', true)
+      this.$emit('compActive', this.item, true)
     },
     onDeactivated: function () {
       console.log('active:', false)
+      this.$emit('compActive', this.item, false)
     },
     // 图片加载成功触发
     load: function (e) {
@@ -168,85 +179,5 @@ export default {
     width: 100%;
     height: 100%;
   }
-}
-// 拖动时具有自定义类名的组件
-.my-dragging-class {
-  border: 1px solid black;
-}
-// 调整大小时具有自定义类名的组件
-//.my-resizing-class {
-    // background-color: blue;
-    // border: 1px solid black;
-    // color: white;
-//}
-// 活动状态下具有自定义类名的组件
-.my-active-class {
-  border: 1px dashed #000
-}
-// 具有自定义类名称句柄的组件
-.my-handle-class {
-    position: absolute;
-    // background-color: pink;
-    background: #eee;
-    border: 1px solid black;
-    // border-radius: 50%;
-    height: 5px;
-    width: 5px;
-    //box-model: border-box;
-    box-sizing: border-box;
-    -webkit-transition: all 300ms linear;
-    -ms-transition: all 300ms linear;
-    transition: all 300ms linear;
-}
-.my-handle-class-tl {
-  top: -5px;
-  left: -5px;
-  cursor: nw-resize;
-}
-.my-handle-class-tm {
-  top: -5px;
-  left: 50%;
-  margin-left: -2.5px;
-  cursor: n-resize;
-}
-.my-handle-class-tr {
-  top: -5px;
-  right: -5px;
-  cursor: ne-resize;
-}
-.my-handle-class-ml {
-  top: 50%;
-  margin-top: -2.5px;
-  left: -5px;
-  cursor: w-resize;
-}
-.my-handle-class-mr {
-  top: 50%;
-  margin-top: -2.5px;
-  right: -5px;
-  cursor: e-resize;
-}
-.my-handle-class-bl {
-  bottom: -5px;
-  left: -5px;
-  cursor: sw-resize;
-}
-.my-handle-class-bm {
-  bottom: -5px;
-  left: 50%;
-  margin-left: -2.5px;
-  cursor: s-resize;
-}
-.my-handle-class-br {
-  bottom: -5px;
-  right: -5px;
-  cursor: se-resize;
-}
-.my-handle-class-tl:hover,
-.my-handle-class-tr:hover,
-.my-handle-class-bl:hover,
-.my-handle-class-br:hover {
-    background-color: red;
-    transform: scale(1.4);
 }
 </style>

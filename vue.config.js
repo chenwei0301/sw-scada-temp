@@ -2,7 +2,7 @@
 /*
  * @Author: sw0447
  * @Date: 2021-01-29 10:22:58
- * @LastEditTime: 2021-07-19 15:37:48
+ * @LastEditTime: 2021-07-26 09:34:24
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \swiscs_3d\vue.config.js
@@ -25,7 +25,7 @@ module.exports = {
         // copyright: 'Copyright © 2021 ${author}',
         // 可用使用${}引用package.json里面配置项，配置yarn项不存在会报错
         directories: {
-          output: 'dist_electron_V1.0.1' // 打包产物的位置
+          output: 'dist_electron_V1.0.0' // 打包产物的位置
         },
         win: {
           target: 'nsis',
