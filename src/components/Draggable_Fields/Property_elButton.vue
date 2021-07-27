@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-07-12 17:06:39
- * @LastEditTime: 2021-07-26 14:17:06
+ * @LastEditTime: 2021-07-27 15:15:47
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_Fields\Property_elButton.vue
@@ -143,8 +143,7 @@
             :min="0"
             controls-position="right"
             :style="{width:'100%'}"
-            >
-          </el-input-number>
+            ></el-input-number>
 
           <div v-else-if='ColorPickerProperty.indexOf(scope.row.Property)>=0'>
             <el-color-picker
@@ -153,11 +152,8 @@
               size='mini'
               @change="standardConfigChange(scope.row)"
               :style="{top:'5px'}"
-              >
-            </el-color-picker>
-            <span
-              :style="{'margin-left':'5px'}"
-            >{{scope.row.Value}}</span>
+              ></el-color-picker>
+            <span :style="{'margin-left':'5px'}">{{scope.row.Value}}</span>
           </div>
 
           <el-input
@@ -167,6 +163,14 @@
             type="textarea"
             :autosize="{ minRows: 2}"
             @change="standardConfigChange(scope.row)"
+            ></el-input>
+
+          <el-input
+            v-else-if="scope.row.Property==='src'"
+            v-model="scope.row.Value"
+            size="small"
+            @change="standardConfigChange(scope.row)"
+            @dblclick.native = "setSrc"
             ></el-input>
 
           <el-input
@@ -183,6 +187,7 @@
 
 <script>
 import DesignApi from '@/api/draggable/design'
+import PropertyApi from '@/api/draggable/property'
 
 export default {
   props: {
@@ -232,7 +237,7 @@ export default {
         { value: 'oblique', label: '倾斜' },
         { value: 'inherit', label: '继承' }
       ],
-      spanProperty: ['htmlType', 'property', 'vdrProperty', 'style', 'active', 'name'],
+      spanProperty: ['htmlType', 'property', 'name', 'icon', 'vdrProperty', 'style', 'active', 'copmStatus'],
       selectProperty: ['loading', 'disabled', 'autofocus', 'visible', 'draggable', 'resizable', 'enableNativeDrag', 'axis', 'isFixed'],
       InputNumberProperty: ['w', 'h', 'y', 'x', 'zIndex', 'fontSize'],
       ColorPickerProperty: ['background', 'color']
@@ -259,6 +264,12 @@ export default {
 
     standardConfigChange (v) {
       this.$emit('standardConfigChange', v)
+    },
+
+    setSrc: function (v) {
+      PropertyApi.setSrc(this, (picSrc) => {
+        this.$emit('standardConfigChange', { Property: 'src', Value: picSrc })
+      })
     }
   },
   // 存放 过滤器

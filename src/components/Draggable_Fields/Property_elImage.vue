@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-07-12 17:06:39
- * @LastEditTime: 2021-07-26 14:03:13
+ * @LastEditTime: 2021-07-27 11:27:45
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_Fields\Property_elButton.vue
@@ -43,23 +43,30 @@
             v-else-if='selectProperty.indexOf(scope.row.Property)>=0' v-model="scope.row.Value"
             placeholder="请选择"
             size="small"
+            @change="standardConfigChange(scope.row)"
+            :style="{width:'100%'}"
             >
-            <el-option v-for="item in options_Boolean"
-                      :key="item.value"
-                      :label="item.value"
-                      :value="item.value">
+            <el-option
+              v-for="item in options_Boolean"
+              :key="item.value"
+              :label="item.value"
+              :value="item.value">
             </el-option>
           </el-select>
 
           <el-select
-            v-else-if="scope.row.Property==='fit'" v-model="scope.row.Value"
+            v-else-if="scope.row.Property==='fit'"
+            v-model="scope.row.Value"
             placeholder="请选择"
             size="small"
+            @change="standardConfigChange(scope.row)"
+            :style="{width:'100%'}"
             >
-            <el-option v-for="item in options_fit"
-                      :key="item.value"
-                      :label="item.value"
-                      :value="item.value">
+            <el-option
+              v-for="item in options_fit"
+              :key="item.value"
+              :label="item.value"
+              :value="item.value">
             </el-option>
           </el-select>
 
@@ -87,7 +94,7 @@
             v-model="scope.row.Value"
             size="small"
             @change="standardConfigChange(scope.row)"
-            @dblclick.native = "setImageSrc"
+            @dblclick.native = "setSrc"
             ></el-input>
 
           <el-input
@@ -104,6 +111,7 @@
 
 <script>
 import DesignApi from '@/api/draggable/design'
+import PropertyApi from '@/api/draggable/property'
 
 export default {
   props: {
@@ -131,8 +139,8 @@ export default {
         { value: 'cover' },
         { value: 'scale-down' }
       ],
-      spanProperty: ['htmlType', 'property', 'vdrProperty', 'style', 'active', 'name'],
-      selectProperty: ['visible', 'draggable', 'resizable', 'enableNativeDrag', 'axis'],
+      spanProperty: ['htmlType', 'label', 'icon', 'property', 'vdrProperty', 'style', 'active', 'name'],
+      selectProperty: ['visible', 'placeholder', 'error', 'draggable', 'resizable', 'enableNativeDrag', 'axis'],
       InputNumberProperty: ['w', 'h', 'y', 'x', 'zIndex']
     }
   },
@@ -159,28 +167,10 @@ export default {
       this.$emit('standardConfigChange', v)
     },
 
-    setImageSrc: function (v) {
-      console.log('setImageSrc:', v)
-      this.$electron.remote.dialog
-        .showOpenDialog({
-          title: '选择图片',
-          defaultPath: this.$path.resolve(__dirname),
-          properties: ['openFile', 'createDirectory'],
-          filters: [
-            { name: 'Images', extensions: ['jpg', 'png'] }
-          ]
-        }).then(result => {
-          // console.log(result)
-          const temp = Object.values(result.filePaths)
-          // console.log(temp)
-          if (temp.length > 0) {
-            const picSrc = DesignApi.getPicSrc(temp[0])
-            console.log('picSrc:', picSrc)
-            this.$emit('standardConfigChange', { Property: 'backgroundUrl', Value: picSrc })
-          }
-        }).catch(err => {
-          console.log(err)
-        })
+    setSrc: function (v) {
+      PropertyApi.setSrc(this, (picSrc) => {
+        this.$emit('standardConfigChange', { Property: 'src', Value: picSrc })
+      })
     }
   },
   // 存放 过滤器

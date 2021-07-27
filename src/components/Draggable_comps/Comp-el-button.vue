@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-07-06 16:32:59
- * @LastEditTime: 2021-07-26 11:49:02
+ * @LastEditTime: 2021-07-27 15:02:34
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_comps\Comp-el-button.vue
@@ -36,7 +36,7 @@
       :circle=circle
       :hidden=visible
       :style=cssArr
-      >{{item.name}}</el-button>
+      >{{item.title}}</el-button>
 
   </vue-draggable-resizable>
 </template>
@@ -136,6 +136,9 @@ export default {
         for (var index in cssObj) {
           arr[index] = cssObj[index]
         }
+      }
+      if (this.item.property.src !== '') {
+        arr.background = 'url(' + this.item.property.src + ')'
       }
       // {"font-family":"Arial","border":"1px dashed #4444ff"}
       return arr

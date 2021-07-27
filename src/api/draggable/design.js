@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-02 09:07:35
- * @LastEditTime: 2021-07-26 17:19:58
+ * @LastEditTime: 2021-07-27 15:41:51
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\api\draggable\design.js
@@ -53,7 +53,7 @@ const itemProperty = function (obj, e) {
       h,
       background,
       color,
-      border,
+      // border,
       fontSize,
       fontFamily,
       fontStyle,
@@ -68,7 +68,7 @@ const itemProperty = function (obj, e) {
       y: y,
       x: x,
       color: color || '',
-      border: border || '',
+      // border: border || '',
       fontSize: fontSize || 14,
       fontFamily: fontFamily || 'auto',
       fontStyle: fontStyle || 'normal',
@@ -79,6 +79,7 @@ const itemProperty = function (obj, e) {
     item.active = false
     item.style = _style
     item.name = setItemName(obj.editableTabs[obj.tabIndex].edrawComponents, item.htmlType)
+    delete item.icon
     resolve(item)
   })
 }
