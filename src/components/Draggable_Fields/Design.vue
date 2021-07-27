@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-28 09:09:39
- * @LastEditTime: 2021-07-26 15:14:41
+ * @LastEditTime: 2021-07-26 16:58:33
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_Fields\Design.vue
@@ -18,7 +18,7 @@
           :style="designStyle"
           @drop="drop($event)"
           @dragover="dragover($event)"
-          @keyup.delete="DragCompDelete"
+          @keyup.delete="compOnDelete"
           >
           <DragComp
             v-for="(item, index) in edrawComps"
@@ -28,10 +28,10 @@
             @compActive=compActive
             @onResizeStop=onResizeStop
             @onDragStop=onDragStop
-            @keyup.up.native="DragCompMove('up', index)"
-            @keyup.down.native="DragCompMove('down', index)"
-            @keyup.left.native="DragCompMove('left', index)"
-            @keyup.right.native="DragCompMove('right', index)"
+            @keyup.up.native="compOnMove('up')"
+            @keyup.down.native="compOnMove('down')"
+            @keyup.left.native="compOnMove('left')"
+            @keyup.right.native="compOnMove('right')"
             ></DragComp>
 
         </div>
@@ -42,7 +42,7 @@
 <script>
 import VueRulerTool from 'vue-ruler-tool'
 import DragComp from '@/components/Draggable_comps/DragComp'
-import DesignApi from '@/api/draggable/design'
+// import DesignApi from '@/api/draggable/design'
 
 export default {
   // name: 'Draggable_Fields_Design',
@@ -97,11 +97,13 @@ export default {
   },
   // 存放 方法
   methods: {
-    DragCompDelete: function () {
-      this.$emit('compDelete')
+    compOnDelete: function () {
+      console.log('compOnDelete')
+      this.$emit('compOnDelete')
     },
-    DragCompMove: function (moveType, index) {
-      this.$emit('compMove', moveType, index)
+    compOnMove: function (moveType) {
+      console.log('compOnMove')
+      this.$emit('compOnMove', moveType)
     },
     drop (e) {
       this.$emit('selectComp', e);

@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-07-06 16:51:45
- * @LastEditTime: 2021-07-26 14:27:28
+ * @LastEditTime: 2021-07-27 09:21:01
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_comps\Comp-el-image.vue
@@ -82,8 +82,8 @@ export default {
 
     // el-image组件 属性
     src: function () {
-      return this.item.property.src
-      // return require('@/' + this.item.property.src)
+      // return this.item.property.src
+      return require('@/' + this.item.property.src)
     },
     alt: function () {
       return this.item.property.alt
@@ -110,6 +110,7 @@ export default {
   },
   watch: {
     active: function (newVal, oldVal) {
+      console.log('watch:', newVal)
       this.$emit('compActive', this.item, newVal)
     }
   },

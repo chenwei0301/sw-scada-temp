@@ -1,14 +1,14 @@
 /*
  * @Author: your name
  * @Date: 2021-07-02 09:07:35
- * @LastEditTime: 2021-07-26 16:11:55
+ * @LastEditTime: 2021-07-26 17:19:58
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\api\draggable\design.js
  */
 import proElButtonApi from '@/api/draggable/property_elButton'
 
-const compDelete = function (obj) {
+const compOnDelete = function (obj) {
   const comps = obj.editableTabs[obj.tabIndex].edrawComponents
   for (var i = comps.length - 1; i >= 0; i--) {
     if (comps[i].active) {
@@ -16,7 +16,7 @@ const compDelete = function (obj) {
     }
   }
 }
-const compMove = function (obj, moveType, index) {
+const compOnMove = function (obj, moveType) {
   switch (moveType) {
     case 'up': {
       --obj.designActItem.style.y
@@ -51,18 +51,12 @@ const itemProperty = function (obj, e) {
     const {
       w,
       h,
-      // borderRadius,
-      // rotate,
-      // borderWidth,
       background,
-      // isApplyShadow,
-      // bgiBool,
       color,
       border,
       fontSize,
       fontFamily,
       fontStyle,
-      // opacity,
       x,
       y,
       customCss,
@@ -71,26 +65,16 @@ const itemProperty = function (obj, e) {
     var _style = {
       w: w || 100,
       h: h || 100,
-      // position: 'absolute',
       y: y,
       x: x,
-      // drag_start_x: 0, // 拖拽相对
-      // drag_start_y: 0,
       color: color || '',
       border: border || '',
       fontSize: fontSize || 14,
       fontFamily: fontFamily || 'auto',
       fontStyle: fontStyle || 'normal',
-      // borderWidth: borderWidth || 0,
       background: background || '',
-      // borderRadius: borderRadius || 0,
-      // rotate: rotate || 0,
       customCss: customCss || '',
       zIndex: zIndex || 1
-      // isApplyShadow: (isApplyShadow === undefined || isApplyShadow === null) ? 'true' : 'false',
-      // bgiBool: bgiBool || false, // 材质
-      // opacity: opacity || 1,
-      // isFixed: 'false'
     }
     item.active = false
     item.style = _style
@@ -278,8 +262,8 @@ const getPicSrc = function (src) {
   return picSrc
 }
 export default {
-  compDelete,
-  compMove,
+  compOnDelete,
+  compOnMove,
   itemProperty,
   handleDesignTabsEdit,
   designConfigChange,
