@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-07-06 16:51:45
- * @LastEditTime: 2021-07-27 11:09:12
+ * @LastEditTime: 2021-07-28 17:42:28
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_comps\Comp-el-image.vue
@@ -29,6 +29,7 @@
       :src=src
       :alt=alt
       :fit=fit
+      :hidden=visible
       @load=srcLoadSuccess
       @error=srcLoadError
       :style=cssArr
@@ -47,6 +48,8 @@
 import VueDraggableResizable from 'vue-draggable-resizable'
 // import 'vue-draggable-resizable/dist/VueDraggableResizable.css'
 import '@/styles/VueDraggableResizable.css'
+import PropertyApi from '@/api/draggable/property'
+
 export default {
   // name: 'elImage',
   props: {
@@ -62,16 +65,16 @@ export default {
       return this.item.active
     },
     preventDeactivation: function () {
-      return this.item.vdrProperty.preventDeactivation
+      return PropertyApi.booleanCheck(this.item.vdrProperty.preventDeactivation)
     },
     draggable: function () {
-      return this.item.vdrProperty.draggable
+      return PropertyApi.booleanCheck(this.item.vdrProperty.draggable)
     },
     resizable: function () {
-      return this.item.vdrProperty.resizable
+      return PropertyApi.booleanCheck(this.item.vdrProperty.resizable)
     },
     enableNativeDrag: function () {
-      return this.item.vdrProperty.enableNativeDrag
+      return PropertyApi.booleanCheck(this.item.vdrProperty.enableNativeDrag)
     },
     // zIndex: function () {
     //   return this.item.vdrProperty.zIndex
@@ -92,18 +95,31 @@ export default {
       return this.item.property.fit
     },
     placeholder: function () {
-      return this.item.property.placeholder
+      return PropertyApi.booleanCheck(this.item.property.placeholder)
     },
     error: function () {
-      return this.item.property.error
+      return PropertyApi.booleanCheck(this.item.property.error)
     },
-
+    visible: function () {
+      return !PropertyApi.booleanCheck(this.item.property.visible)
+    },
     vdrCssArr: function () {
       const arr = {}
+      if (this.item.style.zIndex !== '') {
+        arr['z-index'] = this.item.style.zIndex
+      }
+      console.log('vdrCssArr:', arr)
       return arr
     },
     cssArr: function () {
       const arr = {}
+      if (this.item.style.customCss !== '') {
+        const cssObj = JSON.parse(this.item.style.customCss)
+        // console.log(cssObj)
+        for (var index in cssObj) {
+          arr[index] = cssObj[index]
+        }
+      }
       return arr
     }
 

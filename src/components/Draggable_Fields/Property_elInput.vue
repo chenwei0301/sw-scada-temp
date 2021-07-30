@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-07-12 17:06:39
- * @LastEditTime: 2021-07-19 09:00:18
+ * @LastEditTime: 2021-07-28 16:09:41
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_Fields\Property_elImage.vue
@@ -43,11 +43,29 @@
             v-else-if='selectProperty.indexOf(scope.row.Property)>=0' v-model="scope.row.Value"
             placeholder="请选择"
             size="small"
+            @change="standardConfigChange(scope.row)"
+            :style="{width:'100%'}"
             >
             <el-option v-for="item in Boolean_Options"
                       :key="item.value"
                       :label="item.value"
                       :value="item.value">
+            </el-option>
+          </el-select>
+
+          <el-select
+            v-else-if='iconProperty.indexOf(scope.row.Property)>=0' v-model="scope.row.Value"
+            placeholder="请选择"
+            size="small"
+           @change="standardConfigChange(scope.row)"
+            :style="{width:'100%'}"
+            >
+            <el-option v-for="item in Icon_Options"
+                      :key="item"
+                      :label="item"
+                      :value="item"
+                      >
+              <i :class="item"> {{item}}</i>
             </el-option>
           </el-select>
 
@@ -59,6 +77,7 @@
             label=""
             :min="1"
             controls-position="right"
+            :style="{width:'100%'}"
             >
             </el-input-number>
 
@@ -66,6 +85,7 @@
             v-else
             v-model="scope.row.Value"
             size="small"
+            @change="standardConfigChange(scope.row)"
             ></el-input>
 
         </template>
@@ -75,6 +95,7 @@
 
 <script>
 import DesignApi from '@/api/draggable/design'
+import iconClassArr from '@/api/draggable/iconClass'
 
 export default {
   props: {
@@ -84,6 +105,8 @@ export default {
   // 存放 数据
   data () {
     return {
+      Icon_Options: iconClassArr,
+      // Icon_Options: ['', 'el-icon-date', 'el-icon-search'],
       Boolean_Options: [
         { value: 'true' },
         { value: 'false' }
@@ -96,8 +119,9 @@ export default {
         { value: 'large' }
       ],
       spanProperty: ['htmlType', 'property', 'vdrProperty', 'style', 'size'],
-      selectProperty: ['default', 'plain', 'round', 'circle', 'type', 'loading', 'disabled', 'autofocus', 'draggable', 'resizable', 'enableNativeDrag', 'axis', 'position', 'isApplyShadow', 'isFixed'],
-      InputNumberProperty: ['w', 'h', 'y', 'x']
+      selectProperty: ['default', 'plain', 'round', 'circle', 'type', 'loading', 'disabled', 'autofocus', 'draggable', 'resizable', 'enableNativeDrag', 'axis'],
+      InputNumberProperty: ['w', 'h', 'y', 'x', 'zIndex', 'fontSize'],
+      iconProperty: ['prefixIcon', 'suffixIcon']
     }
   },
   // 计算 属性
@@ -116,7 +140,6 @@ export default {
       // console.log('row:', row)
     },
     standardConfigChange (v) {
-      console.log(v)
       this.$emit('standardConfigChange', v)
     }
   },

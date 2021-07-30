@@ -35,6 +35,7 @@
     "nprogress": "^0.2.0",
     "qs": "^6.10.1",
     "screenfull": "^5.1.0",
+    "script-loader": "^0.7.2",
     "splitpanes": "^2.3.6",
     "v-ajax": "^1.0.6",
     "view-design": "^4.5.0",

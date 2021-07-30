@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-02 09:07:35
- * @LastEditTime: 2021-07-27 15:41:51
+ * @LastEditTime: 2021-07-27 16:02:42
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\api\draggable\design.js
@@ -47,37 +47,7 @@ const itemProperty = function (obj, e) {
     // 设置位置属性等
     item.style.x = e.layerX // layerX相对于父元素的定位
     item.style.y = e.layerY
-    // property
-    const {
-      w,
-      h,
-      background,
-      color,
-      // border,
-      fontSize,
-      fontFamily,
-      fontStyle,
-      x,
-      y,
-      customCss,
-      zIndex
-    } = item.style
-    var _style = {
-      w: w || 100,
-      h: h || 100,
-      y: y,
-      x: x,
-      color: color || '',
-      // border: border || '',
-      fontSize: fontSize || 14,
-      fontFamily: fontFamily || 'auto',
-      fontStyle: fontStyle || 'normal',
-      background: background || '',
-      customCss: customCss || '',
-      zIndex: zIndex || 1
-    }
     item.active = false
-    item.style = _style
     item.name = setItemName(obj.editableTabs[obj.tabIndex].edrawComponents, item.htmlType)
     delete item.icon
     resolve(item)
@@ -87,7 +57,7 @@ const itemProperty = function (obj, e) {
 // 控件唯一名称设置
 const setItemName = function (comps, itemType) {
   const count = comps.filter(comp => comp.htmlType === itemType).length
-  return itemType + (count + 1)
+  return itemType + '-' + (count + 1)
 }
 
 const handleDesignTabsEdit = function (obj, targetName, action) {

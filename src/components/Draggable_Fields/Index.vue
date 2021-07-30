@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-24 14:53:13
- * @LastEditTime: 2021-07-27 15:03:55
+ * @LastEditTime: 2021-07-28 09:28:19
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_Fields\Index.vue
@@ -154,14 +154,8 @@ export default {
     async selectComp (e) {
       e.preventDefault()
       const item = await DesignApi.itemProperty(this, e)
-      console.log('await-item:', item)
+      // console.log('await-item:', item)
       this.editableTabs[this.tabIndex].edrawComponents.push(item)
-    },
-
-    setItemName (itemType) {
-      const comps = this.editableTabs[this.tabIndex].edrawComponents
-      const count = comps.filter(comp => comp.htmlType === itemType)
-      return itemType + count
     },
 
     handleClick (tab, event) {
@@ -226,6 +220,7 @@ export default {
 
     compOnDelete: function () {
       DesignApi.compOnDelete(this)
+      this.designActItem = {}
     },
 
     compOnMove: function (moveType, index) {

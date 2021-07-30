@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-07-12 17:06:39
- * @LastEditTime: 2021-07-27 15:15:47
+ * @LastEditTime: 2021-07-28 17:34:56
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_Fields\Property_elButton.vue
@@ -238,7 +238,7 @@ export default {
         { value: 'inherit', label: '继承' }
       ],
       spanProperty: ['htmlType', 'property', 'name', 'icon', 'vdrProperty', 'style', 'active', 'copmStatus'],
-      selectProperty: ['loading', 'disabled', 'autofocus', 'visible', 'draggable', 'resizable', 'enableNativeDrag', 'axis', 'isFixed'],
+      selectProperty: ['loading', 'disabled', 'autofocus', 'visible', 'draggable', 'resizable', 'enableNativeDrag', 'axis'],
       InputNumberProperty: ['w', 'h', 'y', 'x', 'zIndex', 'fontSize'],
       ColorPickerProperty: ['background', 'color']
     }

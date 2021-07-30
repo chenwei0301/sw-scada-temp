@@ -2,14 +2,14 @@
 /*
  * @Author: your name
  * @Date: 2021-07-14 10:34:32
- * @LastEditTime: 2021-07-27 14:38:22
+ * @LastEditTime: 2021-07-28 17:32:21
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\api\draggable\property.js
  */
 
 const options_Style = ['x', 'y', 'w', 'h', 'background', 'color', 'fontSize', 'zIndex', 'customCss', 'fontStyle', 'fontFamily']
-const options_Property = ['size', 'styleType', 'type', 'loading', 'disabled', 'src', 'autofocus', 'visible', 'fit', 'alt', 'placeholder', 'error']
+const options_Property = ['size', 'styleType', 'type', 'loading', 'disabled', 'src', 'autofocus', 'visible', 'fit', 'alt', 'placeholder', 'error', 'prefixIcon', 'suffixIcon', 'value']
 const options_VdrProperty = ['preventDeactivation', 'draggable', 'resizable', 'enableNativeDrag', 'axis']
 const options_Base = ['title']
 // const options_ColorPicker = ['background', 'color']
@@ -29,10 +29,14 @@ const standardConfigChange = function (obj, v) {
 }
 
 const booleanCheck = function (params) {
-  if (params === 'true' || params === 'TRUE') {
-    return true
-  } else if (params === 'false' || params === 'FALSE') {
-    return false
+  if (typeof (params) === 'boolean') {
+    return params
+  } else {
+    if (params === 'true' || params === 'TRUE') {
+      return true
+    } else if (params === 'false' || params === 'FALSE') {
+      return false
+    }
   }
 }
 

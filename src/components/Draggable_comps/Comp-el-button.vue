@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-07-06 16:32:59
- * @LastEditTime: 2021-07-27 15:02:34
+ * @LastEditTime: 2021-07-28 09:30:10
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_comps\Comp-el-button.vue
@@ -104,7 +104,7 @@ export default {
       return this.item.property.styleType === 'circle'
     },
     visible: function () {
-      return PropertyApi.booleanCheck(this.item.property.visible)
+      return !PropertyApi.booleanCheck(this.item.property.visible)
     },
     vdrCssArr: function () {
       const arr = {}

@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-07-06 16:38:38
- * @LastEditTime: 2021-07-15 10:36:58
+ * @LastEditTime: 2021-07-28 17:41:27
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_comps\Comp-el-input.vue
@@ -15,8 +15,9 @@
     :y='item.style.y'
     :w=item.style.w
     :h=item.style.h
-    :min-width=5
+    :min-width=10
     :min-height=22
+    :style=vdrCssArr
 
     @resizestop=onResizeStop
     @dragstop=onDragStop
@@ -33,13 +34,20 @@
       :show-word-limit=showWordLimit
       :resize=resize
       :autofocus=autofocus
-      ></el-input>
+      :prefix-icon=prefixIcon
+      :suffix-icon=suffixIcon
+      :style=cssArr
+      >
+
+      </el-input>
 
   </vue-draggable-resizable>
 </template>
 <script>
 import VueDraggableResizable from 'vue-draggable-resizable'
 import '@/styles/VueDraggableResizable.css'
+import PropertyApi from '@/api/draggable/property'
+
 export default {
   // name: 'elInput',
   props: {
@@ -100,6 +108,12 @@ export default {
     type: function () {
       return this.item.property.type
     },
+    rows: function () {
+      return this.item.property.rows
+    },
+    // autosize: function () {
+    //   return this.item.property.autosize
+    // },
     value: function () {
       return this.item.property.value
     },
@@ -110,16 +124,16 @@ export default {
       return this.item.property.placeholder
     },
     disabled: function () {
-      return this.item.property.disabled
+      return PropertyApi.booleanCheck(this.item.property.disabled)
     },
     clearable: function () {
-      return this.item.property.clearable
+      return PropertyApi.booleanCheck(this.item.property.clearable)
     },
     showPassword: function () {
-      return this.item.property.showPassword
+      return PropertyApi.booleanCheck(this.item.property.showPassword)
     },
     showWordLimit: function () {
-      return this.item.property.showWordLimit
+      return PropertyApi.booleanCheck(this.item.property.showWordLimit)
     },
     minlength: function () {
       return this.item.property.minlength
@@ -131,7 +145,47 @@ export default {
       return this.item.property.resize
     },
     autofocus: function () {
-      return this.item.property.autofocus
+      return PropertyApi.booleanCheck(this.item.property.autofocus)
+    },
+    prefixIcon: function () {
+      return this.item.property.prefixIcon
+    },
+    suffixIcon: function () {
+      return this.item.property.suffixIcon
+    },
+    vdrCssArr: function () {
+      const arr = {}
+      if (this.item.style.zIndex !== '') {
+        arr['z-index'] = this.item.style.zIndex
+      }
+      console.log('vdrCssArr:', arr)
+      return arr
+    },
+    cssArr: function () {
+      const arr = {}
+      if (this.item.style.color !== '') {
+        arr.color = this.item.style.color
+      }
+      if (this.item.style.background !== '') {
+        arr.background = this.item.style.background
+      }
+      if (this.item.style.fontSize !== '') {
+        arr['font-size'] = this.item.style.fontSize + 'px'
+      }
+      if (this.item.style.fontFamily !== '') {
+        arr['font-family'] = this.item.style.fontFamily
+      }
+      if (this.item.style.fontStyle !== '') {
+        arr['font-style'] = this.item.style.fontStyle
+      }
+      if (this.item.style.customCss !== '') {
+        const cssObj = JSON.parse(this.item.style.customCss)
+        // console.log(cssObj)
+        for (var index in cssObj) {
+          arr[index] = cssObj[index]
+        }
+      }
+      return arr
     }
   },
   watch: {
