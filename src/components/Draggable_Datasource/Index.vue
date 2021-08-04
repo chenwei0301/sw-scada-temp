@@ -70,6 +70,6 @@ export default {
 .Draggable_Datasource{
   width: 100%;
   height: 100%;
-  background: lightblue;
+//   background: lightblue;
 }
 </style>

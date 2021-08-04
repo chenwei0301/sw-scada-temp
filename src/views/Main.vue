@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-22 14:21:48
- * @LastEditTime: 2021-08-03 11:28:39
+ * @LastEditTime: 2021-08-04 14:37:37
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\views\Main.vue
@@ -11,31 +11,19 @@
 </template>
 
 <script>
-import MainPage from '@/components/Main/Index'
 export default {
   data () {
-    return {
-    }
+    return {}
   },
   components: {
-    MainPage
-  },
-  mixins: '',
-  methods: {},
-  beforeCreate () {},
-  created () {},
-  beforeMount () {},
-  mounted () {},
-  beforeUpdate () {},
-  updated () {},
-  activated () {},
-  deactivated () {},
-  beforeDestroy () {},
-  destroyed () {},
-  // eslint-disable-next-line handle-callback-err
-  errorCaptured: (err, vm, info) => {}
+    MainPage: () => import(/* webpackChunkName: "MainPage" */'@/components/Main/Index')
+  }
 }
 </script>
 
 <style lang="scss" scoped>
+.main{
+  height: 100%;
+  background-color: #a7b0b754;
+}
 </style>

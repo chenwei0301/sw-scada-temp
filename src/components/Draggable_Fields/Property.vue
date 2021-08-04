@@ -119,6 +119,9 @@ export default {
   height: 100%;
   //font-size: 12px;
   // background: rgb(204, 224, 128);
+  .el-tabs--border-card{
+    height: 100%;
+  }
   .el-tabs--border-card>.el-tabs__content {
     padding: 2px;
   }

@@ -110,7 +110,7 @@ export default {
 .Draggable_Fields_Toolbox{
   width: 100%;
   height: 100%;
-  background: rgb(50, 194, 105);
+//   background: rgb(50, 194, 105);
   padding: 1px;
   overflow: auto;
     .subBox{

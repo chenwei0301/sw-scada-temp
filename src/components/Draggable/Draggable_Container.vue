@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-23 14:22:11
- * @LastEditTime: 2021-08-03 11:12:43
+ * @LastEditTime: 2021-08-04 17:50:41
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings EditDraggable_Container.vue
  * @FilePath: \sw_scada_temp\src\components\Draggable\Draggable_Container.vue
@@ -67,16 +67,6 @@
 </template>
 
 <script>
-import DraggableHeader from '@/components/Draggable/Draggable_Header'
-// import DraggableFooter from '@/components/Draggable/Draggable_Footer'
-import DraggableFields from '@/components/Draggable_Fields/Index'
-import DraggableDatasource from '@/components/Draggable_Datasource/Index'
-import DraggableListeners from '@/components/Draggable_Listeners/Index'
-import DraggableMetadata from '@/components/Draggable_Metadata/Index'
-import DataPoint from '@/components/DataPoint/Index'
-import Edit from '@/views/Edit'
-// import SvgIcon from '@/svgicon'
-
 export default {
   name: 'Draggable_Container',
   data () {
@@ -93,15 +83,15 @@ export default {
     }
   },
   components: {
-    // SvgIcon,
-    DraggableHeader,
-    // DraggableFooter,
-    DraggableFields,
-    DraggableDatasource,
-    DraggableListeners,
-    DraggableMetadata,
-    DataPoint,
-    Edit
+    // SvgIcon: () => import(/* webpackChunkName: "svgicon" */'@/svgicon'),
+    // DraggableHeader: () => import(/* webpackChunkName: "DraggableHeader" */'@/components/DraggableHeader/Index'),
+    // DraggableFooter: () => import(/* webpackChunkName: "DraggableFooter" */'@/components/DraggableFooter/Index'),
+    DraggableFields: () => import(/* webpackChunkName: "DraggableFields" */'@/components/Draggable_Fields/Index'),
+    DraggableDatasource: () => import(/* webpackChunkName: "DraggableDatasource" */'@/components/Draggable_Datasource/Index'),
+    DraggableListeners: () => import(/* webpackChunkName: "DraggableListeners" */'@/components/Draggable_Listeners/Index'),
+    DraggableMetadata: () => import(/* webpackChunkName: "DraggableMetadata" */'@/components/Draggable_Metadata/Index'),
+    DataPoint: () => import(/* webpackChunkName: "DataPoint" */'@/components/DataPoint/Index'),
+    Edit: () => import(/* webpackChunkName: "Edit" */'@/views/Edit')
   },
   mixins: '',
   methods: {

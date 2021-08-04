@@ -1,10 +1,10 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-22 14:52:01
- * @LastEditTime: 2021-06-23 17:09:12
+ * @LastEditTime: 2021-08-04 17:46:04
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
- * @FilePath: \sw_scada_temp\src\components\Draggable\Draggable.vue
+ * @FilePath: \sw_scada_temp\src\components\Draggable\Index.vue
 -->
 <template>
 
