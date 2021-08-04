@@ -1,26 +1,24 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-22 14:21:48
- * @LastEditTime: 2021-08-03 11:16:34
+ * @LastEditTime: 2021-08-03 11:28:39
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
- * @FilePath: \sw_scada_temp\src\views\Draggable.vue
+ * @FilePath: \sw_scada_temp\src\views\Main.vue
 -->
 <template>
-  <Draggable class="Draggable"></Draggable>
+  <MainPage class="main"></MainPage>
 </template>
 
 <script>
-import Draggable from '@/components/Draggable/Draggable_Container'
-// import Draggable from '@/components/Draggable/Draggable'
+import MainPage from '@/components/Main/Index'
 export default {
-  name: 'draggable',
   data () {
     return {
     }
   },
   components: {
-    Draggable
+    MainPage
   },
   mixins: '',
   methods: {},

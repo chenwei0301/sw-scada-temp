@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-07-12 17:06:39
- * @LastEditTime: 2021-07-28 17:34:56
+ * @LastEditTime: 2021-08-02 17:37:23
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_Fields\Property_elButton.vue
@@ -188,6 +188,7 @@
 <script>
 import DesignApi from '@/api/draggable/design'
 import PropertyApi from '@/api/draggable/property'
+import { optionsStyleType, optionsBoolean, optionsSize, optionsType, optionsFontFamily, optionsFontStyle, InputNumberProperty, ColorPickerProperty } from '@/api/draggable/options'
 
 export default {
   props: {
@@ -197,50 +198,20 @@ export default {
   // 存放 数据
   data () {
     return {
-      options_styleType: [
-        { value: 'default' },
-        { value: 'plain' },
-        { value: 'round' },
-        { value: 'circle' }
-      ],
-      options_Boolean: [
-        { value: 'true' },
-        { value: 'false' }
-      ],
-      options_size: [
-        { value: '' },
-        { value: 'mini' },
-        { value: 'small' },
-        { value: 'medium' },
-        { value: 'large' }
-      ],
-      options_type: [
-        { value: '' },
-        { value: 'primary' },
-        { value: 'success' },
-        { value: 'warning' },
-        { value: 'danger' },
-        { value: 'info' },
-        { value: 'text' }
-      ],
-      options_fontFamily: [
-        { value: 'auto', label: '' },
-        { value: 'Serif', label: '' },
-        { value: 'Sans-serif', label: '' },
-        { value: 'Monospace', label: '' },
-        { value: 'Cursive', label: '' },
-        { value: 'Fantasy ', label: '' }
-      ],
-      options_fontStyle: [
-        { value: 'normal', label: '默认值' },
-        { value: 'italic', label: '斜体' },
-        { value: 'oblique', label: '倾斜' },
-        { value: 'inherit', label: '继承' }
-      ],
-      spanProperty: ['htmlType', 'property', 'name', 'icon', 'vdrProperty', 'style', 'active', 'copmStatus'],
+      options_styleType: optionsStyleType,
+      options_Boolean: optionsBoolean,
+      // options_Boolean: [
+      //   { value: 'true' },
+      //   { value: 'false' }
+      // ],
+      options_size: optionsSize,
+      options_type: optionsType,
+      options_fontFamily: optionsFontFamily,
+      options_fontStyle: optionsFontStyle,
+      spanProperty: ['htmlType', 'property', 'name', 'vdrProperty', 'style', 'active', 'copmStatus'],
       selectProperty: ['loading', 'disabled', 'autofocus', 'visible', 'draggable', 'resizable', 'enableNativeDrag', 'axis'],
-      InputNumberProperty: ['w', 'h', 'y', 'x', 'zIndex', 'fontSize'],
-      ColorPickerProperty: ['background', 'color']
+      InputNumberProperty: InputNumberProperty,
+      ColorPickerProperty: ColorPickerProperty
     }
   },
   // 计算 属性

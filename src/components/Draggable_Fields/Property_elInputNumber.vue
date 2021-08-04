@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-07-12 17:06:39
- * @LastEditTime: 2021-07-19 09:00:18
+ * @LastEditTime: 2021-08-03 10:11:27
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_Fields\Property_elInputNumber.vue
@@ -44,7 +44,18 @@
             placeholder="请选择"
             size="small"
             >
-            <el-option v-for="item in Boolean_Options"
+            <el-option v-for="item in options_Boolean"
+                      :key="item.value"
+                      :label="item.value"
+                      :value="item.value">
+            </el-option>
+          </el-select>
+          <el-select
+            v-else-if="scope.row.Property==='controlsPosition'" v-model="scope.row.Value"
+            placeholder="请选择"
+            size="small"
+            >
+            <el-option v-for="item in options_controlsPosition"
                       :key="item.value"
                       :label="item.value"
                       :value="item.value">
@@ -57,10 +68,29 @@
             @change="standardConfigChange(scope.row)"
             size="small"
             label=""
-            :min="1"
             controls-position="right"
             >
             </el-input-number>
+
+          <el-input-number
+            v-else-if='InputNumberPropertyUNINT.indexOf(scope.row.Property)>=0'
+            v-model="scope.row.Value"
+            @change="standardConfigChange(scope.row)"
+            size="small"
+            label=""
+            :min="scope.row.Property==='precision'?0:1"
+            controls-position="right"
+            >
+            </el-input-number>
+
+          <el-input
+            v-else-if="scope.row.Property==='customCss'"
+            v-model="scope.row.Value"
+            size="small"
+            type="textarea"
+            :autosize="{ minRows: 2}"
+            @change="standardConfigChange(scope.row)"
+            ></el-input>
 
           <el-input
             v-else
@@ -75,7 +105,7 @@
 
 <script>
 import DesignApi from '@/api/draggable/design'
-
+import { optionsBoolean, optionsSize, optionsFontFamily, optionsFontStyle, optionsTextType, optionsControlsPosition, InputNumberProperty, ColorPickerProperty, InputNumberPropertyUNINT } from '@/api/draggable/options'
 export default {
   props: {
     property: Object
@@ -84,20 +114,17 @@ export default {
   // 存放 数据
   data () {
     return {
-      Boolean_Options: [
-        { value: 'true' },
-        { value: 'false' }
-      ],
-      compSize_Options: [
-        { value: '' },
-        { value: 'mini' },
-        { value: 'small' },
-        { value: 'medium' },
-        { value: 'large' }
-      ],
-      spanProperty: ['htmlType', 'property', 'vdrProperty', 'style', 'size'],
-      selectProperty: ['default', 'plain', 'round', 'circle', 'type', 'loading', 'disabled', 'autofocus', 'draggable', 'resizable', 'enableNativeDrag', 'axis', 'position', 'isApplyShadow', 'isFixed'],
-      InputNumberProperty: ['w', 'h', 'y', 'x']
+      options_Boolean: optionsBoolean,
+      options_size: optionsSize,
+      options_fontFamily: optionsFontFamily,
+      options_fontStyle: optionsFontStyle,
+      options_textType: optionsTextType,
+      options_controlsPosition: optionsControlsPosition,
+      spanProperty: ['htmlType', 'property', 'vdrProperty', 'style', 'name', 'active', 'copmStatus'],
+      selectProperty: ['disabled', 'stepStrictly', 'controls', 'visible'],
+      InputNumberProperty: InputNumberProperty,
+      InputNumberPropertyUNINT: InputNumberPropertyUNINT,
+      ColorPickerProperty: ColorPickerProperty
     }
   },
   // 计算 属性

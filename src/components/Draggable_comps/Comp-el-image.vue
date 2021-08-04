@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-07-06 16:51:45
- * @LastEditTime: 2021-07-28 17:42:28
+ * @LastEditTime: 2021-08-02 16:54:58
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_comps\Comp-el-image.vue
@@ -32,6 +32,7 @@
       :hidden=visible
       @load=srcLoadSuccess
       @error=srcLoadError
+      @contextmenu.prevent=rightClick
       :style=cssArr
       >
       <div slot="placeholder" class="image-slot" v-if='placeholder'>
@@ -169,6 +170,9 @@ export default {
     // 图片加载失败触发
     srcLoadError: function (err) {
       console.log('srcLoadError', err)
+    },
+    rightClick: function () {
+      console.log('rightClick')
     }
   },
   components: {

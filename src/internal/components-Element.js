@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-06 14:26:24
- * @LastEditTime: 2021-07-28 17:38:21
+ * @LastEditTime: 2021-08-03 10:12:13
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\internal\components-Element.js
@@ -94,28 +94,28 @@ export default [
       h: 42,
       x: 0,
       y: 0,
-      color: '',
-      background: '',
+      // color: '',
+      // background: '',
       fontSize: 14,
-      fontFamily: 'auto',
-      fontStyle: 'normal',
+      // fontFamily: 'auto',
+      // fontStyle: 'normal',
       customCss: '',
       zIndex: 1
     },
     property: {
       type: 'text', // text/textarea
-      rows: 1,
+      // rows: 1,
       autosize: { minRows: 2, maxRows: 4 },
       value: '',
-      size: '', // 只在type!="textarea"时有效 medium/small/min
+      // size: '', // 只在type!="textarea"时有效 medium/small/min
       placeholder: '', // 输入框占位文本
       disabled: false,
       clearable: false, // 可清空
       showPassword: false, // 是否显示切换密码图
       showWordLimit: false,
-      minlength: 0,
+      // minlength: 0,
       maxlength: 20,
-      resize: 'both', // none, both, horizontal, vertical
+      // resize: 'both', // none, both, horizontal, vertical
       autofocus: false,
       visible: true,
       prefixIcon: '',
@@ -134,21 +134,22 @@ export default [
       h: 40,
       x: 0,
       y: 0,
-      color: '',
-      background: '',
+      // color: '',
+      // background: '',
       fontSize: 14,
-      fontFamily: 'auto',
-      fontStyle: 'normal',
+      // fontFamily: 'auto',
+      // fontStyle: 'normal',
       customCss: '',
       zIndex: 1
     },
     property: {
+      value: '',
       disabled: false,
       min: 0,
       max: 0,
       step: 1,
       stepStrictly: false,
-      precision: 1,
+      precision: 0,
       controls: true,
       controlsPosition: 'right', // right
       label: '',

@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-23 14:22:11
- * @LastEditTime: 2021-07-08 10:38:11
+ * @LastEditTime: 2021-08-03 11:12:43
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings EditDraggable_Container.vue
  * @FilePath: \sw_scada_temp\src\components\Draggable\Draggable_Container.vue
@@ -10,9 +10,11 @@
   <!---->
   <el-container id='Drag-container'>
 
+<!--
     <el-header :width= "headerHeight + 'px'">
       <DraggableHeader></DraggableHeader>
     </el-header>
+-->
 
     <el-container>
           <el-aside :width= "asideWidth + 'px'">

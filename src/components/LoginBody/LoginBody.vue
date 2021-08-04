@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-02-01 10:19:36
- * @LastEditTime: 2021-07-19 16:29:18
+ * @LastEditTime: 2021-08-03 11:23:36
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \swiscs_3d\src\components\LoginBody\LoginBody.vue
@@ -27,8 +27,8 @@
         <el-option
           v-for="(item, index) in ruleForm.uiOptions"
           :key=index
-          :label="item.value"
-          :value="item.value">
+          :label="item"
+          :value="item">
         </el-option>
       </el-select>
     </el-form-item>
@@ -89,19 +89,7 @@ export default {
       ruleForm: {
         username: '',
         password: '',
-        uiOptions: [
-          {
-            value: 'Gedi'
-          },
-          {
-            value: 'Draggable'
-          },
-          {
-            value: 'Edit'
-          },
-          {
-            value: 'Home'
-          }],
+        uiOptions: ['Gedi', 'Draggable', 'Main', 'Edit', 'Home'],
         uiType: '',
         ui: 1,
         displaySeleted: [],

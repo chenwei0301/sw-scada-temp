@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-07-06 16:38:38
- * @LastEditTime: 2021-07-28 17:41:27
+ * @LastEditTime: 2021-08-02 17:02:17
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_comps\Comp-el-input.vue
@@ -18,7 +18,6 @@
     :min-width=10
     :min-height=22
     :style=vdrCssArr
-
     @resizestop=onResizeStop
     @dragstop=onDragStop
     >
@@ -32,11 +31,13 @@
       :clearable=clearable
       :show-password=showPassword
       :show-word-limit=showWordLimit
+      :maxlength=maxlength
       :resize=resize
       :autofocus=autofocus
       :prefix-icon=prefixIcon
       :suffix-icon=suffixIcon
       :style=cssArr
+      v-show=!visible
       >
 
       </el-input>
@@ -78,6 +79,7 @@ export default {
       // resize: 'both', // none, both, horizontal, vertical
       // boolean 自动获取焦点
       // autofocus: true
+      inputArr: ''
     }
   },
   computed: {
@@ -111,9 +113,6 @@ export default {
     rows: function () {
       return this.item.property.rows
     },
-    // autosize: function () {
-    //   return this.item.property.autosize
-    // },
     value: function () {
       return this.item.property.value
     },
@@ -153,31 +152,33 @@ export default {
     suffixIcon: function () {
       return this.item.property.suffixIcon
     },
+    visible: function () {
+      return !PropertyApi.booleanCheck(this.item.property.visible)
+    },
     vdrCssArr: function () {
       const arr = {}
       if (this.item.style.zIndex !== '') {
         arr['z-index'] = this.item.style.zIndex
       }
-      console.log('vdrCssArr:', arr)
       return arr
     },
     cssArr: function () {
       const arr = {}
-      if (this.item.style.color !== '') {
-        arr.color = this.item.style.color
-      }
-      if (this.item.style.background !== '') {
-        arr.background = this.item.style.background
-      }
+      // if (this.item.style.color !== '') {
+      //   arr.color = this.item.style.color
+      // }
+      // if (this.item.style.background !== '') {
+      //   arr.background = this.item.style.background
+      // }
       if (this.item.style.fontSize !== '') {
         arr['font-size'] = this.item.style.fontSize + 'px'
       }
-      if (this.item.style.fontFamily !== '') {
-        arr['font-family'] = this.item.style.fontFamily
-      }
-      if (this.item.style.fontStyle !== '') {
-        arr['font-style'] = this.item.style.fontStyle
-      }
+      // if (this.item.style.fontFamily !== '') {
+      //   arr['font-family'] = this.item.style.fontFamily
+      // }
+      // if (this.item.style.fontStyle !== '') {
+      //   arr['font-style'] = this.item.style.fontStyle
+      // }
       if (this.item.style.customCss !== '') {
         const cssObj = JSON.parse(this.item.style.customCss)
         // console.log(cssObj)
@@ -195,24 +196,14 @@ export default {
   },
   methods: {
     onResizeStartCallback: function (handle, ev) {
-      // console.log('onResizeStartCallback:', handle, ev)
       return true
     },
     onResizeCallback: function (handle, x, y, width, height) {
-      // console.log('onResizeCallback:', handle, x, y, width, height)
       return true
     },
     onResize: function (x, y, width, height) {
-      // const para = {
-      //   x: x,
-      //   y: y,
-      //   w: width,
-      //   h: height
-      // }
-      // this.$emit('compOnResize', this.item, para)
     },
     onResizeStop: function (x, y, width, height) {
-      console.log('onResizeStop:', x, y, width, height)
       const para = {
         x: x,
         y: y,
@@ -222,14 +213,9 @@ export default {
       this.$emit('onResizeStop', this.item, para)
     },
     onDrag: function (x, y) {
-      // const para = {
-      //   x: x,
-      //   y: y
-      // }
-      // this.$emit('compOnDrag', this.item, para)
     },
     onDragStop: function (x, y) {
-      console.log('onDragStop:', x, y)
+      // this.test()
       const para = {
         x: x,
         y: y
@@ -237,12 +223,18 @@ export default {
       this.$emit('onDragStop', this.item, para)
     },
     onActivated: function () {
-      console.log('active:', true)
       this.$emit('compActive', this.item, true)
     },
     onDeactivated: function () {
-      console.log('active:', false)
       this.$emit('compActive', this.item, false)
+    },
+    test () {
+      var compst = document.querySelector('.comp .el-input__inner')
+      // var compst = document.getElementsByClassName('.el-input__inner')
+      // console.log('arr:', arr)
+      compst.style.background = 'red'
+      compst.style.color = '#ffffff'
+      console.log(compst)
     }
   },
   components: {
@@ -256,6 +248,9 @@ export default {
     height: 100%;
     .el-input__inner{
       min-height: 20px !important;
+      height: 100% !important;
+    }
+    .el-textarea__inner{
       height: 100% !important;
     }
   }

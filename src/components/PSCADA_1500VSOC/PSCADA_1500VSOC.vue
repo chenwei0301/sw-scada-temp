@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-02-24 13:51:07
- * @LastEditTime: 2021-02-25 15:20:39
+ * @LastEditTime: 2021-08-03 11:18:03
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \swiscs_3d\src\components\PSCADA_1500VSOC\PSCADA_1500VSOC.vue

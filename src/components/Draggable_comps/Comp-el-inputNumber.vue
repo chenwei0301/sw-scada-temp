@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-07-14 17:09:16
- * @LastEditTime: 2021-07-15 10:32:59
+ * @LastEditTime: 2021-08-02 17:57:07
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_comps\Comp-el-inputNumber.vue
@@ -25,7 +25,7 @@
 
     <el-input-number
       class='comp'
-      v-model="item.Value"
+      v-model="item.property.value"
       :size='size'
       :disabled='disabled'
       :min='min'
@@ -37,6 +37,7 @@
       :controls-position='controlsPosition'
       :label='label'
       :placeholder='placeholder'
+      @change=change
       ></el-input-number>
 
   </vue-draggable-resizable>
@@ -170,6 +171,9 @@ export default {
     onDeactivated: function () {
       console.log('active:', false)
       this.$emit('compActive', this.item, false)
+    },
+    change: function (currentValue, oldValue) {
+      console.log(currentValue, oldValue);
     }
   },
   components: {

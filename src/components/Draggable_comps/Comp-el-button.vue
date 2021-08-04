@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-07-06 16:32:59
- * @LastEditTime: 2021-07-28 09:30:10
+ * @LastEditTime: 2021-08-03 10:50:58
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_comps\Comp-el-button.vue
@@ -36,6 +36,7 @@
       :circle=circle
       :hidden=visible
       :style=cssArr
+      @click=click
       >{{item.title}}</el-button>
 
   </vue-draggable-resizable>
@@ -183,6 +184,12 @@ export default {
     },
     onDeactivated: function () {
       this.$emit('compActive', this.item, false)
+    },
+    click: function () {
+      console.log('click')
+    },
+    rightClick: function () {
+      console.log('rightClick')
     }
   },
   components: {

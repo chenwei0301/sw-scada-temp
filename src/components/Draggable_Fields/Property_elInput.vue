@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-07-12 17:06:39
- * @LastEditTime: 2021-07-28 16:09:41
+ * @LastEditTime: 2021-08-02 16:07:36
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_Fields\Property_elImage.vue
@@ -46,7 +46,7 @@
             @change="standardConfigChange(scope.row)"
             :style="{width:'100%'}"
             >
-            <el-option v-for="item in Boolean_Options"
+            <el-option v-for="item in options_Boolean"
                       :key="item.value"
                       :label="item.value"
                       :value="item.value">
@@ -57,7 +57,7 @@
             v-else-if='iconProperty.indexOf(scope.row.Property)>=0' v-model="scope.row.Value"
             placeholder="请选择"
             size="small"
-           @change="standardConfigChange(scope.row)"
+            @change="standardConfigChange(scope.row)"
             :style="{width:'100%'}"
             >
             <el-option v-for="item in Icon_Options"
@@ -66,6 +66,70 @@
                       :value="item"
                       >
               <i :class="item"> {{item}}</i>
+            </el-option>
+          </el-select>
+
+          <el-select
+            v-else-if="scope.row.Property==='fontFamily'"
+            v-model="scope.row.Value"
+            placeholder="请选择"
+            size="small"
+            @change="standardConfigChange(scope.row)"
+            :style="{width:'100%'}"
+            >
+            <el-option
+              v-for="item in options_fontFamily"
+              :key="item.value"
+              :label="item.value"
+              :value="item.value">
+            </el-option>
+          </el-select>
+
+          <el-select
+            v-else-if="scope.row.Property==='size'"
+            v-model="scope.row.Value"
+            placeholder="请选择"
+            size="small"
+            @change="standardConfigChange(scope.row)"
+            :style="{width:'100%'}"
+            >
+            <el-option
+              v-for="item in options_size"
+              :key="item.value"
+              :label="item.value"
+              :value="item.value">
+            </el-option>
+          </el-select>
+
+          <el-select
+            v-else-if="scope.row.Property==='fontStyle'"
+            v-model="scope.row.Value"
+            placeholder="请选择"
+            size="small"
+            @change="standardConfigChange(scope.row)"
+            :style="{width:'100%'}"
+            >
+            <el-option
+              v-for="item in options_fontStyle"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+
+          <el-select
+            v-else-if="scope.row.Property==='type'"
+            v-model="scope.row.Value"
+            placeholder="请选择"
+            size="small"
+            @change="standardConfigChange(scope.row)"
+            :style="{width:'100%'}"
+            >
+            <el-option
+              v-for="item in options_textType"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
             </el-option>
           </el-select>
 
@@ -80,6 +144,26 @@
             :style="{width:'100%'}"
             >
             </el-input-number>
+
+          <div v-else-if='ColorPickerProperty.indexOf(scope.row.Property)>=0'>
+            <el-color-picker
+              v-model="scope.row.Value"
+              show-alpha
+              size='mini'
+              @change="standardConfigChange(scope.row)"
+              :style="{top:'5px'}"
+              ></el-color-picker>
+            <span :style="{'margin-left':'5px'}">{{scope.row.Value}}</span>
+          </div>
+
+          <el-input
+            v-else-if="scope.row.Property==='customCss'"
+            v-model="scope.row.Value"
+            size="small"
+            type="textarea"
+            :autosize="{ minRows: 2}"
+            @change="standardConfigChange(scope.row)"
+            ></el-input>
 
           <el-input
             v-else
@@ -96,6 +180,7 @@
 <script>
 import DesignApi from '@/api/draggable/design'
 import iconClassArr from '@/api/draggable/iconClass'
+import { optionsBoolean, optionsSize, optionsFontFamily, optionsFontStyle, optionsTextType, InputNumberProperty, ColorPickerProperty } from '@/api/draggable/options'
 
 export default {
   props: {
@@ -106,21 +191,15 @@ export default {
   data () {
     return {
       Icon_Options: iconClassArr,
-      // Icon_Options: ['', 'el-icon-date', 'el-icon-search'],
-      Boolean_Options: [
-        { value: 'true' },
-        { value: 'false' }
-      ],
-      compSize_Options: [
-        { value: '' },
-        { value: 'mini' },
-        { value: 'small' },
-        { value: 'medium' },
-        { value: 'large' }
-      ],
-      spanProperty: ['htmlType', 'property', 'vdrProperty', 'style', 'size'],
-      selectProperty: ['default', 'plain', 'round', 'circle', 'type', 'loading', 'disabled', 'autofocus', 'draggable', 'resizable', 'enableNativeDrag', 'axis'],
-      InputNumberProperty: ['w', 'h', 'y', 'x', 'zIndex', 'fontSize'],
+      options_Boolean: optionsBoolean,
+      options_size: optionsSize,
+      options_fontFamily: optionsFontFamily,
+      options_fontStyle: optionsFontStyle,
+      options_textType: optionsTextType,
+      spanProperty: ['htmlType', 'property', 'vdrProperty', 'style', 'name', 'active', 'copmStatus'],
+      selectProperty: ['disabled', 'clearable', 'showPassword', 'showWordLimit', 'autofocus', 'visible'],
+      InputNumberProperty: InputNumberProperty,
+      ColorPickerProperty: ColorPickerProperty,
       iconProperty: ['prefixIcon', 'suffixIcon']
     }
   },

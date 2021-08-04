@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-01-28 15:50:04
- * @LastEditTime: 2021-07-21 09:19:24
+ * @LastEditTime: 2021-08-03 11:21:07
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \swiscs_3d\src\router\index.js
@@ -61,6 +61,32 @@ export const constantRoutes = [
     alwaysShow: true,
     component: () => import(/* webpackChunkName: "Draggable" */'@/views/Draggable.vue'),
     children: []
+  },
+  {
+    path: '/main',
+    name: 'Main',
+    meta: { title: 'main', icon: '' },
+    alwaysShow: true,
+    component: () => import(/* webpackChunkName: "Main" */'@/views/Main.vue'),
+    redirect: '/drag',
+    children: [
+      {
+        path: '/drag',
+        name: 'Drag',
+        meta: { title: 'Drag', icon: '' },
+        alwaysShow: true,
+        component: () => import(/* webpackChunkName: "Draggable" */'@/views/Draggable.vue'),
+        children: []
+      },
+      {
+        path: '/editTest',
+        name: 'EditTest',
+        meta: { title: 'Edit', icon: '' },
+        alwaysShow: true,
+        component: () => import(/* webpackChunkName: "Edit" */'@/views/Edit.vue'),
+        children: []
+      }
+    ]
   },
   {
     path: '/vdr',
