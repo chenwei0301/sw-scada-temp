@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-08-04 10:28:09
- * @LastEditTime: 2021-08-04 17:26:24
+ * @LastEditTime: 2021-08-05 14:58:53
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\views\Menu.vue
@@ -65,7 +65,18 @@
   </div>
 
   <el-main class="elMain">
-    <div ></div>
+    <div class="breakCrumb">
+    <el-breadcrumb separator-class="el-icon-arrow-right">
+      <el-breadcrumb-item>首页</el-breadcrumb-item>
+      <el-breadcrumb-item>活动管理</el-breadcrumb-item>
+      <el-breadcrumb-item>活动列表</el-breadcrumb-item>
+      <el-breadcrumb-item>活动详情</el-breadcrumb-item>
+    </el-breadcrumb>
+    </div>
+
+<!--
+    <el-container class="content"></el-container>
+-->
   </el-main>
 
   </el-container>
@@ -123,6 +134,7 @@ export default {
   height: 100%;
   .elAside{
     height: 100%;
+    box-shadow: 10px 0 10px -10px #c7c7c7;
     .MenuShow{
       height: 20px;
       width: 100%;
@@ -134,8 +146,16 @@ export default {
   }
   .elMain{
     margin: 5px;
-    background: #ffffff;
+    padding: 5px;
+    //background: #ffffff;
     width: 100%;
+    .breakCrumb{
+      background: #ffffff;
+    }
+    .content{
+      height: 100%;
+      background-color: lightcoral;
+    }
   }
 }
 </style>

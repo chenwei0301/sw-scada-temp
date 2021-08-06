@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-07-12 17:06:39
- * @LastEditTime: 2021-08-03 10:11:27
+ * @LastEditTime: 2021-08-05 14:08:53
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_Fields\Property_elInputNumber.vue
@@ -43,6 +43,8 @@
             v-else-if='selectProperty.indexOf(scope.row.Property)>=0' v-model="scope.row.Value"
             placeholder="请选择"
             size="small"
+            @change="standardConfigChange(scope.row)"
+            :style="{width:'100%'}"
             >
             <el-option v-for="item in options_Boolean"
                       :key="item.value"
@@ -54,6 +56,8 @@
             v-else-if="scope.row.Property==='controlsPosition'" v-model="scope.row.Value"
             placeholder="请选择"
             size="small"
+            @change="standardConfigChange(scope.row)"
+            :style="{width:'100%'}"
             >
             <el-option v-for="item in options_controlsPosition"
                       :key="item.value"
@@ -80,6 +84,7 @@
             label=""
             :min="scope.row.Property==='precision'?0:1"
             controls-position="right"
+            :style="{width:'100%'}"
             >
             </el-input-number>
 
@@ -96,6 +101,7 @@
             v-else
             v-model="scope.row.Value"
             size="small"
+            @change="standardConfigChange(scope.row)"
             ></el-input>
 
         </template>
