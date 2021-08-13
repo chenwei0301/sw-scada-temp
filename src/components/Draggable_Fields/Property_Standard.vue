@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-07-12 17:06:39
- * @LastEditTime: 2021-07-21 09:40:57
+ * @LastEditTime: 2021-08-10 09:24:17
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_Fields\Property_Standard.vue
@@ -37,10 +37,18 @@
       @standardConfigChange=standardConfigChange
     >
     </PropertyElInputNumber>
+
+    <PropertyBasic
+      v-else
+      :property=property
+      @standardConfigChange=standardConfigChange
+    >
+    </PropertyBasic>
   </div>
 </template>
 
 <script>
+import PropertyBasic from '@/components/Draggable_Fields/Property_Basic'
 import PropertyElButton from '@/components/Draggable_Fields/Property_elButton'
 import PropertyElImage from '@/components/Draggable_Fields/Property_elImage'
 import PropertyElInput from '@/components/Draggable_Fields/Property_elInput'
@@ -76,6 +84,7 @@ export default {
   directives: {},
   // 存放 子组件
   components: {
+    PropertyBasic,
     PropertyElButton,
     PropertyElImage,
     PropertyElInput,

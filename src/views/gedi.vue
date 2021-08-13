@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-05-26 09:09:39
- * @LastEditTime: 2021-06-22 14:10:36
+ * @LastEditTime: 2021-08-09 14:24:38
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\views\gedi.vue
@@ -326,6 +326,7 @@ export default {
     },
     exportVue () {
       const content = this.$refs.designer.getVueContent();
+      console.log(content)
       FileSaver.saveAs('data:text/plain;charset=utf-8,' + encodeURIComponent(content), 'Untitled.vue');
     },
     funcTest () {

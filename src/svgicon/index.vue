@@ -27,21 +27,21 @@ export default {
     }
   },
   computed: {
-    isExternal() {
+    isExternal () {
       // return isExternal(this.name)
       return true
     },
-    iconName() {
+    iconName () {
       return `#icon-${this.name}`
     },
-    svgClass() {
+    svgClass () {
       if (this.className) {
         return 'svg-icon svg-fill' + this.className
       } else {
         return 'svg-icon svg-fill'
       }
     },
-    styleExternalIcon() {
+    styleExternalIcon () {
       return {
         mask: `url(${this.name}) no-repeat 50% 50%`,
         '-webkit-mask': `url(${this.name}) no-repeat 50% 50%`

@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-24 17:03:46
- * @LastEditTime: 2021-07-16 16:37:34
+ * @LastEditTime: 2021-08-10 10:10:58
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_Fields\Property.vue
@@ -15,7 +15,13 @@
     >
 
     <el-tab-pane label="标准属性" name="standard">
+      <PropertyBasic
+      v-if='property.compType==="Basic"'
+      :property=property
+      @standardConfigChange=standardConfigChange
+      ></PropertyBasic>
       <PropertyStandard
+      v-else
       :property=property
       @standardConfigChange=standardConfigChange
       ></PropertyStandard>
@@ -39,6 +45,7 @@
 
 <script>
 
+import PropertyBasic from '@/components/Draggable_Fields/Property_Basic'
 import PropertyStandard from '@/components/Draggable_Fields/Property_Standard'
 import PropertyDesign from '@/components/Draggable_Fields/Property_Design'
 import PropertyData from '@/components/Draggable_Fields/Property_Data'
@@ -88,7 +95,8 @@ export default {
   components: {
     PropertyStandard,
     PropertyDesign,
-    PropertyData
+    PropertyData,
+    PropertyBasic
   },
   /*  生命周期函数  */
   // 创建期间

@@ -17,6 +17,11 @@
     <comp-button
       v-if="item.htmlType==='button'"
       :item=item
+      @compActive=compActive
+      @compOnResize=compOnResize
+      @onResizeStop=onResizeStop
+      @compOnDrag=compOnDrag
+      @onDragStop=onDragStop
       ></comp-button>
 
     <comp-span

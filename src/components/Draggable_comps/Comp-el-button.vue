@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-07-06 16:32:59
- * @LastEditTime: 2021-08-03 10:50:58
+ * @LastEditTime: 2021-08-10 09:09:31
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_comps\Comp-el-button.vue
@@ -48,8 +48,7 @@ import PropertyApi from '@/api/draggable/property'
 
 export default {
   props: {
-    item: Object,
-    id: String
+    item: Object
   },
   data () {
     return {

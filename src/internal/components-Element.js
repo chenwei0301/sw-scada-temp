@@ -22,7 +22,7 @@
 // }
 const COMPSTATUSDESIGN = 'design'
 const COMPSTATUSRUN = 'running'
-
+const COMPTYPEELEMENT = 'Element'
 export {
   COMPSTATUSDESIGN,
   COMPSTATUSRUN
@@ -31,6 +31,7 @@ export {
 export default [
   {
     compStatus: COMPSTATUSDESIGN,
+    compType: COMPTYPEELEMENT,
     htmlType: 'el-button',
     name: '',
     title: 'el-button',
@@ -61,6 +62,7 @@ export default [
   },
   {
     compStatus: COMPSTATUSDESIGN,
+    compType: COMPTYPEELEMENT,
     htmlType: 'el-image',
     name: '',
     title: 'el-image',
@@ -85,6 +87,7 @@ export default [
   },
   {
     compStatus: COMPSTATUSDESIGN,
+    compType: COMPTYPEELEMENT,
     htmlType: 'el-input',
     name: '',
     title: 'el-input',
@@ -125,6 +128,7 @@ export default [
   },
   {
     compStatus: COMPSTATUSDESIGN,
+    compType: COMPTYPEELEMENT,
     htmlType: 'el-input-number',
     name: '',
     title: 'el-input-number',

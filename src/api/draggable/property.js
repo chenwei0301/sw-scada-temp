@@ -2,14 +2,14 @@
 /*
  * @Author: your name
  * @Date: 2021-07-14 10:34:32
- * @LastEditTime: 2021-08-03 10:00:03
+ * @LastEditTime: 2021-08-10 11:36:09
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\api\draggable\property.js
  */
 
-const options_Style = ['x', 'y', 'w', 'h', 'background', 'color', 'fontSize', 'zIndex', 'customCss', 'fontStyle', 'fontFamily']
-const options_Property = ['size', 'styleType', 'type', 'loading', 'disabled', 'src', 'autofocus', 'visible', 'fit', 'alt', 'placeholder', 'error', 'prefixIcon', 'suffixIcon', 'value', 'rows', 'clearable', 'showPassword', 'showWordLimit', 'minlength', 'maxlength', 'stepStrictly', 'controls', 'min', 'max', 'step', 'precision', 'controlsPosition']
+const options_Style = ['x', 'y', 'w', 'h', 'background', 'color', 'fontSize', 'zIndex', 'customCss', 'fontStyle', 'fontFamily', 'border', 'disabled', 'align', 'visible', 'src']
+const options_Property = ['size', 'styleType', 'type', 'loading', 'disabled', 'src', 'autofocus', 'fit', 'alt', 'placeholder', 'error', 'prefixIcon', 'suffixIcon', 'value', 'rows', 'clearable', 'showPassword', 'showWordLimit', 'minlength', 'maxlength', 'stepStrictly', 'controls', 'min', 'max', 'step', 'precision', 'controlsPosition']
 const options_VdrProperty = ['preventDeactivation', 'draggable', 'resizable', 'enableNativeDrag', 'axis']
 const options_Base = ['title']
 // const options_ColorPicker = ['background', 'color']
