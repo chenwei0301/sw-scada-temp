@@ -1,13 +1,13 @@
 /*
  * @Author: your name
  * @Date: 2021-07-28 09:58:33
- * @LastEditTime: 2021-07-28 16:05:40
+ * @LastEditTime: 2021-08-18 13:56:25
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\api\draggable\iconClass.js
  */
 const iconClassArr = [
-  '',
+  // '',
   'el-icon-platform-eleme',
   'el-icon-eleme',
   'el-icon-delete-solid',
@@ -110,7 +110,7 @@ const iconClassArr = [
   'el-icon-sort-up',
   'el-icon-sort-down',
   'el-icon-rank',
-  'el-icon-loading',
+  // 'el-icon-loading',
   'el-icon-view',
   'el-icon-c-scale-to-original',
   'el-icon-date',
@@ -223,8 +223,7 @@ const iconClassArr = [
   'el-icon-location-outline',
   'el-icon-location-information',
   'el-icon-add-location',
-  'el-icon-d',
-  'elete-location',
+  'el-icon-delete-location',
   'el-icon-map-location',
   'el-icon-alarm-clock',
   'el-icon-timer',
@@ -276,7 +275,6 @@ const iconClassArr = [
   'el-icon-goblet-square-full',
   'el-icon-refrigerator',
   'el-icon-grape',
-  'el-icon-waterm',
   'el-icon-cherry',
   'el-icon-apple',
   'el-icon-pear',

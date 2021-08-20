@@ -2,7 +2,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-03 10:27:55
- * @LastEditTime: 2021-06-15 09:47:52
+ * @LastEditTime: 2021-08-13 17:49:47
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\FunctionTest\s_router.vue
@@ -30,6 +30,10 @@
 
     <el-button @click.prevent="routertest" type="primary">router</el-button>
 
+    <el-button @click.prevent="routerMenuList" type="primary">routerMenuList</el-button>
+
+    <el-tree :data="treeData" :props="treeProps" @node-click="handleNodeClick"></el-tree>
+
   </div>
 </template>
 
@@ -40,6 +44,11 @@ import Vue2Filters from 'vue2-filters'
 export default {
   data () {
     return {
+      treeData: [],
+      treeProps: {
+        children: 'children',
+        label: 'title'
+      },
       active: false,
       msg: 'this is table named s_router function Test'
     }
@@ -48,6 +57,9 @@ export default {
   },
   mixins: [Vue2Filters.mixin],
   methods: {
+    handleNodeClick (data) {
+      console.log(data);
+    },
     routertest () {
       // console.log(this.$router.options.routes[1])
       this.$router.push({ path: '/vdr' })
@@ -164,6 +176,12 @@ export default {
       for (var i = 0; i < ret.length; i++) {
         this.$router.addRoute('Home', ret[i])
       }
+    },
+    async routerMenuList () {
+      console.log('routerMenuList')
+      var ret = await sRouter.getRouterMenuAsync()
+      this.treeData = ret
+      console.table(ret)
     }
   },
   beforeCreate () {},

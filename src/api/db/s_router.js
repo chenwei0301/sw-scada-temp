@@ -3,7 +3,7 @@
 /*
  * @Author: your name
  * @Date: 2021-06-03 09:53:24
- * @LastEditTime: 2021-07-22 09:48:12
+ * @LastEditTime: 2021-08-18 18:01:29
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\api\db\s_router.js
@@ -127,9 +127,9 @@ async function getUnregisteredRouterAsync () {
  * @param {*} para
  * @return {*}
  */
-async function getRouterMenuAsync () {
+async function getRouterMenuAsync (selectFilter = '*') {
   const para = {
-    selectFilter: '*',
+    selectFilter: selectFilter,
     // eslint-disable-next-line quotes
     whereFilter: 'menu_type=' + MENUTYPE.menuBAR + ' order by display_order ASC'
   }
@@ -139,7 +139,7 @@ async function getRouterMenuAsync () {
     ret[i].children = []
     if (isNull(ret[i].path)) { // 子组件
       const subPara = {
-        selectFilter: '*',
+        selectFilter: selectFilter,
         whereFilter: 'parent_id=' + ret[i].menu_id + ' order by display_order ASC'
       }
       ret[i].children = await whereRouterAsync(subPara)
@@ -187,6 +187,17 @@ const addAsyncRoutes = async function (obj) {
   }
 }
 
+/**
+ * @description: 获取Router Menu数据 Async
+ * @param {*} para
+ * @return {*}
+ */
+async function getRouterMenuFormatAsync () {
+  var ret = await getRouterMenuAsync()
+
+  return ret
+}
+
 export default {
   getRouterAsync,
   whereRouterAsync,
@@ -196,5 +207,6 @@ export default {
   getUnregisteredRouterAsync,
   UnRegisteredRouter,
   getRouterMenuAsync,
-  addAsyncRoutes
+  addAsyncRoutes,
+  getRouterMenuFormatAsync
 }

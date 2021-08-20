@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-08-03 11:18:03
- * @LastEditTime: 2021-08-09 10:34:58
+ * @LastEditTime: 2021-08-16 14:46:15
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Main\Index.vue
@@ -41,6 +41,7 @@
 
     <!-- 主显示区域 -->
     <el-main class="eMain">
+      <MenuEdit v-show="activeMenu==='MenuEdit'"></MenuEdit>
       <Dash v-show="activeMenu==='Dash'"></Dash>
       <Draggable v-show="activeMenu==='drag'"></Draggable>
       <Menu v-show="activeMenu==='Menu'"></Menu>
@@ -62,8 +63,9 @@ export default {
     return {
       logSrc: require('@/assets/icons/32x32.png'),
       title: 'main index',
-      activeMenu: 'LodashTest',
+      activeMenu: 'MenuEdit',
       items: [ // 水平一级菜单栏的菜单
+        { index: 'MenuEdit', title: '菜单编辑' },
         { index: 'Dash', title: '控制台' },
         { index: 'drag', title: '组态' },
         { index: 'Menu', title: '配置' },
@@ -75,6 +77,8 @@ export default {
   components: {
     Dash: () => import(/* webpackChunkName: "Dash" */'@/views/Dash'),
     Draggable: () => import(/* webpackChunkName: "Draggable" */'@/components/Draggable/Draggable_Container'),
+    MenuEdit: () => import(/* webpackChunkName: "MenuEdit" */'@/components/MenuEdit/'),
+    // MenuEdit: () => import(/* webpackChunkName: "MenuEdit" */'@/components/MenuEdit/router'),
     Edit: () => import(/* webpackChunkName: "Edit" */'@/views/Edit'),
     Menu: () => import(/* webpackChunkName: "Menu" */'@/views/Menu'),
     LodashTest: () => import(/* webpackChunkName: "Menu" */'@/views/FuncTest/lodash_Test')
@@ -129,7 +133,7 @@ export default {
     }
   }
   .eMain {
-    padding: 0;
+    padding: 10px;
   }
 }
 </style>

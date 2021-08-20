@@ -11,6 +11,8 @@
     <!-- <h4>{{msg | uppercase  }}</h4> -->
     <h4>{{msg | uppercaseFirst  }}</h4>
 
+    <el-button @click='getRole'>getRole</el-button>
+
     <sSysInfo></sSysInfo>
 
     <staticRouter></staticRouter>
@@ -69,6 +71,9 @@ export default {
   },
   mixins: [Vue2Filters.mixin],
   methods: {
+    getRole: function () {
+
+    },
     test () {
       // 生产环境  C:\Program Files\SW-HMI-IDE V1.0.0\resources\app
       // picPath C:\Program Files\SW-HMI-IDE V1.0.0\resources\app\WebConfigure\pictures\Element\el-input.png

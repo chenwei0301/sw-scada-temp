@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-05-13 10:14:59
- * @LastEditTime: 2021-06-08 15:02:30
+ * @LastEditTime: 2021-08-19 16:38:42
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \swiscs_3d\src\db\mysql.js
@@ -14,6 +14,7 @@ const pool = mysql.createPool(appConfig('mysql'))
 
 // 导出查询相关
 var querySync = function (sql, callback) {
+  // console.log('querySync-sql:', sql)
   pool.getConnection(function (err, conn) {
     if (err) {
       callback(err, null, null);

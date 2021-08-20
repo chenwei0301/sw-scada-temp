@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-08-10 09:22:50
- * @LastEditTime: 2021-08-12 09:51:59
+ * @LastEditTime: 2021-08-17 09:42:01
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Draggable_Fields\Property_Basic.vue
