@@ -2,7 +2,7 @@
 /*
  * @Author: your name
  * @Date: 2021-08-19 17:33:08
- * @LastEditTime: 2021-08-27 11:12:55
+ * @LastEditTime: 2021-08-27 17:45:36
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\api\db\s_right.js
@@ -42,30 +42,13 @@ async function whereRightAsync (para) {
 async function getRightAsyncFormate (roleId) {
   // 1. 获取所有 area 信息
   var retArea = await sArea.getAreasAsync({ filter: 'area_id,area_name' })
-  // const data = []
   // 2. 循环查询对应权限 roleId 下的所有module 权限
   if (retArea.length > 0) {
     for (let i = 0; i < retArea.length; i++) {
-      // const subData = {
-      //   role_id: roleId,
-      //   id: retArea[i].area_id,
-      //   label: retArea[i].area_name
-      // }
-
-      // const ret = await whereRightAsync({ selectFilter: 'module_id,behavior', whereFilter: 'role_id=' + roleId + " and area_id='" + retArea[i].area_id + "'" })
-      // const temp = []
-      // ret.forEach(element => {
-      //   temp.push({ id: retArea[i].area_id + "-" + element.module_id })
-      // });
-      // subData.chirldren = temp
-      // data.push(subData)
-
       retArea[i].role_id = roleId
       retArea[i].children = await whereRightAsync({ selectFilter: 'module_id,behavior', whereFilter: 'role_id=' + roleId + " and area_id='" + retArea[i].area_id + "'" })
     }
   }
-
-  // return data
   return retArea
 }
 
@@ -78,15 +61,17 @@ async function FormateRightForTree (roleId) {
   const ret = await getRightAsyncFormate(roleId)
   // console.log(ret)
   const data = []
+  let retModule = []
+  let retBehavior = []
   if (ret.length > 0) {
-    const retModule = await sModule.getModuleAsync({ filter: 'module_id,module_title' })
+    retModule = await sModule.getModuleAsync({ filter: 'module_id,module_title' })
     const objModule = {}
     retModule.forEach(element => {
       objModule[element.module_id] = element.module_title
     })
     // console.log(retModule)
     // console.log(objModule)
-    const retBehavior = await sBehavior.getBehaviorAsync({ field: '*' })
+    retBehavior = await sBehavior.getBehaviorAsync({ field: '*' })
     const objBehavior = {}
     retBehavior.forEach(element => {
       objBehavior[element.behavior_name] = element.behavior_des
@@ -100,19 +85,25 @@ async function FormateRightForTree (roleId) {
         const behaviorTemp = []
         const id2 = id1 + "-" + sysEle.module_id
         retBehavior.forEach(behaEle => {
-          behaviorTemp.push({ id: id2 + '-' + behaEle.behavior_name, label: behaEle.behavior_des })
+          behaviorTemp.push({ id: id2 + '-' + behaEle.behavior_name, label: behaEle.behavior_des, name: behaEle.behavior_name, type: 'behavior' })
         })
-        temp.push({ id: id2, label: objModule[sysEle.module_id], children: behaviorTemp })
+        temp.push({ id: id2, label: objModule[sysEle.module_id], children: behaviorTemp, name: sysEle.module_id, type: 'module' })
       })
       const subData = {
         id: id1,
         label: ret[i].area_name,
-        children: temp
+        children: temp,
+        name: ret[i].area_id,
+        type: 'area'
       }
       data.push(subData)
     }
   }
-  return data
+  let behaComb = ''
+  retBehavior.forEach(element => {
+    behaComb += element.behavior_name
+  });
+  return { data: data, module: retModule, behavior: retBehavior, behaComb: behaComb }
 }
 
 /**

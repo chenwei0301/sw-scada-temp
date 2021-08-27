@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-08-26 10:59:08
- * @LastEditTime: 2021-08-27 11:36:51
+ * @LastEditTime: 2021-08-27 18:01:42
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\FunctionTest\s_right.vue
@@ -24,11 +24,10 @@
       node-key="id"
       highlight-current
       empty-text=" "
+      :style="{height:'300px', overflow: 'auto'}"
       :default-expanded-keys="[]"
-      :default-checked-keys="['1-400']"
+      :default-checked-keys="[]"
       :props="defaultProps"
-      @node-click=nodeClick
-      @check-change=checkChange
       @check=check
       >
       </el-tree>
@@ -47,41 +46,9 @@ export default {
       active: false,
       msg: 'this is table named s_right function Test',
       data: [],
-      // data: [{
-      //   id: 1,
-      //   label: '一级 1',
-      //   children: [{
-      //     id: 4,
-      //     label: '二级 1-1',
-      //     children: [{
-      //       id: 9,
-      //       label: '三级 1-1-1'
-      //     }, {
-      //       id: 10,
-      //       label: '三级 1-1-2'
-      //     }]
-      //   }]
-      // }, {
-      //   id: 2,
-      //   label: '一级 2',
-      //   children: [{
-      //     id: 5,
-      //     label: '二级 2-1'
-      //   }, {
-      //     id: 6,
-      //     label: '二级 2-2'
-      //   }]
-      // }, {
-      //   id: 3,
-      //   label: '一级 3',
-      //   children: [{
-      //     id: 7,
-      //     label: '二级 3-1'
-      //   }, {
-      //     id: 8,
-      //     label: '二级 3-2'
-      //   }]
-      // }],
+      module: [],
+      behavior: [],
+      behaComb: '',
       defaultProps: {
         children: 'children',
         label: 'label'
@@ -98,10 +65,12 @@ export default {
       }
     },
     async getFormateRight () {
-      // var ret = await sRight.getRightAsyncFormate(1)
       var ret = await sRight.FormateRightForTree(1)
-      console.log(ret)
-      this.data = ret
+      // console.log(ret)
+      this.data = ret.data
+      this.module = ret.module
+      this.behavior = ret.behavior
+      this.behaComb = ret.behaComb
     },
     async addRightBaseInfo () {
       // 当添加新权限组
@@ -153,11 +122,28 @@ export default {
     nodeClick (data, node, obj) {
       console.log('nodeClick', data, node, obj);
     },
-    checkChange (event, data, node, obj) {
-      console.log('checkChange', event, data, node, obj);
+    checkChange (data, check, chilCheck) {
+      console.log('checkChange', data, check, chilCheck);
     },
     check (data, node) {
       console.log('check', data, node);
+      // 判断当前节点id 是否在已选择节点当中 从而判断是否选中
+      const check = node.checkedKeys.indexOf(data.id) > -1
+      console.log(check);
+      const temp = data.id.split('-')
+      const para = {
+        role_id: parseInt(temp[0]),
+        area_id: temp[1]
+      }
+      if (data.type === 'area') { // 选择area节点 各module设置所有behavior
+        // 分离id
+      } else if (data.type === 'module') { // 选择module节点   设置所有behavior
+        para.module_id = temp[2]
+      } else if (data.type === 'behavior') { // 选择behavior节点  设置对应behavior
+        para.module_id = temp[2]
+        para.behavior_id = temp[3]
+      }
+      console.log(para);
     }
   },
   beforeCreate () {},
