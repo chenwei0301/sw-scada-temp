@@ -2,7 +2,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-08-17 09:17:20
- * @LastEditTime: 2021-08-19 16:39:13
+ * @LastEditTime: 2021-08-26 09:37:01
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\MenuEdit\MenuDialog.vue
@@ -40,7 +40,7 @@
           <el-row>
             <el-col :span="24">
               <el-form-item label="类型">
-                <el-radio-group v-model="form.menu_type">
+                <el-radio-group v-model="form.menu_type" @change=changeMenuType>
                   <el-radio label="list">目录</el-radio>
                   <el-radio label="menu">菜单</el-radio>
                 </el-radio-group>
@@ -113,8 +113,8 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="上级节点">
-                <el-popover placement="bottom-start" width="260" trigger="focus" popper-class="properClass">
-                  <el-input v-model="form.parent_title" size="mini" slot="reference" clearable></el-input>
+                <el-popover placement="bottom-start" width="260" trigger="focus" popper-class="properClass" :disabled="form.menu_type==='list'">
+                  <el-input v-model="form.parent_title" size="mini" slot="reference" clearable :disabled="form.menu_type==='list'"></el-input>
                   <div class="menuBox">
                     <el-tree :data="menulist" :props="defaultProps" highlight-current @node-click="handleNodeClick"></el-tree>
                   </div>
@@ -239,7 +239,15 @@ export default {
     }
   },
   // 计算 属性
-  computed: {},
+  computed: {
+    menuListId: function () {
+      var ids = []
+      this.menulist.forEach(element => {
+        ids.push(element.menu_id)
+      })
+      return ids
+    }
+  },
   // 监听 属性
   watch: {},
   // 存放 过滤器
@@ -278,23 +286,46 @@ export default {
       this.setData(type, data)
       this.dialogVisible = true
     },
+    changeMenuType: function (val) {
+      console.log(val);
+      if (val === 'list') {
+        this.form.parent_id = 1
+        this.form.parent_title = ''
+      }
+    },
     async confirmDialog () {
       if (this.dialogType === 'new') {
         var para = this.form
         // 重复判断  判断同一 parent_id 下，  display_order不能有重复
-        // const filter = 'parent_id=' + para.parent_id + ' and display_order=' + para.display_order
-        // const checkRes = await sRouter.whereRouterAsync({ selectFilter: '*', whereFilter: filter })
-        // if (checkRes.length > 0) {
-        //   this.$message({
-        //     showClose: true,
-        //     message: '当前序号已被占用，请重新选择序号！',
-        //     type: 'warning',
-        //     center: true,
-        //     duration: 2000,
-        //     offset: 50
-        //   })
-        //   return false
-        // }
+        const filter = 'parent_id=' + para.parent_id + ' and display_order=' + para.display_order
+        const checkRes = await sRouter.whereRouterAsync({ selectFilter: '*', whereFilter: filter })
+        if (checkRes.length > 0) {
+          this.$message({
+            showClose: true,
+            message: '当前序号已被占用，请重新选择序号！',
+            type: 'warning',
+            center: true,
+            duration: 2000,
+            offset: 50
+          })
+          return false
+        }
+
+        console.log(this.menuListId);
+        console.log(para);
+        console.log(this.menuListId.indexOf(para.parent_id));
+        // 是否二级节点选择了目录类型
+        if (this.menuListId.indexOf(para.parent_id) < 0 && para.menu_type === 'menu') {
+          this.$message({
+            showClose: true,
+            message: '当前仅支持二级菜单，请重新类型或者上级节点！',
+            type: 'warning',
+            center: true,
+            duration: 2000,
+            offset: 50
+          })
+          return false
+        }
         para.menu_id = null
         para.menu_type = para.menu_type === 'list' ? 3 : 4
         para.module_id = 1

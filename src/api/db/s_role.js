@@ -2,25 +2,26 @@
 /* eslint-disable camelcase */
 /*
  * @Author: your name
- * @Date: 2021-05-21 09:34:07
- * @LastEditTime: 2021-08-26 14:53:15
+ * @Date: 2021-07-28 09:34:07
+ * @LastEditTime: 2021-07-29 17:56:22
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
- * @FilePath: \sw_scada_temp\src\api\db\s_area.js
+ * @FilePath: \sw_scada_temp\src\api\db\s_role.js
  */
 import tableName from '@/api/db/tableName'
 import { querySync, queryAsync } from '@/plugins/modules/mysql'
 
 /**
- * @description: 查询 区域表 数据
+ * @description: 查询 权限表 数据
  * @param {*} para
  * @return {*}
  */
-async function getAreasAsync (para) {
+async function getRolesAsync (para) {
   const sql = 'select ' +
               para.filter +
-              ' from ' + tableName.area +
-              ' order by ABS(area_id) ASC'
+              ' from ' + tableName.role +
+              // ' order by role_id ASC'
+              ' order ' + para.order
   return await queryAsync(sql)
 }
 
@@ -29,35 +30,36 @@ async function getAreasAsync (para) {
  * @param {*} para
  * @return {*}
  */
-async function whereAreasAsync (para) {
+async function whereRolesAsync (para) {
   const sql = "select " +
               para.selectFilter +
-              " from " + tableName.area +
-              " where " + para.whereFilter + ''
-  // " order by area_id ASC"
+              " from " + tableName.role +
+              " where " + para.whereFilter
+  // " order by role_id ASC"
   return await queryAsync(sql)
 }
 
 /**
- * @description: 新增areas Sync
+ * @description: 新增roles Sync
  * @param {*} obj
  * @param {*} para
  * @return {*}
  */
-function insertAreasSync (obj, para) {
+function insertRolesSync (obj, para) {
   const sql = "INSERT INTO " +
-              tableName.area +
+              tableName.role +
               " VALUES(" +
-              "null" + ",'" +
-              para.areaId + "','" +
-              para.areaName + "'," +
-              // para.updateTime + "'," +
+              // para.roleId + ",'" +
+              null + ",'" +
+              para.roleName + "','" +
+              para.roledes + "'," +
+              para.isenable + "," +
               "NOW()" + "," +
-              para.updateTimeMs +
+              "NOW()" +
               ")"
   querySync(sql, function (err, vals, fields) {
     if (err) {
-      // console.log(err.message)
+      // console.log(err.message, sql)
       obj.$message({
         showClose: true,
         message: '添加失败',
@@ -71,6 +73,11 @@ function insertAreasSync (obj, para) {
         message: '添加成功',
         type: 'success'
       })
+      // 调用页码跳转函数
+      obj.whereRoleForId(obj.pageparm)
+      // 调用窗口关闭函数及初始查询函数
+      obj.closeDialog()
+      // obj.getRoles()
     }
     if (fields) {
       // console.log(fields)
@@ -79,23 +86,21 @@ function insertAreasSync (obj, para) {
 }
 
 /**
- * @description: 新增areas Async
+ * @description: 新增roles Async
  * @param {*} para
  * @return {*}
  */
-async function insertAreasAsync (para) {
+async function insertRolesAsync (para) {
   const sql = "INSERT INTO " +
-              tableName.area +
+              tableName.role +
               " VALUES(" +
-              "null" + ",'" +
-              para.areaId + "','" +
-              // para.areaName + "','" +
-              para.areaName + "'," +
-              // para.updateTime + "'," +
+              // para.roleId + ",'" +
+              para.roleName + "','" +
+              para.roledes + "'," +
+              para.isenable + "," +
               "NOW()" + "," +
-              para.updateTimeMs +
+              "NOW()" +
               ")"
-  console.log('sql:', sql)
   return await queryAsync(sql)
 }
 
@@ -104,16 +109,18 @@ async function insertAreasAsync (para) {
  * @param {*} para
  * @return {*}
  */
-async function updateAreasAsync (para) {
-  const sql = "update " + tableName.area +
+async function updateRolesAsync (para) {
+  const sql = "update " + tableName.role +
               " set " +
-              "area_id='" + para.area_id + "', " +
-              "area_name='" + para.area_name + "', " +
-              // "update_time='" + para.updateTime + "', " +
+              "role_id=" + para.role_id + ", " +
+              // null + ",'" +
+              "role_name='" + para.role_name + "', " +
+              "role_des='" + para.role_des + "', " +
+              "is_enable=" + para.is_enable + ", " +
+              "create_time='" + para.create_time + "', " +
               "update_time=" + "NOW()" + ", " +
-              "update_timeMS=" + para.updateTimeMs +
               " where " +
-              "id=" + para.id
+              "role_id=" + para.role_id
   return await queryAsync(sql)
 }
 
@@ -123,17 +130,19 @@ async function updateAreasAsync (para) {
  * @param {*} para
  * @return {*}
  */
-function updateAreasSync (obj, para) {
+function updateRolesSync (obj, para) {
   const sql = "update " +
-              tableName.area +
+              tableName.role +
               " set " +
-              "area_id='" + para.area_id + "', " +
-              "area_name='" + para.area_name + "', " +
-              // "update_time='" + para.updateTime + "', " +
-              "update_time=" + "NOW()" + ", " +
-              "update_timeMS=" + para.updateTimeMs +
+              "role_id=" + para.role_id + ", " +
+              // null + ",'" +
+              "role_name='" + para.role_name + "', " +
+              "role_des='" + para.role_des + "', " +
+              "is_enable=" + para.is_enable + ", " +
+              "create_time='" + para.create_time + "', " +
+              "update_time=" + "NOW()" +
               " where " +
-              "id=" + para.id
+              "role_id=" + para.role_id
   querySync(sql, function (err, vals, fields) {
     if (err) {
       // console.log(err.message)
@@ -145,13 +154,14 @@ function updateAreasSync (obj, para) {
     }
     if (vals) {
       var ret = JSON.parse(JSON.stringify(vals))
-      // console.log(ret)
       if (ret.affectedRows > 0) {
         obj.$message({
           showClose: true,
           message: '更新成功',
           type: 'success'
         })
+        // 调用页码跳转函数
+        obj.whereRoleForId(obj.pageparm)
       } else if (ret.affectedRows === 0) {
         console.log('update not exist')
         obj.$message({
@@ -161,6 +171,10 @@ function updateAreasSync (obj, para) {
         })
       }
     }
+
+    // 调用窗口关闭函数及初始查询函数
+    obj.closeDialog()
+    // obj.getRoles()
     if (fields) {
       // console.log(fields)
     }
@@ -172,20 +186,19 @@ function updateAreasSync (obj, para) {
  * @param {*} para
  * @return {*}
  */
-async function deleteAreasAsync (para) {
-  const singleQuotes = (typeof (para.fieldVal) !== "number" ? "'" : "")
-  const sql = "delete from " + tableName.area +
+async function deleteRolesAsync (para) {
+  const sql = "delete from " + tableName.role +
               " where " +
-              para.field + "=" + singleQuotes + para.fieldVal + singleQuotes
+              para.field + " in " + "(" + para.fieldVal + ")"
   return await queryAsync(sql)
 }
 
 export default {
-  getAreasAsync,
-  whereAreasAsync,
-  insertAreasAsync,
-  insertAreasSync,
-  updateAreasAsync,
-  updateAreasSync,
-  deleteAreasAsync
+  getRolesAsync,
+  whereRolesAsync,
+  insertRolesAsync,
+  insertRolesSync,
+  updateRolesAsync,
+  updateRolesSync,
+  deleteRolesAsync
 }

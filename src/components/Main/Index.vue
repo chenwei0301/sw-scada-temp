@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-08-03 11:18:03
- * @LastEditTime: 2021-08-16 14:46:15
+ * @LastEditTime: 2021-08-26 14:35:09
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\Main\Index.vue
@@ -47,6 +47,7 @@
       <Menu v-show="activeMenu==='Menu'"></Menu>
       <Edit v-show="activeMenu==='editTest'"></Edit>
       <LodashTest v-show="activeMenu==='LodashTest'"></LodashTest>
+      <RoleManager v-show="activeMenu==='RoleManager'"></RoleManager>
     </el-main>
 
   </el-container>
@@ -63,14 +64,15 @@ export default {
     return {
       logSrc: require('@/assets/icons/32x32.png'),
       title: 'main index',
-      activeMenu: 'MenuEdit',
+      activeMenu: 'editTest',
       items: [ // 水平一级菜单栏的菜单
         { index: 'MenuEdit', title: '菜单编辑' },
         { index: 'Dash', title: '控制台' },
         { index: 'drag', title: '组态' },
         { index: 'Menu', title: '配置' },
         { index: 'editTest', title: '一级菜单1' },
-        { index: 'LodashTest', title: 'LodashTest' }
+        { index: 'LodashTest', title: 'LodashTest' },
+        { index: 'RoleManager', title: 'RoleManager' }
       ]
     };
   },
@@ -81,7 +83,8 @@ export default {
     // MenuEdit: () => import(/* webpackChunkName: "MenuEdit" */'@/components/MenuEdit/router'),
     Edit: () => import(/* webpackChunkName: "Edit" */'@/views/Edit'),
     Menu: () => import(/* webpackChunkName: "Menu" */'@/views/Menu'),
-    LodashTest: () => import(/* webpackChunkName: "Menu" */'@/views/FuncTest/lodash_Test')
+    LodashTest: () => import(/* webpackChunkName: "Menu" */'@/views/FuncTest/lodash_Test'),
+    RoleManager: () => import(/* webpackChunkName: "RoleManager" */'@/components/RoleManager/RoleManager.vue')
   },
   methods: {
     // 切换菜单栏

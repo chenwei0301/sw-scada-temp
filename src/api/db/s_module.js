@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-08-19 09:46:14
- * @LastEditTime: 2021-08-19 09:48:45
+ * @LastEditTime: 2021-08-26 14:51:26
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\api\db\s_module.js
@@ -18,7 +18,7 @@ async function getModuleAsync (para) {
   const sql = 'select ' +
               para.filter +
               ' from ' + tableName.module +
-              ' order by module_id ASC'
+              ' order by ABS(module_id) ASC'
   return await queryAsync(sql)
 }
 

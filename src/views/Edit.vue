@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-05-19 17:52:36
- * @LastEditTime: 2021-07-23 16:19:19
+ * @LastEditTime: 2021-08-26 11:02:51
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\views\Edit.vue
@@ -13,6 +13,7 @@
 
     <el-button @click='getRole'>getRole</el-button>
 
+    <sRight></sRight>
     <sSysInfo></sSysInfo>
 
     <staticRouter></staticRouter>
@@ -39,6 +40,7 @@
 </template>
 
 <script>
+import sRight from '@/components/FunctionTest/s_right.vue'
 import sArea from '@/components/FunctionTest/s_area.vue'
 import sRouter from '@/components/FunctionTest/s_router.vue'
 import sSysInfo from '@/components/FunctionTest/s_sysinfo.vue'
@@ -62,6 +64,7 @@ export default {
     }
   },
   components: {
+    sRight,
     sArea,
     sRouter,
     Axios,
