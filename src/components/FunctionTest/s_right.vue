@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-08-26 10:59:08
- * @LastEditTime: 2021-08-30 15:18:36
+ * @LastEditTime: 2021-08-30 16:18:02
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\FunctionTest\s_right.vue
@@ -16,7 +16,8 @@
     <el-button @click.prevent="addRightBaseInfo" type="primary">addRightBaseInfo</el-button>
     <el-button @click.prevent="insertRight" type="primary">insertRight</el-button>
     <el-button @click.prevent="deleteRight" type="primary">deleteRight</el-button>
-    <el-button @click.prevent="openDialog" type="primary">授权</el-button>
+    <el-button @click.prevent="openDialog(1)" type="primary">授权1</el-button>
+    <el-button @click.prevent="openDialog(2)" type="primary">授权2</el-button>
 
     <div :style="{width: '340px'}">
       <el-tree
@@ -34,7 +35,7 @@
       </el-tree>
       </div>
 
-      <RoleDialog ref="RoleDialog"></RoleDialog>
+      <RoleDialog ref="RoleDialog" title="111"></RoleDialog>
   </div>
 </template>
 
@@ -67,7 +68,7 @@ export default {
     },
     async getFormateRight () {
       var ret = await sRight.FormateRightForTree(1)
-      console.log(ret)
+      // console.log(ret)
       this.data = ret.data
       this.module = ret.module
       this.behavior = ret.behavior
@@ -77,6 +78,7 @@ export default {
     async addRightBaseInfo () {
       // 当添加新权限组
       // sRight.updateRightBaseInfo({ edit: 'add', type: 'role', id: 2 })
+      // sRight.updateRightBaseInfo({ edit: 'delete', type: 'role', id: 2 })
 
       // 当添加新区域
       // sRight.updateRightBaseInfo({ edit: 'add', type: 'area', id: '436' })
@@ -142,8 +144,8 @@ export default {
       }
       await sRight.updateRightInfoForType(para, check, this.module)
     },
-    openDialog () {
-      this.$refs.RoleDialog.setDialogVisible(1)
+    openDialog (roleId) {
+      this.$refs.RoleDialog.setDialogVisible(roleId)
     }
   },
   components: {

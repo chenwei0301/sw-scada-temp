@@ -330,7 +330,7 @@ function updateRighSync (para) {
  * @return {*}
  */
 async function updateRightInfoForType (para, check, moduleList) {
-  console.log(para)
+  // console.log(para)
   if (para.type === 'area') {
     // 获取module列表
     moduleList.forEach(element => {
