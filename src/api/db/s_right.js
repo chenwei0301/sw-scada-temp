@@ -2,7 +2,7 @@
 /*
  * @Author: your name
  * @Date: 2021-08-19 17:33:08
- * @LastEditTime: 2021-08-27 17:45:36
+ * @LastEditTime: 2021-08-30 14:01:27
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\api\db\s_right.js
@@ -63,6 +63,8 @@ async function FormateRightForTree (roleId) {
   const data = []
   let retModule = []
   let retBehavior = []
+  const defaultCheckKeys = []
+  let behaComb = ''
   if (ret.length > 0) {
     retModule = await sModule.getModuleAsync({ filter: 'module_id,module_title' })
     const objModule = {}
@@ -74,6 +76,7 @@ async function FormateRightForTree (roleId) {
     retBehavior = await sBehavior.getBehaviorAsync({ field: '*' })
     const objBehavior = {}
     retBehavior.forEach(element => {
+      behaComb += element.behavior_name
       objBehavior[element.behavior_name] = element.behavior_des
     })
     // console.log(retBehavior)
@@ -81,14 +84,28 @@ async function FormateRightForTree (roleId) {
     for (let i = 0; i < ret.length; i++) {
       const id1 = roleId + '-' + ret[i].area_id
       const temp = []
+      let moCount = 0
       ret[i].children.forEach(sysEle => {
         const behaviorTemp = []
         const id2 = id1 + "-" + sysEle.module_id
+        let beCount = 0
         retBehavior.forEach(behaEle => {
           behaviorTemp.push({ id: id2 + '-' + behaEle.behavior_name, label: behaEle.behavior_des, name: behaEle.behavior_name, type: 'behavior' })
+          // 不为null 且包含当前权限标志
+          if (sysEle.behavior !== '' && sysEle.behavior.indexOf(behaEle.behavior_name) !== -1) {
+            beCount++
+            defaultCheckKeys.push(id2 + '-' + behaEle.behavior_name)
+          }
         })
         temp.push({ id: id2, label: objModule[sysEle.module_id], children: behaviorTemp, name: sysEle.module_id, type: 'module' })
+        if (beCount === retBehavior.length) {
+          moCount++
+          defaultCheckKeys.push(id1 + "-" + sysEle.module_id)
+        }
       })
+      if (moCount === ret[i].children.length) {
+        defaultCheckKeys.push(id1)
+      }
       const subData = {
         id: id1,
         label: ret[i].area_name,
@@ -99,11 +116,8 @@ async function FormateRightForTree (roleId) {
       data.push(subData)
     }
   }
-  let behaComb = ''
-  retBehavior.forEach(element => {
-    behaComb += element.behavior_name
-  });
-  return { data: data, module: retModule, behavior: retBehavior, behaComb: behaComb }
+
+  return { data: data, module: retModule, behavior: retBehavior, behaComb: behaComb, defaultCheckKeys: defaultCheckKeys }
 }
 
 /**
@@ -174,6 +188,7 @@ function deleteRightSync (para) {
     }
   })
 }
+
 /**
  * @description: 当新增role、area、 module时，添加或者删除right信息
  * @param {*} para
@@ -279,6 +294,73 @@ async function updateRightBaseInfo (para) {
   }
 }
 
+/**
+ * @description: 更新right信息
+ * @param {*} para
+ * @return {*}
+ */
+function updateRighSync (para) {
+  const sql = "update " +
+              tableName.right +
+              " set " +
+              "behavior='" + para.behavior + "', " +
+              "update_time=" + "NOW()" +
+              " where " +
+              "role_id=" + para.role_id +
+              " and " +
+              "area_id='" + para.area_id +
+              "' and " +
+              "module_id='" + para.module_id + "'"
+  querySync(sql, function (err, vals, fields) {
+    if (err) {
+      // console.log(err)
+    }
+    if (vals) {
+      // console.log(vals)
+    }
+    if (fields) {
+      // console.log(fields)
+    }
+  })
+}
+
+/**
+ * @description: 更新right信息
+ * @param {*} para
+ * @return {*}
+ */
+async function updateRightInfoForType (para, check, moduleList) {
+  console.log(para)
+  if (para.type === 'area') {
+    // 获取module列表
+    moduleList.forEach(element => {
+      para.module_id = element.module_id
+      updateRighSync(para)
+    })
+  } else if (para.type === 'module') {
+    updateRighSync(para)
+  } else if (para.type === 'behavior') {
+    // 获取数据库当前数据  更新数据  保存到数据库
+    const ret = await whereRightAsync({
+      selectFilter: '*',
+      whereFilter: "role_id=" + para.role_id + " and " +
+    "area_id='" + para.area_id + "' and " +
+    "module_id='" + para.module_id + "'"
+    })
+
+    if (ret.length > 0) {
+      if (ret[0].behavior.indexOf(para.behavior_id) === -1 && check) { // 增加对应权限
+        para.behavior = ret[0].behavior + para.behavior_id
+        updateRighSync(para)
+      } else if (ret[0].behavior.indexOf(para.behavior_id) !== -1 && !check) { // 删除对应权限
+        var reg = new RegExp(para.behavior_id, 'g')
+        para.behavior = ret[0].behavior.replace(reg, "")
+        updateRighSync(para)
+      }
+    }
+  }
+}
+
 export default {
   getRightAsync,
   whereRightAsync,
@@ -287,5 +369,7 @@ export default {
   insertRightSync,
   deleteRightSync,
   updateRightBaseInfo,
-  FormateRightForTree
+  FormateRightForTree,
+  updateRighSync,
+  updateRightInfoForType
 }

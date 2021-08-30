@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-08-26 10:59:08
- * @LastEditTime: 2021-08-27 18:01:42
+ * @LastEditTime: 2021-08-30 15:18:36
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\components\FunctionTest\s_right.vue
@@ -16,6 +16,7 @@
     <el-button @click.prevent="addRightBaseInfo" type="primary">addRightBaseInfo</el-button>
     <el-button @click.prevent="insertRight" type="primary">insertRight</el-button>
     <el-button @click.prevent="deleteRight" type="primary">deleteRight</el-button>
+    <el-button @click.prevent="openDialog" type="primary">授权</el-button>
 
     <div :style="{width: '340px'}">
       <el-tree
@@ -26,13 +27,14 @@
       empty-text=" "
       :style="{height:'300px', overflow: 'auto'}"
       :default-expanded-keys="[]"
-      :default-checked-keys="[]"
+      :default-checked-keys=defaultCheckKeys
       :props="defaultProps"
       @check=check
       >
       </el-tree>
       </div>
 
+      <RoleDialog ref="RoleDialog"></RoleDialog>
   </div>
 </template>
 
@@ -44,18 +46,17 @@ export default {
   data () {
     return {
       active: false,
-      msg: 'this is table named s_right function Test',
+      msg: 'this is ytable named s_right function Test',
       data: [],
       module: [],
       behavior: [],
       behaComb: '',
+      defaultCheckKeys: [],
       defaultProps: {
         children: 'children',
         label: 'label'
       }
     }
-  },
-  components: {
   },
   methods: {
     async getRight () {
@@ -66,11 +67,12 @@ export default {
     },
     async getFormateRight () {
       var ret = await sRight.FormateRightForTree(1)
-      // console.log(ret)
+      console.log(ret)
       this.data = ret.data
       this.module = ret.module
       this.behavior = ret.behavior
       this.behaComb = ret.behaComb
+      this.defaultCheckKeys = ret.defaultCheckKeys
     },
     async addRightBaseInfo () {
       // 当添加新权限组
@@ -112,42 +114,45 @@ export default {
       // console.timeEnd()
     },
     deleteRight () {
-      console.log('deleteRight');
       sRight.deleteRightSync({
         role_id: 2,
         area_id: '433',
         module_id: '17'
       })
     },
-    nodeClick (data, node, obj) {
-      console.log('nodeClick', data, node, obj);
-    },
-    checkChange (data, check, chilCheck) {
-      console.log('checkChange', data, check, chilCheck);
-    },
-    check (data, node) {
-      console.log('check', data, node);
+    async check (data, node) {
+      // console.log('check', data, node);
       // 判断当前节点id 是否在已选择节点当中 从而判断是否选中
       const check = node.checkedKeys.indexOf(data.id) > -1
-      console.log(check);
       const temp = data.id.split('-')
       const para = {
+        type: data.type,
         role_id: parseInt(temp[0]),
         area_id: temp[1]
       }
       if (data.type === 'area') { // 选择area节点 各module设置所有behavior
         // 分离id
+        para.behavior = check ? this.behaComb : ''
       } else if (data.type === 'module') { // 选择module节点   设置所有behavior
         para.module_id = temp[2]
+        para.behavior = check ? this.behaComb : ''
       } else if (data.type === 'behavior') { // 选择behavior节点  设置对应behavior
         para.module_id = temp[2]
         para.behavior_id = temp[3]
       }
-      console.log(para);
+      await sRight.updateRightInfoForType(para, check, this.module)
+    },
+    openDialog () {
+      this.$refs.RoleDialog.setDialogVisible(1)
     }
   },
+  components: {
+    RoleDialog: () => import(/* webpackChunkName: "RoleDialog" */'@/components/RoleManager/RoleDialog')
+  },
   beforeCreate () {},
-  created () {},
+  created () {
+    // this.getFormateRight()
+  },
   beforeMount () {},
   mounted () {},
   beforeUpdate () {},

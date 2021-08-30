@@ -3,7 +3,7 @@
 /*
  * @Author: your name
  * @Date: 2021-05-21 09:34:07
- * @LastEditTime: 2021-08-26 14:53:15
+ * @LastEditTime: 2021-08-30 11:09:38
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sw_scada_temp\src\api\db\s_area.js
@@ -144,15 +144,13 @@ function updateAreasSync (obj, para) {
       })
     }
     if (vals) {
-      var ret = JSON.parse(JSON.stringify(vals))
-      // console.log(ret)
-      if (ret.affectedRows > 0) {
+      if (vals.affectedRows > 0) {
         obj.$message({
           showClose: true,
           message: '更新成功',
           type: 'success'
         })
-      } else if (ret.affectedRows === 0) {
+      } else if (vals.affectedRows === 0) {
         console.log('update not exist')
         obj.$message({
           showClose: true,
