@@ -14,7 +14,6 @@ const pool = mysql.createPool(appConfig('mysql'))
 
 // 导出查询相关
 var querySync = function (sql, callback) {
-  // console.log('querySync-sql:', sql)
   pool.getConnection(function (err, conn) {
     if (err) {
       callback(err, null, null);

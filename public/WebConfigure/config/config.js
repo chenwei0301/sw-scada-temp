@@ -11,20 +11,20 @@ export default {
   isDist: 0,
   isRedu: 0,
   ip: '127.0.0.1',
-  // mysql(本地数据库)
-  mysql: {
-    host: '127.0.0.1',
-    port: '3306',
-    user: 'root',
-    password: '123456',
-    database: 'swrtdb'
-  }
-  // mysql(config (服务器数据库))
+  /** mysql(本地数据库) **/ 
   // mysql: {
-  //   host: '192.168.1.98',
+  //   host: '127.0.0.1',
   //   port: '3306',
   //   user: 'root',
-  //   password: 'sunwin',
+  //   password: '123456',
   //   database: 'swrtdb'
   // }
+  /** mysql(服务器数据库) **/ 
+  mysql: {
+    host: '192.168.20.218',
+    port: '3306',
+    user: 'root',
+    password: 'sunwin',
+    database: 'swrtdb'
+  }
 }

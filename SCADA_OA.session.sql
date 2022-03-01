@@ -1,1 +1,1 @@
-SELECT * FROM s_area ORDER BY area_id ASC
+SELECT * FROM s_area

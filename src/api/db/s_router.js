@@ -28,7 +28,12 @@ const MENUTYPE = {
   menuBARVUE: MENU_TYPE_MENUBAR_VUE,
   menuVUE: MENU_TYPE_VUE
 }
-
+// async function getLangchaoAsync(para) {
+//   console.log('getLangchaoAsync')
+//   const sql = 'select ' + para.field + ' from ' + 'TEST01'
+//   console.log(sql)
+//   return await queryAsync(sql)
+// }
 /**
  * @description: 获取Router数据 Async
  * @param {*} para
@@ -199,6 +204,7 @@ async function getRouterMenuFormatAsync () {
 }
 
 export default {
+  // getLangchaoAsync,
   getRouterAsync,
   whereRouterAsync,
   insertRouterAsync,

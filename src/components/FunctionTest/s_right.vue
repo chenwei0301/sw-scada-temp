@@ -35,7 +35,7 @@
       </el-tree>
       </div>
 
-      <RoleDialog ref="RoleDialog" title="111"></RoleDialog>
+      <RoleDialog ref="RoleDialog"></RoleDialog>
   </div>
 </template>
 
@@ -82,7 +82,7 @@ export default {
 
       // 当添加新区域
       // sRight.updateRightBaseInfo({ edit: 'add', type: 'area', id: '436' })
-      sRight.updateRightBaseInfo({ edit: 'delete', type: 'area', id: '435' })
+      //sRight.updateRightBaseInfo({ edit: 'delete', type: 'area', id: '435' })
 
       // 当添加新子系统
       // sRight.updateRightBaseInfo({ edit: 'add', type: 'module', id: '16' })

@@ -12,6 +12,7 @@
     <label for="">{{msg | uppercaseFirst  }}</label>
     <br>
 
+    <!-- <el-button @click.prevent="langchao" type="primary">浪潮</el-button> -->
     <el-button @click.prevent="getRouter" type="primary">getRouter</el-button>
 
     <el-button @click.prevent="whereRouter" type="primary">whereRouter</el-button>
@@ -57,6 +58,11 @@ export default {
   },
   mixins: [Vue2Filters.mixin],
   methods: {
+    // async langchao () {
+    //   var ret = await sRouter.getLangchaoAsync({ field: '*' })
+    //   console.table(ret)
+    // },
+
     handleNodeClick (data) {
       console.log(data);
     },
